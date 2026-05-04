@@ -1,0 +1,17 @@
+# created by virtualenv automatically*
+
+# Virtual environment
+.venv/
+
+# Python cache
+__pycache__/
+*.pyc
+
+# Django stuff
+db.sqlite3
+
+# Environment variables
+.env
+
+# PyCharm
+.idea/
