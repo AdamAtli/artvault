@@ -1,88 +1,29 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Artworks</title>
-    <style>
-        .artworks-container{
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 20px;
-        }
-        .artwork-item{
-            padding: 10px;
-            background-color: lightslategray;
-        }
-        .artwork-item h3{
+{% extends "base.html" %}
 
-        }
-        .artwork-item .image{
-            height: 150px;
-            width: 150px;
-            background-size: contain;
-            background-position: center;
-            background-repeat: no-repeat;
-        }
-        .artwork-item .badge {
-            border-radius: 20px;
-            padding: 10px;
-            font-size: 1em;
-            background-color: springgreen;
-            max-width: 100px;
-            text-align: center;
-        }
+{% block content %}
+<div class="container">
+    {% for artwork in artworks %}
 
-        .red{
-            background-color: red !important;
-            color: white;
-        }
+        <div class="item">
 
-        .seller{
-            display:flex;
-            align-items: center;
-            gap:10px;
-            margin-top: 10px;
-        }
+            <a href="{% url 'artworks-detail' artwork.id %}">
+            <div class="image" style="background-image: url('{{ artwork.image }}')"></div>
+            <h3>{{artwork.title}}</h3>
+            </a>
 
-        .seller-image {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
-        }
-
-        .seller-name {
-            font-size: 1em;
-        }
-    </style>
-</head>
-<body>
-    <div class="artworks-container">
-        {% for artwork in artworks %}
-
-            <div class="artwork-item">
-
-                <a href="{% url 'artworks-detail' artwork.id %}">
-                <div class="image" style="background-image: url('{{ artwork.image }}')"></div>
-                <h3>{{artwork.title}}</h3>
-                </a>
-
-                <div class="seller">
-                    <div class="seller-image" style="background-image: url('{{ artwork.seller_logo }}')"></div>
-                    <span class="seller-name">{{ artwork.seller_name }}</span>
-                </div>
-                <div>${{ artwork.starting_bid_price }}</div>
-                {% if artwork.is_sold == False %}
-                    <div class = "badge">Available!</div>
-                {% else %}
-                    <div class = "badge red">Sold</div>
-                {% endif %}
-
+            <div class="seller">
+                <div class="seller-image" style="background-image: url('{{ artwork.seller_logo }}')"></div>
+                <span class="seller-name">{{ artwork.seller_name }}</span>
             </div>
+            <div>${{ artwork.starting_bid_price }}</div>
+            {% if artwork.is_sold == False %}
+                <div class = "badge">Available!</div>
+            {% else %}
+                <div class = "badge red">Sold</div>
+            {% endif %}
 
-        {% endfor %}
-    </div>
-</body>
-</html>
+        </div>
+
+    {% endfor %}
+</div>
+{% endblock %}

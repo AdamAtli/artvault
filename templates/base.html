@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <style>
+        .container{
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+        .item{
+            padding: 10px;
+            background-color: lightslategray;
+        }
+
+        .item .image{
+            height: 150px;
+            width: 150px;
+            background-size: contain;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+        .item .badge {
+            border-radius: 20px;
+            padding: 10px;
+            font-size: 1em;
+            background-color: springgreen;
+            max-width: 100px;
+            text-align: center;
+        }
+
+        .red{
+            background-color: red !important;
+            color: white;
+        }
+
+        .seller{
+            display:flex;
+            align-items: center;
+            gap:10px;
+            margin-top: 10px;
+        }
+
+        .seller-image {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+
+        .seller-name {
+            font-size: 1em;
+        }
+    </style>
+    <meta charset="UTF-8">
+    <title>ArtVault</title>
+</head>
+<body>
+{% block content %}
+
+{% endblock %}
+</body>
+</html>
