@@ -1,10 +1,15 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends "base.html" %}
 
-</body>
-</html>
+{% block content %}
+
+    {% if seller.cover_image %}
+    <div class="cover-image-item">
+        <img src="{{ seller.cover_image }}" class="cover-image" alt="cover-image">
+    </div>
+    {% else %}
+    {% endif %}
+
+    <div class="container">
+        
+    </div>
+{% endblock %}
