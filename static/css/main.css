@@ -1,0 +1,64 @@
+.container{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+}
+.item{
+    padding: 10px;
+    background-color: lightslategray;
+}
+
+.item .image{
+    height: 150px;
+    width: 150px;
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+.item .badge {
+    border-radius: 20px;
+    padding: 10px;
+    font-size: 1em;
+    background-color: springgreen;
+    max-width: 100px;
+    text-align: center;
+}
+
+.red{
+    background-color: red !important;
+    color: white;
+}
+
+.seller{
+    display:flex;
+    align-items: center;
+    gap:10px;
+    margin-top: 10px;
+}
+
+.seller-image {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.seller-name {
+    font-size: 1em;
+}
+
+.cover-image-item {
+    display: flex;
+    justify-content: center;
+}
+
+.cover-image {
+    width: 1000px;
+    height: 300px;
+    object-fit: cover;
+    object-position: 50% 70%;
+    border-radius: 50%;
+    box-shadow: 7px 7px 5px rgba(0, 0, 0, 0.5);
+        }
