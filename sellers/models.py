@@ -1,6 +1,6 @@
 from django.db import models
 
-class Sellers(models.Model):
+class Seller(models.Model):
     Artist = 'artist'
     Gallery = 'gallery'
 
