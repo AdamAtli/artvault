@@ -1,10 +1,20 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends "base.html" %}
 
-</body>
-</html>
+{% block content %}
+<div class="container">
+    {% for seller in sellers %}
+
+        <div class="item">
+
+            <a href="{% url 'seller-detail' seller.id %}">
+            <div class="image" style="background-image: url('{{ seller.logo }}')"></div>
+            <h3>{{seller.name}}</h3>
+            </a>
+
+            <div id="seller-type">{{ seller.seller_type }}</div>
+
+        </div>
+
+    {% endfor %}
+</div>
+{% endblock %}
