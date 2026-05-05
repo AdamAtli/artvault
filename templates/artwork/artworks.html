@@ -16,7 +16,7 @@
         .artwork-item h3{
 
         }
-        .artwork-item .artwork-image{
+        .artwork-item .image{
             height: 150px;
             width: 150px;
             background-size: contain;
@@ -36,6 +36,26 @@
             background-color: red !important;
             color: white;
         }
+
+        .seller{
+            display:flex;
+            align-items: center;
+            gap:10px;
+            margin-top: 10px;
+        }
+
+        .seller-image {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+
+        .seller-name {
+            font-size: 1em;
+        }
     </style>
 </head>
 <body>
@@ -43,13 +63,20 @@
         {% for artwork in artworks %}
 
             <div class="artwork-item">
-                <div class="artwork-image" style="background-image: url('{{ artwork.image }}')"></div>
+
+                <a href="{% url 'artworks-detail' artwork.id %}">
+                <div class="image" style="background-image: url('{{ artwork.image }}')"></div>
                 <h3>{{artwork.title}}</h3>
-                <div>{{ artwork.seller_id }}</div>
+                </a>
+
+                <div class="seller">
+                    <div class="seller-image" style="background-image: url('{{ artwork.seller_logo }}')"></div>
+                    <span class="seller-name">{{ artwork.seller_name }}</span>
+                </div>
                 <div>${{ artwork.starting_bid_price }}</div>
                 {% if artwork.is_sold == False %}
                     <div class = "badge">Available!</div>
-                {% elif artwork.is_sold == True %}
+                {% else %}
                     <div class = "badge red">Sold</div>
                 {% endif %}
 
