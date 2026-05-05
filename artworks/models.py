@@ -2,7 +2,6 @@ from django.db import models
 
 class Artwork(models.Model):
     title = models.CharField(max_length=200)
-
     medium =models.CharField(max_length=100)
     style = models.CharField(max_length=100)
     starting_bid_price = models.DecimalField(max_digits=10, decimal_places=2)
@@ -24,3 +23,10 @@ class Artwork(models.Model):
     def __str__(self):
         return self.title
 
+
+class Images(models.Model):
+    artwork = models.ForeignKey(Artwork, on_delete=models.CASCADE)
+    image = models.ImageField(upload_to='artworks/')
+
+    def __str__(self):
+        return self.artwork.title
