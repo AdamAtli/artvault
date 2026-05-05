@@ -9,16 +9,16 @@ class Sellers(models.Model):
         (Gallery, 'Gallery'),
     ]
 
-    name = models.charfield(max_length=100)
-    seller_type = models.charfield(max_length=10, choices=Seller_Type_choices)
+    name = models.CharField(max_length=100)
+    seller_type = models.CharField(max_length=10, choices=Seller_Type_choices)
 
-    logo = models.imageField(upload_to='seller_logos/', blank=True, null=True)
+    logo = models.ImageField(upload_to='seller_logos/', blank=True, null=True)
     cover_image = models.ImageField(upload_to='seller_cover/', blank=True, null=True)
-    bio = models.Textfield(blank=True)
+    bio = models.TextField(blank=True)
 
-    street_name = models.charfield(max_length=100)
-    city = models.charfield(max_length=100)
-    postal_code = models.integerField()
+    street_name = models.CharField(max_length=100)
+    city = models.CharField(max_length=100)
+    postal_code = models.IntegerField()
 
     def clean(self):
         if self.seller_type == self.Gallery:
