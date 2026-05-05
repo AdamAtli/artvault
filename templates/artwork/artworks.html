@@ -4,19 +4,58 @@
     <meta charset="UTF-8">
     <title>Artworks</title>
     <style>
+        .artworks-container{
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
         .artwork-item{
+            padding: 10px;
+            background-color: lightslategray;
+        }
+        .artwork-item h3{
 
+        }
+        .artwork-item .artwork-image{
+            height: 150px;
+            width: 150px;
+            background-size: contain;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+        .artwork-item .badge {
+            border-radius: 20px;
+            padding: 10px;
+            font-size: 1em;
+            background-color: springgreen;
+            max-width: 100px;
+            text-align: center;
+        }
+
+        .red{
+            background-color: red !important;
+            color: white;
         }
     </style>
 </head>
 <body>
-    {% for artwork in artworks %}
+    <div class="artworks-container">
+        {% for artwork in artworks %}
 
-        <div class="artwrok-item">
-            <h3>({artwork.name})</h3>
-            <div></div>
-        </div>
+            <div class="artwork-item">
+                <div class="artwork-image" style="background-image: url('{{ artwork.image }}')"></div>
+                <h3>{{artwork.title}}</h3>
+                <div>{{ artwork.seller_id }}</div>
+                <div>${{ artwork.starting_bid_price }}</div>
+                {% if artwork.is_sold == False %}
+                    <div class = "badge">Available!</div>
+                {% elif artwork.is_sold == True %}
+                    <div class = "badge red">Sold</div>
+                {% endif %}
 
-    {% endfor %}
+            </div>
+
+        {% endfor %}
+    </div>
 </body>
 </html>

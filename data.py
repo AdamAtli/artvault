@@ -134,7 +134,7 @@ artworks = [
         "height_cm": 45.0,
         "year_of_creation": 2023,
         "edition": "limited",
-        "is_sold": False,
+        "is_sold": True,
         "seller_id": 2,
         "image": "https://images.unsplash.com/photo-1504198453319-5ce911bafcde"
     },
