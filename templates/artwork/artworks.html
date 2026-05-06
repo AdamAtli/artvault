@@ -2,31 +2,14 @@
 
 {% block content %}
 <div class="container">
+
+    <div class="row g-4">
     {% for artwork in artworks %}
 
-        <div class="container-item">
-
-            <a href="{% url 'artworks-detail' artwork.id %}">
-            <div class="image" style="background-image: url('{{ artwork.image }}')"></div>
-            <h3>{{artwork.title}}</h3>
-            </a>
-
-            <a href="{% url 'seller-detail' artwork.seller_id %}">
-                <div class="seller">
-                    <div class="seller-image" style="background-image: url('{{ artwork.seller_logo }}')"></div>
-                    <span class="seller-name">{{ artwork.seller_name }}</span>
-                </div>
-            </a>
-
-            <div>${{ artwork.starting_bid_price }}</div>
-            {% if artwork.is_sold == False %}
-                <div class = "badge">Available!</div>
-            {% else %}
-                <div class = "badge red">Sold</div>
-            {% endif %}
-
-        </div>
+        {% include "artwork/_single_artwork.html" with is_detail=False artwork=artwork %}
 
     {% endfor %}
+    </div>
+
 </div>
 {% endblock %}

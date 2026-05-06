@@ -1,0 +1,39 @@
+<div class="col-md-4">
+
+    <a href="{% url 'artworks-detail' artwork.id %}">
+        <img src="{{ artwork.image }}" class="artwork-image" alt="artwork-image">
+        <h3>{{artwork.title}}</h3>
+    </a>
+
+    <a href="{% url 'seller-detail' artwork.seller_id %}">
+        <div class="seller">
+            <img src="{{ artwork.seller_logo}}" class="artwork_seller-image" alt="seller-logo">
+            <span class="seller-name">{{ artwork.seller_name }}</span>
+        </div>
+    </a>
+
+    <section>
+        <b>Starting bid:</b>
+        <span class="starting-bid">${{ artwork.starting_bid_price }}</span>
+    </section>
+
+    <ul class="artwork-details-list">
+        <li class="artwork-medium">{{ artwork.medium }}</li>
+        <li class="artwork-dimensions">{{ artwork.width_cm }}x{{ artwork.height_cm }}cm</li>
+    </ul>
+
+    {% if artwork.is_sold == False %}
+        <p class = "badge">Available!</p>
+    {% else %}
+        <p class = "badge red">Sold</p>
+    {% endif %}
+
+
+    {% if is_detail == True %}
+        <section class="additional-details">
+            <h3>Additional details</h3>
+            <p class="artwork-edition">{{ artwork.edition }}</p>
+        </section>
+    {% endif %}
+
+</div>
