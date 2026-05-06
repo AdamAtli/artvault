@@ -4,7 +4,7 @@
 <div class="container">
     {% for artwork in artworks %}
 
-        <div class="item">
+        <div class="container-item">
 
             <a href="{% url 'artworks-detail' artwork.id %}">
             <div class="image" style="background-image: url('{{ artwork.image }}')"></div>

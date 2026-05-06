@@ -4,7 +4,7 @@
 <div class="container">
     {% for seller in sellers %}
 
-        <div class="item">
+        <div class="container-item">
 
             <a href="{% url 'seller-detail' seller.id %}">
             <img src="{{ seller.logo}}" class="seller-profile-logo" alt="seller-logo">
