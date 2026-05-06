@@ -1,10 +1,28 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends "base.html" %}
 
-</body>
-</html>
+{% block content %}
+
+    {% if seller.cover_image %}
+    <div class="cover-image-item">
+        <img src="{{ seller.cover_image }}" class="cover-image" alt="cover-image">
+    </div>
+    {% endif %}
+<br>
+
+    <div class="seller-profile-card">
+        <img src="{{ seller.logo}}" class="seller-profile-logo" alt="seller-logo">
+
+        <div class="seller-info">
+            <span class="profile-seller-name">{{ seller.name }}</span>
+            <span class="seller-type">{{ seller.seller_type}}</span>
+            <span class="seller-address">{{ seller.street_name }}, {{ seller.city }}, {{ seller.postal_code }}</span>
+            <div class="seller-bio">{{ seller.bio }}</div>
+        </div>
+
+
+    </div>
+
+
+<hr>
+
+{% endblock %}
