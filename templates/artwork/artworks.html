@@ -9,6 +9,18 @@
 
         <div class="col-md-4">
             {% include "artwork/_single_artwork.html" with is_detail=False artwork=artwork %}
+            <ul class="artworks-info-list">
+
+                <li>
+                    <b>Medium: </b>{{ artwork.medium }}
+                </li>
+
+                <li>
+                    <b>Dimensions: </b>{{ artwork.width_cm }}x{{ artwork.height_cm }}cm
+                </li>
+
+            </ul>
+
         </div>
 
     {% endfor %}
