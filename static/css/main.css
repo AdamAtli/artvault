@@ -61,4 +61,49 @@
     object-position: 50% 70%;
     border-radius: 50%;
     box-shadow: 7px 7px 5px rgba(0, 0, 0, 0.5);
-        }
+}
+
+
+<.seller-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.seller-profile-logo {
+    width: 150px;
+    height: 150px;
+
+    border-radius: 50%;
+    object-fit: cover;
+    object-position: center;
+}
+
+.profile-seller-name {
+    font-size: 2em;
+    font-weight: bold;
+    text-align: left;
+    align-self: flex-start;
+    padding: 10px;
+}
+
+.seller-type {
+    color: gray;
+    text-align: left;
+    margin-left: 10px;
+}
+
+.seller-profile-card {
+    display: flex;
+    align-items: flex-start;
+    gap: 20px;
+}
+
+.seller-address {
+    text-align: left;
+    margin-left: 10px;
+}
+
+.seller-bio {
+    max-width: 400px;
+    margin-left: 10px;
+}
