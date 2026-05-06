@@ -59,6 +59,7 @@ artworks = [
         "height_cm": 40.0,
         "year_of_creation": 2023,
         "edition": "original",
+        "provenance": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
         "is_sold": False,
         "seller_id": 1,
         "image": "https://images.unsplash.com/photo-1549880338-65ddcdfd017b"
@@ -74,6 +75,7 @@ artworks = [
         "height_cm": 60.0,
         "year_of_creation": 2022,
         "edition": "original",
+        "provenance": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
         "is_sold": False,
         "seller_id": 2,
         "image": "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee"
@@ -89,6 +91,7 @@ artworks = [
         "height_cm": 50.0,
         "year_of_creation": 2021,
         "edition": "limited",
+        "provenance": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
         "is_sold": False,
         "seller_id": 3,
         "image": "https://images.unsplash.com/photo-1492724441997-5dc865305da7"
@@ -104,6 +107,7 @@ artworks = [
         "height_cm": 35.0,
         "year_of_creation": 2020,
         "edition": "open",
+        "provenance": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
         "is_sold": False,
         "seller_id": 3,
         "image": "https://images.unsplash.com/photo-1472214103451-9374bd1c798e"
@@ -119,6 +123,7 @@ artworks = [
         "height_cm": 70.0,
         "year_of_creation": 2024,
         "edition": "original",
+        "provenance": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
         "is_sold": False,
         "seller_id": 4,
         "image": "https://images.unsplash.com/photo-1517694712202-14dd9538aa97"
@@ -134,6 +139,7 @@ artworks = [
         "height_cm": 45.0,
         "year_of_creation": 2023,
         "edition": "limited",
+        "provenance": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
         "is_sold": True,
         "seller_id": 2,
         "image": "https://images.unsplash.com/photo-1504198453319-5ce911bafcde"
