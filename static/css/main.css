@@ -1,3 +1,9 @@
+.artwork-detail-layout {
+    display: flex;
+    gap: 40px;
+    align-items: flex-start;
+}
+
 .container-item{
     padding: 10px;
     border: 1px solid black;
@@ -11,13 +17,30 @@
     font-weight: bold;
     color: #2e8b57;
 }
+.artwork-detail-layout .artwork-image{
+    width: 500px;
+    height: 500px;
+    object-fit: contain;
+}
 
+.artwork-image-section {
+    flex-shrink: 0;
+}
+
+.artwork-info-section {
+    padding-top: 40px;
+}
 .artwork-image{
     width: 100%;
     height: 300px;
     object-fit: cover;
     padding: 10px;
 }
+
+.artwork-details-list {
+    color: dimgray;
+}
+
 .badge {
     border-radius: 20px;
     padding: 10px;
