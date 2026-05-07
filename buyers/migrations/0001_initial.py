@@ -15,16 +15,11 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.CreateModel(
-            name='Seller',
+            name='Buyer',
             fields=[
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('seller_type', models.CharField(choices=[('artist', 'Artist'), ('gallery', 'Gallery')], max_length=10)),
-                ('logo', models.ImageField(blank=True, null=True, upload_to='seller_logos/')),
-                ('cover_image', models.ImageField(blank=True, null=True, upload_to='seller_cover/')),
+                ('profile_pic', models.ImageField(blank=True, default='profile_pics/default.png', null=True, upload_to='profile_pics')),
                 ('bio', models.TextField(blank=True)),
-                ('street_name', models.CharField(max_length=100)),
-                ('city', models.CharField(max_length=100)),
-                ('postal_code', models.IntegerField()),
                 ('user', models.OneToOneField(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
             ],
         ),
