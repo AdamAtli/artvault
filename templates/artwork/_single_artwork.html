@@ -3,6 +3,8 @@
     <div class="artwork-image-section">
             {% with artwork_image=artwork.images.first %}
                 {% if artwork_image %}
+
+                    <!-- Carousel if we are on detailed page -->
                     {% if is_detail == True %}
                         <div id="carousel-{{ artwork.id }}" class="carousel slide artwork-carousel">
                           <div class="carousel-indicators">
@@ -35,12 +37,12 @@
                             <span class="visually-hidden">Next</span>
                           </button>
                         </div>
-                    {% else %}
 
+                    <!-- just first picture if not on detailed page -->
+                    {% else %}
                         <a href="{% url 'artworks-detail' artwork.id %}">
                             <img src="{{ artwork_image.image.url }}" class="artwork-image" alt="artwork-image">
                         </a>
-
                     {% endif %}
 
                 {% endif %}
