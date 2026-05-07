@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+    <form method="post" enctype="multipart/form-data" action="{% url 'create-artwork' %}">
+        {% csrf_token %}
+
+        {{ form }}
+        {{ image_form }}
+
+        <input type="submit" class="btn btn-primary" value="Create" />
+    </form>
+
+
+{% endblock %}
