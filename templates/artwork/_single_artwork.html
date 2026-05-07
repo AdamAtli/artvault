@@ -1,13 +1,51 @@
 <div class="{% if is_detail %}artwork-detail-layout{% endif %}">
 
     <div class="artwork-image-section">
-        <a href="{% url 'artworks-detail' artwork.id %}">
-            {% with artwork_image=artwork.image_set.first %}
+            {% with artwork_image=artwork.images.first %}
                 {% if artwork_image %}
-                    <img src="{{ artwork_image.image.url }}" class="artwork-image" alt="artwork-image">
+                    {% if is_detail == True %}
+                        <div id="carousel-{{ artwork.id }}" class="carousel slide artwork-carousel">
+                          <div class="carousel-indicators">
+                            {% for image in artwork.images.all %}
+                                <button
+                                    type="button"
+                                    data-bs-target="#carousel-{{ artwork.id }}"
+                                    data-bs-slide-to="{{ forloop.counter0 }}"
+                                    class="{% if forloop.first %}active{% endif %}"
+                                    {% if forloop.first %}aria-current="true"{% endif %}
+                                    aria-label="Slide {{ forloop.counter }}">
+                                </button>
+                            {% endfor %}
+                          </div>
+                          <div class="carousel-inner">
+                            {% for image in artwork.images.all %}
+                                <div class="carousel-item {% if forloop.first %}active{% endif %}">
+                                    <img src="{{ image.image.url }}"
+                                         class="carousel-artwork-image"
+                                         alt="artwork-image">
+                                </div>
+                            {% endfor %}
+                          </div>
+                          <button class="carousel-control-prev" type="button" data-bs-target="#carousel-{{ artwork.id }}" data-bs-slide="prev">
+                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Previous</span>
+                          </button>
+                          <button class="carousel-control-next" type="button" data-bs-target="#carousel-{{ artwork.id }}" data-bs-slide="next">
+                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Next</span>
+                          </button>
+                        </div>
+                    {% else %}
+
+                        <a href="{% url 'artworks-detail' artwork.id %}">
+                            <img src="{{ artwork_image.image.url }}" class="artwork-image" alt="artwork-image">
+                        </a>
+
+                    {% endif %}
+
                 {% endif %}
+
             {% endwith %}
-        </a>
     </div>
 
     <div class="artwork-info-section">
