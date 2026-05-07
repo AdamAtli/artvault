@@ -43,7 +43,7 @@
 }
 
 .artwork-carousel .carousel-inner {
-    width: 360px;
+    width: 380px;
     margin: 0 auto;
     height: 500px;
     overflow: hidden;
@@ -59,6 +59,14 @@
     object-fit: contain;
     object-position: center;
     display: block;
+}
+
+.artwork-carousel .carousel-indicators [data-bs-target] {
+    background-color: gray;
+}
+
+.artwork-carousel .carousel-indicators .active {
+    background-color: black;
 }
 
 .artwork-carousel .carousel-control-prev-icon,
