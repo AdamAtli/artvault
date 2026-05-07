@@ -15,7 +15,7 @@
         <a href="{% url 'seller-detail' artwork.seller.id %}">
             <div class="seller">
                 <img src="{{ artwork.seller.logo.url}}" class="artwork_seller-image" alt="seller-logo">
-                <span class="seller-name">{{ artwork.seller.name }}</span>
+                <span class="seller-name">{{ artwork.seller.user.username }}</span>
             </div>
         </a>
 
