@@ -20,28 +20,85 @@
             <span class="starting-bid">${{ artwork.starting_bid_price }}</span>
         </section>
 
-        <ul class="artwork-details-list">
-            <li class="artwork-medium">{{ artwork.medium }}</li>
-            <li class="artwork-dimensions">{{ artwork.width_cm }}x{{ artwork.height_cm }}cm</li>
-        </ul>
+        <div class="artwork-status-and-bid">
 
-        {% if artwork.is_sold == False %}
-            <p class = "badge">Available!</p>
-        {% else %}
-            <p class = "badge red">Sold</p>
-        {% endif %}
+            {% if artwork.is_sold == False %}
+                <p class="badge text-bg-success">Available!</p>
+
+            {% else %}
+                <p class="badge text-bg-secondary">Sold</p>
+
+            {% endif %}
+
+        </div>
 
 
         {% if is_detail == True %}
-            <section class="additional-details">
-                <h3>Additional details</h3>
-                <p class="artwork-edition">
-                    <b>Edition: </b>
-                    {{ artwork.edition }}
-                </p>
-                <b>Provenance: </b>
-                <p class="artwork-provenance">{{ artwork.provenance }}</p>
-            </section>
+
+        <div class="accordion" id="accordionPanelsStayOpenExample" style="width: 500px">
+
+            <div class="accordion-item">
+
+                <h2 class="accordion-header">
+                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="true" aria-controls="panelsStayOpen-collapseOne">
+                        Details
+                    </button>
+                </h2>
+
+                <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse show">
+                    <div class="accordion-body">
+                        <ul class="list-group list-group-flush">
+
+                            <li class="list-group-item">
+                                <b>Medium: </b>{{ artwork.medium }}
+                            </li>
+
+                            <li class="list-group-item">
+                                <b>Style: </b>{{ artwork.style }}
+                            </li>
+
+                            <li class="list-group-item">
+                                <b>Dimensions: </b>{{ artwork.width_cm }} x {{ artwork.height_cm }}cm
+                            </li>
+
+                            <li class="list-group-item">
+                                <b>Listing date: </b>{{ artwork.listing_date }}
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="accordion-item">
+
+                <h2 class="accordion-header">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseTwo" aria-expanded="false" aria-controls="panelsStayOpen-collapseTwo">
+                        Additional details
+                    </button>
+                </h2>
+
+                <div id="panelsStayOpen-collapseTwo" class="accordion-collapse collapse">
+                    <div class="accordion-body">
+                        <ul class="list-group list-group-flush">
+
+                            <li class="list-group-item">
+                              <b>Year of creation: </b>{{ artwork.year_of_creation }}
+                            </li>
+
+                            <li class="list-group-item">
+                              <b>Edition: </b>{{ artwork.edition }}
+                            </li>
+
+                            <li class="list-group-item">
+                              <b>Provenance: </b>{{ artwork.provenance }}
+                            </li>
+
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         {% endif %}
 
     </div>

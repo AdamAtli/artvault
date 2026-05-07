@@ -37,22 +37,8 @@
     padding: 10px;
 }
 
-.artwork-details-list {
+.artworks-info-list {
     color: dimgray;
-}
-
-.badge {
-    border-radius: 20px;
-    padding: 10px;
-    font-size: 1em;
-    background-color: springgreen;
-    max-width: 100px;
-    text-align: center;
-}
-
-.red{
-    background-color: red !important;
-    color: white;
 }
 
 .seller{
