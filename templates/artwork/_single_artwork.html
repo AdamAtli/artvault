@@ -2,16 +2,20 @@
 
     <div class="artwork-image-section">
         <a href="{% url 'artworks-detail' artwork.id %}">
-            <img src="{{ artwork.image }}" class="artwork-image" alt="artwork-image">
+            {% with artwork_image=artwork.image_set.first %}
+                {% if artwork_image %}
+                    <img src="{{ artwork_image.image.url }}" class="artwork-image" alt="artwork-image">
+                {% endif %}
+            {% endwith %}
         </a>
     </div>
 
     <div class="artwork-info-section">
         <h3>{{artwork.title}}</h3>
-        <a href="{% url 'seller-detail' artwork.seller_id %}">
+        <a href="{% url 'seller-detail' artwork.seller.id %}">
             <div class="seller">
-                <img src="{{ artwork.seller_logo}}" class="artwork_seller-image" alt="seller-logo">
-                <span class="seller-name">{{ artwork.seller_name }}</span>
+                <img src="{{ artwork.seller.logo.url}}" class="artwork_seller-image" alt="seller-logo">
+                <span class="seller-name">{{ artwork.seller.name }}</span>
             </div>
         </a>
 
