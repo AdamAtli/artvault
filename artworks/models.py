@@ -33,7 +33,7 @@ class Artwork(models.Model):
 
 
 
-class Images(models.Model):
+class Image(models.Model):
     artwork = models.ForeignKey(Artwork, on_delete=models.CASCADE)
     image = models.ImageField(upload_to='artworks/')
 
