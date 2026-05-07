@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 class Seller(models.Model):
     Artist = 'artist'
@@ -9,7 +10,8 @@ class Seller(models.Model):
         (Gallery, 'Gallery'),
     ]
 
-    name = models.CharField(max_length=100)
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+
     seller_type = models.CharField(max_length=10, choices=Seller_Type_choices)
 
     logo = models.ImageField(upload_to='seller_logos/', blank=True, null=True)
@@ -27,6 +29,6 @@ class Seller(models.Model):
 
 
     def __str__(self):
-        return self.name
+        return self.user.username
 
 
