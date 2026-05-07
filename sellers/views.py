@@ -1,18 +1,16 @@
-from django.http import HttpResponse
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 
-from data import sellers
+from sellers.models import Seller
 def index(request):
-    # TODO: Retrieve data from database
-    # TODO: Populate a template with data coming from database
+    sellers = Seller.objects.all()
+
     return render(request, "seller/sellers.html", {
         "sellers": sellers
     })
 
 def get_seller_by_id(request, id):
-    # TODO: Retrieve data from database
-    # TODO: Populate a template with data coming from database
-    seller = [x for x in sellers if x["id"] == id][0]
+    seller = get_object_or_404(Seller, pk=id)
+
     return render(request, "seller/seller_details.html", {
         "seller": seller
     })
