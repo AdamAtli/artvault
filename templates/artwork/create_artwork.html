@@ -1,15 +1,17 @@
 {% extends 'base.html' %}
 
 {% block content %}
+    <div class="container mt-5">
+        <div class="mx-auto" style="max-width: 600px;">
+            <form method="post" enctype="multipart/form-data" action="{% url 'create-artwork' %}">
+                {% csrf_token %}
 
-    <form method="post" enctype="multipart/form-data" action="{% url 'create-artwork' %}">
-        {% csrf_token %}
+                {{ form }}
+                {{ image_form }}
 
-        {{ form }}
-        {{ image_form }}
-
-        <input type="submit" class="btn btn-primary" value="Create" />
-    </form>
-
+                <input type="submit" class="btn btn-primary mt-3" value="Create" />
+            </form>
+        </div>
+    </div>
 
 {% endblock %}
