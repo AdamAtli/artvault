@@ -34,8 +34,8 @@ class Artwork(models.Model):
 
 
 
-class Images(models.Model):
-    artwork = models.ForeignKey(Artwork, on_delete=models.CASCADE)
+class Image(models.Model):
+    artwork = models.ForeignKey(Artwork, on_delete=models.CASCADE, related_name='images')
     image = models.ImageField(upload_to='artworks/')
 
     def __str__(self):
