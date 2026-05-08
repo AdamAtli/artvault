@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'artworks.apps.ArtworkConfig',
     'sellers.apps.SellersConfig',
     'buyers.apps.BuyerConfig',
+    'bids.apps.BidsConfig',
 ]
 
 MIDDLEWARE = [
