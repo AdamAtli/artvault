@@ -2,7 +2,6 @@ from django.contrib.auth.models import User
 from django.db import models
 from sellers.models import Seller
 
-
 class Artwork(models.Model):
     title = models.CharField(max_length=200)
     medium =models.CharField(max_length=100)
