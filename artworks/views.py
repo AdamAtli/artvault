@@ -34,7 +34,7 @@ def create_artwork(request):
             for uploaded_image in request.FILES.getlist("image"):
                 Image.objects.create(artwork=artwork, image=uploaded_image)
 
-            return redirect("artworks-index")
+            return redirect("artworks-detail", id=artwork.id)
 
     else:
         form = ArtworkCreateForm()
