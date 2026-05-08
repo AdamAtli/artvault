@@ -8,23 +8,23 @@
 
         {% if seller.cover_image %}
         <div class="cover-image-item">
-            <img src="{{ seller.cover_image }}" class="cover-image">
+            <img src="{{ seller.cover_image.url }}" class="cover-image">
         </div>
         {% endif %}
 
         <div class="seller-profile-card">
 
             {% if seller.logo %}
-            <img src="{{ seller.logo }}" class="seller-profile-logo">
+            <img src="{{ seller.logo.url }}" class="seller-profile-logo">
             {% endif %}
 
             <div class="seller-info">
 
-                <div class="profile-seller-name">{{ seller.name }}</div>
+                <div class="profile-seller-name">{{ seller.user.username }}</div>
 
                 <div class="seller-type">{{ seller.seller_type }}</div>
 
-                {% if seller.seller_type == "Gallery" %}
+                {% if seller.seller_type == "gallery" %}
                 <div class="seller-address">
                     {{ seller.street_name }}, {{ seller.city }}, {{ seller.postal_code }}
                 </div>
@@ -44,13 +44,13 @@
 
         <div class="seller-artworks-grid">
 
-            {% for artwork in seller.artwork_set.all %}
+            {% for artwork in seller.artworks.all %}
 
-            <a href="{% url 'artwork-detail' artwork.id %}" class="seller-artwork-card">
+            <a href="{% url 'artworks-detail' artwork.id %}" class="seller-artwork-card">
 
-                {% for img in artwork.images_set.all %}
+                {% for img in artwork.images.all %}
                     {% if forloop.first %}
-                        <img src="{{ img.image }}" class="seller-artwork-img">
+                        <img src="{{ img.image.url }}" class="seller-artwork-img">
                     {% endif %}
                 {% endfor %}
 
