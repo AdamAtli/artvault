@@ -1,7 +1,7 @@
 from django.contrib.auth.models import User
 from django.db import models
 from sellers.models import Seller
-from bids.models import Bid
+
 
 class Artwork(models.Model):
     title = models.CharField(max_length=200)

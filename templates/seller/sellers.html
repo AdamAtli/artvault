@@ -10,9 +10,9 @@
 
         <a href="{% url 'seller-detail' seller.id %}" class="seller-card seller-link">
 
-            <img src="{{ seller.logo }}" class="seller-card-logo">
+            <img src="{{ seller.logo.url }}" class="seller-card-logo">
 
-            <h3 class="seller-name">{{ seller.name }}</h3>
+            <h3 class="seller-name">{{ seller.user.username }}</h3>
 
             <div class="seller-type-text">
                 {{ seller.seller_type }}
