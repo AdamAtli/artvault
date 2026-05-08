@@ -79,6 +79,18 @@
 
         {% if is_detail == True %}
 
+        <form method="POST" action="{% url 'place_bid' artwork.id %}" class="input-group mb-3">
+            {% csrf_token %}
+            <span class="input-group-text" id="basic-addon1">$</span>
+            <input type="number" class="form-control" placeholder="place your bid here" step="0.01" aria-label="amount" aria-describedby="basic-addon1">
+            <button class="btn btn-outline-primary" type="submit" id="button-addon2">Place bid</button>
+        </form>
+
+        <form class="d-grid gap-2" style="padding: 10px">
+          <button class="btn btn-success" type="button" disabled>Finalize bid</button>
+        </form>
+
+        <!-- Accordion for artwork details -->
         <div class="accordion" id="accordionPanelsStayOpenExample" style="width: 500px">
 
             <div class="accordion-item">
