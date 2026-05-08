@@ -31,9 +31,30 @@
         <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search"/>
         <button class="btn btn-outline-success" type="submit">Search</button>
       </form>
-        <a class="navbar-brand" href="/">
-            <img src="https://images.unsplash.com/photo-1582139329536-e7284fece509?q=80&w=880&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="avlogo" width="50" height="50" class="ms-3 rounded-circle">
-        </a>
+        {% if user.is_authenticated %}
+            <a class="navbar-brand ms-3" href="/">
+                <img src="{% static 'images/profile-placeholder.png' %}"
+                     alt="profile"
+                     width="50"
+                     height="50"
+                     class="rounded-circle"
+                     style="object-fit: cover;">
+            </a>
+
+        {% else %}
+
+            <button type="button"
+                    class="btn btn-outline-dark ms-3"
+                    data-bs-toggle="modal"
+                    data-bs-target="#loginModal">
+                Login
+            </button>
+
+            <a href="{% url 'register' %}" class="btn btn-dark ms-2">
+                Register
+            </a>
+
+        {% endif %}
     </div>
   </div>
 </nav>
