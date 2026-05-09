@@ -1,19 +1,29 @@
 {% extends "base.html" %}
 
 {% block content %}
-<div class="container">
-    {% for seller in sellers %}
 
-        <div class="container-item">
+<div class="seller-page">
 
-            <a href="{% url 'seller-detail' seller.id %}">
-            <img src="{{ seller.logo}}" class="seller-profile-logo" alt="seller-logo">
-            <h3>{{seller.name}}</h3>
-            </a>
-            <div>{{ seller.seller_type }}</div>
+    <div class="seller-grid">
 
-        </div>
+        {% for seller in sellers %}
 
-    {% endfor %}
+        <a href="{% url 'seller-detail' seller.id %}" class="seller-card seller-link">
+
+            <img src="{{ seller.logo.url }}" class="seller-card-logo">
+
+            <h3 class="seller-name">{{ seller.user.username }}</h3>
+
+            <div class="seller-type-text">
+                {{ seller.seller_type }}
+            </div>
+
+        </a>
+
+        {% endfor %}
+
+    </div>
+
 </div>
+
 {% endblock %}
