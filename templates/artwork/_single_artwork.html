@@ -59,10 +59,19 @@
             </div>
         </a>
 
-        <section>
-            <b>Starting bid:</b>
-            <span class="starting-bid">${{ artwork.starting_bid_price }}</span>
-        </section>
+        <div class="starting-and-highest-bid">
+            <h4 class="starting-bid">
+              Starting bid
+              <small class="text-body-secondary"> ${{ artwork.starting_bid_price }} </small>
+            </h4>
+            <h4 class="highest-bid">
+              Highest bid
+              <small class="text-body-secondary"> ${{ artwork.bids.first.amount }} </small>
+            </h4>
+        </div>
+
+
+
 
         <div class="artwork-status-and-bid">
 
@@ -87,9 +96,10 @@
         </form>
 
         <form class="d-grid gap-2" style="padding: 10px">
-          <button class="btn btn-success" type="button" disabled>Finalize bid</button>
+          <button class="btn btn-success" type="button" disabled>Go to payment</button>
         </form>
 
+        <hr>
         <!-- Accordion for artwork details -->
         <div class="accordion" id="accordionPanelsStayOpenExample" style="width: 500px">
 
@@ -160,3 +170,30 @@
     </div>
 
 </div>
+
+<hr>
+
+{% if is_detail %}
+<div class="bid-history">
+    <h5>Bid history</h5>
+        <table class="table table-striped table-hover">
+            <thead>
+                <tr>
+                  <th scope="col">Username</th>
+                  <th scope="col">Timestamp</th>
+                  <th scope="col">Bid amount</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for bid in artwork.bids.all %}
+                <tr class="bid-item">
+                    <td>{{ bid.buyer.user.username }}</td>
+                    <td>{{ bid.timestamp }}</td>
+                    <td>${{ bid.amount }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+
+</div>
+{% endif %}

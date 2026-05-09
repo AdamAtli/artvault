@@ -1,3 +1,4 @@
+from django.core.exceptions import ValidationError
 from django.shortcuts import render, get_object_or_404, redirect
 from pyexpat.errors import messages
 
@@ -10,9 +11,12 @@ def place_bid(request, artwork_id):
         highest_bid = artwork.bids.order_by('-amount').first()
         new_amount = Decimal(request.POST.get('amount'))
 
-        if highest_bid and new_amount <= highest_bid.amount:
-            messages.error(request, f"Your bid must be higher than {highest_bid.amount}")
-        else:
-            Bid.objects.create(artwork=artwork, buyer=request.user.buyer, amount=new_amount)
-            messages.success(request, f"Your bid has been placed successfully")
+        bid = Bid(user=request.user.buyer, artwork=artwork, amount=new_amount)
+        try:
+            bid.full_clean()
+            bid.save()
+            messages.success(request, "Bid placed successfully")
+        except ValidationError as e:
+            messages.error(request, e.messages)
+            
     return redirect("artworks-detail", artwork_id)
