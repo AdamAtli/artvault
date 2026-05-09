@@ -1,15 +1,8 @@
-.artwork-detail-layout {
-    display: flex;
-    gap: 40px;
-    align-items: flex-start;
-}
-
 .container-item{
     padding: 10px;
-    border: 1px solid black;
     border-radius: 5px;
-    background-color: lightgray;
-    box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.75);
+    background-color: white;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
 }
 
 .starting-and-highest-bid {
@@ -47,32 +40,35 @@
     table-layout: fixed;
 }
 
-.artwork-image-section {
-    flex-shrink: 0;
-}
-
-.artwork-info-section {
-    padding-top: 40px;
-}
 .artwork-image{
     width: 100%;
     height: 300px;
     object-fit: cover;
     padding: 10px;
+    transition: transform 0.3s ease;
 }
+
+.artwork-image-section:hover .artwork-image {
+    object-fit: contain;
+}
+
+.artwork-info-section{
+    padding-top: 50px;
+}
+
 
 .artworks-info-list {
     color: dimgray;
 }
 
 .artwork-carousel {
-    width: 500px;
+    width: 100%;
     padding: 40px;
 
 }
 
 .artwork-carousel .carousel-inner {
-    width: 380px;
+    width: 90%;
     margin: 0 auto;
     height: 500px;
     overflow: hidden;
