@@ -1,0 +1,199 @@
+<div class="{% if is_detail %}artwork-detail-layout{% endif %}">
+
+    <div class="artwork-image-section">
+            {% with artwork_image=artwork.images.first %}
+                {% if artwork_image %}
+
+                    <!-- Carousel if we are on detailed page -->
+                    {% if is_detail == True %}
+                        <div id="carousel-{{ artwork.id }}" class="carousel slide artwork-carousel">
+                          <div class="carousel-indicators">
+                            {% for image in artwork.images.all %}
+                                <button
+                                    type="button"
+                                    data-bs-target="#carousel-{{ artwork.id }}"
+                                    data-bs-slide-to="{{ forloop.counter0 }}"
+                                    class="{% if forloop.first %}active{% endif %}"
+                                    {% if forloop.first %}aria-current="true"{% endif %}
+                                    aria-label="Slide {{ forloop.counter }}">
+                                </button>
+                            {% endfor %}
+                          </div>
+                          <div class="carousel-inner">
+                            {% for image in artwork.images.all %}
+                                <div class="carousel-item {% if forloop.first %}active{% endif %}">
+                                    <img src="{{ image.image.url }}"
+                                         class="carousel-artwork-image"
+                                         alt="artwork-image">
+                                </div>
+                            {% endfor %}
+                          </div>
+                          <button class="carousel-control-prev" type="button" data-bs-target="#carousel-{{ artwork.id }}" data-bs-slide="prev">
+                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Previous</span>
+                          </button>
+                          <button class="carousel-control-next" type="button" data-bs-target="#carousel-{{ artwork.id }}" data-bs-slide="next">
+                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Next</span>
+                          </button>
+                        </div>
+
+                    <!-- just first picture if not on detailed page -->
+                    {% else %}
+                        <a href="{% url 'artworks-detail' artwork.id %}">
+                            <img src="{{ artwork_image.image.url }}" class="artwork-image" alt="artwork-image">
+                        </a>
+                    {% endif %}
+
+                {% endif %}
+
+            {% endwith %}
+    </div>
+
+    <div class="artwork-info-section">
+        <h3>{{artwork.title}}</h3>
+        <a href="{% url 'seller-detail' artwork.seller.id %}">
+            <div class="seller">
+                <img src="{{ artwork.seller.logo.url}}" class="artwork_seller-image" alt="seller-logo">
+                <span class="seller-name">{{ artwork.seller.user.username }}</span>
+            </div>
+        </a>
+
+        <div class="starting-and-highest-bid">
+            <h4 class="starting-bid">
+              Starting bid
+              <small class="text-body-secondary"> ${{ artwork.starting_bid_price }} </small>
+            </h4>
+            <h4 class="highest-bid">
+              Highest bid
+              <small class="text-body-secondary"> ${{ artwork.bids.first.amount }} </small>
+            </h4>
+        </div>
+
+
+
+
+        <div class="artwork-status-and-bid">
+
+            {% if artwork.is_sold == False %}
+                <p class="badge text-bg-success">Available!</p>
+
+            {% else %}
+                <p class="badge text-bg-secondary">Sold</p>
+
+            {% endif %}
+
+        </div>
+
+
+        {% if is_detail == True %}
+
+        <form method="POST" action="{% url 'place_bid' artwork.id %}" class="input-group mb-3">
+            {% csrf_token %}
+            <span class="input-group-text" id="basic-addon1">$</span>
+            <input type="number" class="form-control" placeholder="place your bid here" step="0.01" aria-label="amount" aria-describedby="basic-addon1">
+            <button class="btn btn-outline-primary" type="submit" id="button-addon2">Place bid</button>
+        </form>
+
+        <form class="d-grid gap-2" style="padding: 10px">
+          <button class="btn btn-success" type="button" disabled>Go to payment</button>
+        </form>
+
+        <hr>
+        <!-- Accordion for artwork details -->
+        <div class="accordion" id="accordionPanelsStayOpenExample" style="width: 500px">
+
+            <div class="accordion-item">
+
+                <h2 class="accordion-header">
+                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="true" aria-controls="panelsStayOpen-collapseOne">
+                        Details
+                    </button>
+                </h2>
+
+                <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse show">
+                    <div class="accordion-body">
+                        <ul class="list-group list-group-flush">
+
+                            <li class="list-group-item">
+                                <b>Medium: </b>{{ artwork.medium }}
+                            </li>
+
+                            <li class="list-group-item">
+                                <b>Style: </b>{{ artwork.style }}
+                            </li>
+
+                            <li class="list-group-item">
+                                <b>Dimensions: </b>{{ artwork.width_cm }} x {{ artwork.height_cm }}cm
+                            </li>
+
+                            <li class="list-group-item">
+                                <b>Listing date: </b>{{ artwork.listing_date }}
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="accordion-item">
+
+                <h2 class="accordion-header">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseTwo" aria-expanded="false" aria-controls="panelsStayOpen-collapseTwo">
+                        Additional details
+                    </button>
+                </h2>
+
+                <div id="panelsStayOpen-collapseTwo" class="accordion-collapse collapse">
+                    <div class="accordion-body">
+                        <ul class="list-group list-group-flush">
+
+                            <li class="list-group-item">
+                              <b>Year of creation: </b>{{ artwork.year_of_creation }}
+                            </li>
+
+                            <li class="list-group-item">
+                              <b>Edition: </b>{{ artwork.edition }}
+                            </li>
+
+                            <li class="list-group-item">
+                              <b>Provenance: </b>{{ artwork.provenance }}
+                            </li>
+
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        {% endif %}
+
+    </div>
+
+</div>
+
+<hr>
+
+{% if is_detail %}
+<div class="bid-history">
+    <h5>Bid history</h5>
+        <table class="table table-striped table-hover">
+            <thead>
+                <tr>
+                  <th scope="col">Username</th>
+                  <th scope="col">Timestamp</th>
+                  <th scope="col">Bid amount</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for bid in artwork.bids.all %}
+                <tr class="bid-item">
+                    <td>{{ bid.buyer.user.username }}</td>
+                    <td>{{ bid.timestamp }}</td>
+                    <td>${{ bid.amount }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+
+</div>
+{% endif %}

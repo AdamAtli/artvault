@@ -1,32 +1,110 @@
-.container{
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 20px;
+.artwork-detail-layout {
+    display: flex;
+    gap: 40px;
+    align-items: flex-start;
 }
+
 .container-item{
     padding: 10px;
-    background-color: lightslategray;
+    border: 1px solid black;
+    border-radius: 5px;
+    background-color: lightgray;
+    box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.75);
 }
 
-.item .image{
-    height: 150px;
-    width: 150px;
-    background-size: contain;
-    background-position: center;
-    background-repeat: no-repeat;
+.starting-and-highest-bid {
+    padding-top: 10px;
+    padding-bottom: 10px;
 }
-.item .badge {
-    border-radius: 20px;
+
+.starting-bid,
+.highest-bid {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.bid-history {
+    padding: 20px;
+}
+
+.table {
+    border-left: 5px solid midnightblue;
+    border-top: 1px dotted gray;
+    border-bottom: 1px dotted gray;
+}
+
+.bid-history tbody {
+    display: block;
+    max-height: 300px;
+    overflow-y: auto;
+}
+
+.bid-history thead tr,
+.bid-history tbody tr {
+    display: table;
+    width: 100%;
+    table-layout: fixed;
+}
+
+.artwork-image-section {
+    flex-shrink: 0;
+}
+
+.artwork-info-section {
+    padding-top: 40px;
+}
+.artwork-image{
+    width: 100%;
+    height: 300px;
+    object-fit: cover;
     padding: 10px;
-    font-size: 1em;
-    background-color: springgreen;
-    max-width: 100px;
-    text-align: center;
 }
 
-.red{
-    background-color: red !important;
-    color: white;
+.artworks-info-list {
+    color: dimgray;
+}
+
+.artwork-carousel {
+    width: 500px;
+    padding: 40px;
+
+}
+
+.artwork-carousel .carousel-inner {
+    width: 380px;
+    margin: 0 auto;
+    height: 500px;
+    overflow: hidden;
+}
+
+.artwork-carousel .carousel-item {
+    height: 500px;
+}
+
+.carousel-artwork-image {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    object-position: center;
+    display: block;
+}
+
+.artwork-carousel .carousel-indicators [data-bs-target] {
+    background-color: gray;
+}
+
+.artwork-carousel .carousel-indicators .active {
+    background-color: black;
+}
+
+.artwork-carousel .carousel-control-prev-icon,
+.artwork-carousel .carousel-control-next-icon {
+    filter: invert(1);
+}
+
+.accordion {
+    padding: 10px;
 }
 
 .seller{
@@ -36,13 +114,12 @@
     margin-top: 10px;
 }
 
-.seller-image {
+.artwork_seller-image {
     width: 40px;
     height: 40px;
     border-radius: 50%;
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
+    object-fit: cover;
+    object-position: center;
 }
 
 .seller-name {
@@ -64,7 +141,7 @@
 }
 
 
-<.seller-info {
+.seller-info {
     display: flex;
     flex-direction: column;
 }
