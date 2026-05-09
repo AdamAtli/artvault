@@ -12,10 +12,39 @@
     box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.75);
 }
 
-.starting-bid {
-    font-size: 1.4em;
-    font-weight: bold;
-    color: #2e8b57;
+.starting-and-highest-bid {
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.starting-bid,
+.highest-bid {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.bid-history {
+    padding: 20px;
+}
+
+.table {
+    border-left: 5px solid midnightblue;
+    border-top: 1px dotted gray;
+    border-bottom: 1px dotted gray;
+}
+
+.bid-history tbody {
+    display: block;
+    max-height: 300px;
+    overflow-y: auto;
+}
+
+.bid-history thead tr,
+.bid-history tbody tr {
+    display: table;
+    width: 100%;
+    table-layout: fixed;
 }
 
 .artwork-image-section {
