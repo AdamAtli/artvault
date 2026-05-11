@@ -1,34 +1,108 @@
- x<br>
+<br>
+<div class="artwork-page">
+    <aside class="artwork-filters">
+        <form method="GET">
+            <h5>Filters</h5>
 
-<div class="container">
-
-    <div class="row g-4">
-
-    {% for artwork in artworks %}
-
-        <div class="col-md-4">
-            <div class="container-item">
-                {% include "artwork/_single_artwork.html" with is_detail=False artwork=artwork %}
-
-                <ul class="artworks-info-list">
-
-                    <li>
-                        <b>Medium: </b>{{ artwork.medium }}
-                    </li>
-
-                    <li>
-                        <b>Dimensions: </b>{{ artwork.width_cm }}x{{ artwork.height_cm }}cm
-                    </li>
-
-                </ul>
+            <div class="filter-group">
+                <label>Medium</label>
+                <select name="medium">
+                    <option value="">All mediums</option>
+                    {% for medium in mediums %}
+                    <option value="{{ medium }}" {% if request.GET.medium == medium %}selected{% endif %}>
+                        {{ medium }}
+                    </option>
+                    {% endfor %}
+                </select>
             </div>
 
+            <div class="filter-group">
+                <label>Style</label>
+                <select name="style">
+                    <option value="">All styles</option>
+                    {% for style in styles %}
+                    <option value="{{ style }}" {% if request.GET.style == style %}selected{% endif %}>
+                        {{ style }}
+                    </option>
+                    {% endfor %}
+                </select>
+            </div>
 
+            <div class="filter-group price-range">
+                <label for="range1" class="form-label">Price range: $<span id="priceDisplay">{{ request.GET.max_price|default:max_price }}</span></label>
+                <input type="range" class="form-range"
+                       name="max_price"
+                       min="{{ min_price }}"
+                       max="{{ max_price }}"
+                       value="{{ request.GET.max_price|default:max_price }}"
+                       id="range1"
+                       oninput="document.getElementById('priceDisplay').textContent = this.value">
+            </div>
+
+            <div class="filter-group">
+                <label>Size</label>
+                <select name="size">
+                    <option value="">All sizes</option>
+                    <option value="small" {% if request.GET.size == "small" %}selected{% endif %}> Small (up to 30cm) </option>
+                    <option value="medium" {% if request.GET.size == "medium" %}selected{% endif %}>Medium (up to 100cm)</option>
+                    <option value="large" {% if request.GET.size == "large" %}selected{% endif %}>Large (100cm+)</option>
+                </select>
+            </div>
+
+            <div class="filter-group">
+                <label>Year</label>
+                <input type="number"
+                       name="year_of_creation"
+                       placeholder="e.g. 1990"
+                       min="1000"
+                       max="2026"
+                       value="{{ request.GET.year_of_creation }}">
+            </div>
+
+            <div class="filter-group">
+                <label>Size</label>
+                <select name="edition">
+                    <option value="">All editions</option>
+                    <option value="original">Original edition</option>
+                    <option value="open">Open edition</option>
+                    <option value="limited">Limited edition</option>
+                </select>
+            </div>
+            <button type="submit">Apply</button>
+        </form>
+    </aside>
+
+
+    <main class="artworks-content">
+
+        <div class="row g-4">
+
+        {% for artwork in artworks %}
+
+            <div class="col-md-4">
+                <div class="container-item">
+                    {% include "artwork/_single_artwork.html" with is_detail=False artwork=artwork %}
+
+                    <ul class="artworks-info-list">
+
+                        <li>
+                            <b>Medium: </b>{{ artwork.medium }}
+                        </li>
+
+                        <li>
+                            <b>Dimensions: </b>{{ artwork.width_cm }}x{{ artwork.height_cm }}cm
+                        </li>
+
+                    </ul>
+                </div>
+
+
+            </div>
+
+        {% endfor %}
         </div>
 
-    {% endfor %}
-    </div>
-
+    </main>
 </div>
 
 
