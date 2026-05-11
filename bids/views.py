@@ -12,8 +12,9 @@ def place_bid(request, artwork_id):
         artwork = get_object_or_404(Artwork, pk=artwork_id)
         highest_bid = artwork.bids.order_by('-amount').first()
         new_amount = Decimal(request.POST.get('amount'))
+        expiration_date = request.POST.get('expiration_date') or None
 
-        bid = Bid(buyer=request.user.buyer, artwork=artwork, amount=new_amount)
+        bid = Bid(buyer=request.user.buyer, artwork=artwork, amount=new_amount, expiration_date=expiration_date)
         try:
             bid.full_clean()
             bid.save()

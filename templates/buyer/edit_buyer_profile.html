@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="seller-detail-page">
+
+    <div style="height: 90px;"></div>
+
+    <div class ="seller-detail-profile-wrapper">
+
+        <div class="seller-detail-profile-card">
+
+            {% if buyer.profile_pic %}
+                <img src="{{ buyer.profile_pic.url }}"
+                     class="seller-detail-logo">
+            {% endif %}
+
+        <div class="seller-detail-info">
+
+            <form method="POST"
+                  enctype="multipart/form-data">
+
+                {% csrf_token %}
+
+                <div class="mb-3">
+                    <label class="form-label">
+                        Username
+                    </label>
+                    {{ form.username }}
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">
+                        Profile picture
+                    </label>
+                    {{ form.profile_pic }}
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">
+                        Bio
+                    </label>
+                    {{ form.bio }}
+                </div>
+
+                <button type="submit" class = "btn btn-dark">
+                    Save changes
+                </button>
+
+            </form>
+
+        </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

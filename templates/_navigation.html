@@ -52,15 +52,23 @@
                 <ul class="dropdown-menu dropdown-menu-end">
 
                     <li>
-                        <a class="dropdown-item" href="#">
-                            View Profile
-                        </a>
+                        {% if current_buyer %}
+                            <a class="dropdown-item" href="{% url 'buyer-detail' current_buyer.id %}">
+                                View Profile
+                            </a>
+                        {% elif current_seller %}
+                            <a class="dropdown-item" href="{% url 'seller-detail' current_seller.id %}">
+                                View Profile
+                            </a>
+                        {% endif %}
                     </li>
 
                     <li>
-                        <a class="dropdown-item" href="#">
-                            Edit Profile
-                        </a>
+                        {% if current_buyer %}
+                            <a class="dropdown-item" href="{% url 'edit-buyer-profile' %}">
+                                Edit Profile
+                            </a>
+                        {% endif %}
                     </li>
 
                     <li>

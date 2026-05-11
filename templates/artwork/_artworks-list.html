@@ -1,5 +1,6 @@
 <br>
 <div class="artwork-page">
+    {% if not is_buyer %}
     <aside class="artwork-filters">
         <form method="GET">
             <h5>Filters</h5>
@@ -71,35 +72,67 @@
             <button type="submit">Apply</button>
         </form>
     </aside>
-
+    {% endif %}
 
     <main class="artworks-content">
 
         <div class="row g-4">
 
-        {% for artwork in artworks %}
+            {% if is_buyer %}
 
-            <div class="col-md-4">
-                <div class="container-item">
-                    {% include "artwork/_single_artwork.html" with is_detail=False artwork=artwork %}
+                {% for bid in bids %}
+                    {% with artwork=bid.artwork %}
+                        <div class="col-md-4">
+                            <div class="container-item">
+                                {% include "artwork/_single_artwork.html" with is_detail=False is_buyer=True artwork=artwork bid=bid %}
 
-                    <ul class="artworks-info-list">
+                                <ul class="artworks-info-list">
 
-                        <li>
-                            <b>Medium: </b>{{ artwork.medium }}
-                        </li>
+                                    <li>
+                                        <b>Bid price:</b>${{ bid.amount }}
+                                    </li>
 
-                        <li>
-                            <b>Dimensions: </b>{{ artwork.width_cm }}x{{ artwork.height_cm }}cm
-                        </li>
+                                    <li>
+                                        <b>Status:</b>{{ bid.get_status_display }}
+                                    </li>
 
-                    </ul>
-                </div>
+                                    <li>
+                                        <b>Expiration:</b>{{ bid.expiration_date|default:"No expiration" }}
+                                    </li>
+                                </ul>
+                                {% if request.user == bid.buyer.user %}
+                                    {% if bid.status == "accepted" or bid.status == "contingent" %}
+                                        <a href="#" class = "btn btn-success">
+                                            Finalize bid
+                                        </a>
+                                    {% endif %}
+                                {% endif %}
+                            </div>
+                        </div>
+                    {% endwith %}
+                {% endfor %}
+            {% else %}
+                {% for artwork in artworks %}
 
+                    <div class="col-md-4">
+                        <div class="container-item">
+                            {% include "artwork/_single_artwork.html" with is_detail=False artwork=artwork %}
 
-            </div>
+                            <ul class="artworks-info-list">
 
-        {% endfor %}
+                                <li>
+                                    <b>Medium: </b>{{ artwork.medium }}
+                                </li>
+
+                                <li>
+                                    <b>Dimensions: </b>{{ artwork.width_cm }}x{{ artwork.height_cm }}cm
+                                </li>
+
+                            </ul>
+                        </div>
+                    </div>
+                {% endfor %}
+            {% endif %}
         </div>
 
     </main>

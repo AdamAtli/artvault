@@ -9,9 +9,21 @@ class Bid(models.Model):
     artwork = models.ForeignKey(Artwork, on_delete=models.CASCADE, related_name="bids")
     buyer = models.ForeignKey(Buyer, on_delete=models.CASCADE, related_name="bids")
     timestamp = models.DateTimeField(auto_now_add=True)
+    STATUS_CHOICES = [
+        ("pending", "Pending"),
+        ("accepted", "Accepted"),
+        ("rejected", "Rejected"),
+        ("contingent", "Contingent"),
+    ]
+    status = models.CharField(
+        max_length=20,
+        choices=STATUS_CHOICES,
+        default="pending"
+    )
+    expiration_date = models.DateField(null=True, blank=True)
 
     def clean(self):
-        highest_bid = self.artwork.bids.order_by("-amount").first()
+        highest_bid = self.artwork.bids.exclude(pk=self.pk).order_by("-amount").first()
         if highest_bid and self.amount <= highest_bid.amount:
             raise ValidationError(f"Bid must be higher than the current highest bid of ${highest_bid.amount}")
 
