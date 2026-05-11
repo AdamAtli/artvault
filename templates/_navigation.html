@@ -87,6 +87,10 @@
                             <a class="dropdown-item" href="{% url 'my-bids' %}">
                                 View my bids
                             </a>
+                        {% elif current_seller and current_seller.is_approved %}
+                            <a class="dropdown-item" href="{% url 'create-artwork' %}">
+                                Create Artwork
+                            </a>
                         {% endif %}
                     </li>
 

@@ -3,6 +3,7 @@ from django.db.models import Max, Min
 from artworks.forms.artwork_create_form import ArtworkCreateForm, ImageCreateForm
 from artworks.models import Artwork, Image, ArtworkFilter
 from django.contrib.auth.decorators import login_required
+from django.contrib import messages
 
 def get_filtered_artworks(request, queryset=None):
     if queryset is None:
@@ -43,6 +44,11 @@ def get_art_by_id(request, id):
 
 @login_required
 def create_artwork(request):
+
+    if not request.user.seller.is_approved:
+        messages.error(request, "Your seller account has not been approved yet")
+        return redirect("seller-detail", id=request.user.seller.id)
+
     if request.method == "POST":
         form = ArtworkCreateForm(request.POST)
         image_form = ImageCreateForm(request.POST, request.FILES)

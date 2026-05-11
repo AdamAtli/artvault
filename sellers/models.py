@@ -21,6 +21,7 @@ class Seller(models.Model):
     street_name = models.CharField(max_length=100)
     city = models.CharField(max_length=100)
     postal_code = models.IntegerField()
+    is_approved = models.BooleanField(default=False)
 
     def clean(self):
         if self.seller_type == self.Gallery:
