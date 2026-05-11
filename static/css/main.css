@@ -1,3 +1,50 @@
+.artwork-page {
+    display: flex;
+    gap: 2rem;
+    align-items: flex-start;
+    padding: 1rem;
+}
+
+.artwork-filters {
+    width: 240px;
+    flex-shrink: 0;
+    position: sticky;
+    top: 1rem;
+}
+
+.artwork-filters h5{
+    margin-bottom: 1rem;
+    font-weight: 600;
+}
+
+.filter-group {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 1.25rem;
+}
+
+.filter-group label {
+    font-size: 0.85rem;
+    font-weight: 500;
+    margin-bottom: 0.3rem;
+}
+
+.filter-group select,
+.filter-group input[type="range"] {
+    width: 100%;
+}
+
+.filters-sidebar button[type="submit"] {
+    width: 100%;
+    margin-top: 0.5rem;
+}
+
+.artworks-content {
+    flex: 1;
+    min-width: 0;
+}
+
+
 .container-item{
     padding: 10px;
     border-radius: 5px;

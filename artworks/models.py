@@ -28,6 +28,15 @@ class Artwork(models.Model):
 
     seller = models.ForeignKey(Seller, on_delete=models.CASCADE, related_name='artworks')
 
+    def save(self, *args, **kwargs):
+        if self.medium:
+            self.medium = self.medium.strip().capitalize()
+        if self.style:
+            self.style = self.style.strip().capitalize()
+        if self.edition:
+            self.edition = self.edition.strip().lower()
+        super().save(*args, **kwargs)
+
     def __str__(self):
         return self.title
 
