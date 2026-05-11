@@ -57,12 +57,14 @@
     <!-- Info section -->
     <div class="{% if is_detail %}col-12 col-md-6 col-lg-5 artwork-info-section{% endif %}">
         <h3 class="{% if not is_detail %}text-truncate{% endif %}">{{artwork.title}}</h3>
+        {% if is_seller == False %}
         <a href="{% url 'seller-detail' artwork.seller.id %}">
             <div class="seller">
                 <img src="{{ artwork.seller.logo.url}}" class="artwork_seller-image" alt="seller-logo">
                 <span class="seller-name">{{ artwork.seller.user.username }}</span>
             </div>
         </a>
+        {% endif %}
 
         <div class="starting-and-highest-bid">
             <h4 class="starting-bid">

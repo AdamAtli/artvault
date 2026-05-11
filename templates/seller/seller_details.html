@@ -42,31 +42,12 @@
 
         <div class="seller-section-title">Artworks</div>
 
-        <div class="seller-artworks-grid">
-
-            {% for artwork in seller.artworks.all %}
-
-            <a href="{% url 'artworks-detail' artwork.id %}" class="seller-artwork-card">
-
-                {% for img in artwork.images.all %}
-                    {% if forloop.first %}
-                        <img src="{{ img.image.url }}" class="seller-artwork-img">
-                    {% endif %}
-                {% endfor %}
-
-                <div class="seller-artwork-title">
-                    {{ artwork.title }}
-                </div>
-
-            </a>
-
-            {% endfor %}
-
-        </div>
 
     </div>
 
 </div>
+
+{% include "artwork/_artworks-list.html" with is_seller=True artworks=seller.artworks.all %}
 
 {% endblock %}
 
