@@ -51,6 +51,8 @@ class Image(models.Model):
     def __str__(self):
         return self.artwork.title
 
+
+
 SIZE_CHOICES = [
     ("small", "Small(up to 30cm)"),
     ("medium", "Medium(30-70cm)"),
@@ -70,9 +72,6 @@ class ArtworkFilter(django_filters.FilterSet):
         choices=Artwork.EDITION_CHOICES,
         widget=forms.CheckboxSelectMultiple,
     )
-    starting_bid_price = django_filters.RangeFilter()
-
-    year_of_creation = django_filters.RangeFilter()
 
     size = django_filters.MultipleChoiceFilter(
         choices=SIZE_CHOICES,
@@ -97,4 +96,4 @@ class ArtworkFilter(django_filters.FilterSet):
 
     class Meta:
         model = Artwork
-        fields = ['medium', 'style', 'edition', 'starting_bid_price', 'year_of_creation', 'size']
+        fields = ['medium', 'style', 'edition', 'size']

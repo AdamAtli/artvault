@@ -1,17 +1,38 @@
 from django.shortcuts import render, get_object_or_404, redirect
+from django.db.models import Max, Min
 from artworks.forms.artwork_create_form import ArtworkCreateForm, ImageCreateForm
 from artworks.models import Artwork, Image, ArtworkFilter
 from django.contrib.auth.decorators import login_required
 
+def get_filtered_artworks(request, queryset=None):
+    if queryset is None:
+        queryset = Artwork.objects.select_related("seller").all()
+
+    f = ArtworkFilter(request.GET, queryset=queryset)
+    artworks = f.qs
+
+    if request.GET.get("max_price"):
+        artworks = artworks.filter(starting_bid_price__lte=request.GET["max_price"])
+
+    if request.GET.get("max_year"):
+        artworks = artworks.filter(year_of_creation__lte=request.GET["max_year"])
+
+    max_price = Artwork.objects.aggregate(Max("starting_bid_price"))["starting_bid_price__max"] or 0
+    min_year = Artwork.objects.aggregate(Min("year_of_creation"))["year_of_creation__min"] or 1600
+    max_year = Artwork.objects.aggregate(Max("year_of_creation"))["year_of_creation__max"] or 2026
+
+    return {
+        "filter": f,
+        "artworks": artworks,
+        "max_price": max_price,
+        "min_year": min_year,
+        "max_year": max_year,
+    }
 
 def index(request):
-    queryset = Artwork.objects.select_related("seller").all()
-    f = ArtworkFilter(request.GET, queryset=queryset)
+    context = get_filtered_artworks(request)
 
-    return render(request, "artwork/artworks.html", {
-        "filter": f,
-        "artworks": f.qs,
-    })
+    return render(request, "artwork/artworks.html", context)
 
 def get_art_by_id(request, id):
     artwork = get_object_or_404(Artwork, pk=id)
