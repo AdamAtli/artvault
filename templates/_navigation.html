@@ -40,19 +40,13 @@
                    data-bs-toggle="dropdown"
                    aria-expanded="false">
 
-                    <img src="
                     {% if current_buyer and current_buyer.profile_pic %}
-                        {{ current_buyer.profile_pic.url }}
-                    {% elif current_seller and current_seller.logo%}
-                        {{ current_seller.logo.url }}
+                        <img src="{{ current_buyer.profile_pic.url }}" alt="profile" width="50" height="50" class="rounded-circle" style="object-fit: cover;">
+                    {% elif current_seller and current_seller.logo %}
+                        <img src="{{ current_seller.logo.url }}" alt="profile" width="50" height="50" class="rounded-circle" style="object-fit: cover;">
                     {% else %}
-                        {% static 'images/profile-placeholder.png' %}
-                    {% endif %}"
-                     alt="profile"
-                     width="50"
-                     height="50"
-                     class="rounded-circle"
-                     style="object-fit: cover;">
+                        <img src="{% static 'images/profile-placeholder.png' %}" alt="profile" width="50" height="50" class="rounded-circle" style="object-fit: cover;">
+                    {% endif %}
 
                 </a>
 
