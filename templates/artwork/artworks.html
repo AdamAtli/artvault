@@ -1,25 +1,29 @@
 {% extends "base.html" %}
 
 {% block content %}
+<br>
 <div class="container">
 
-    <div class="row">
+    <div class="row g-4">
 
     {% for artwork in artworks %}
 
         <div class="col-md-4">
-            {% include "artwork/_single_artwork.html" with is_detail=False artwork=artwork %}
-            <ul class="artworks-info-list">
+            <div class="container-item">
+                {% include "artwork/_single_artwork.html" with is_detail=False artwork=artwork %}
+                <ul class="artworks-info-list">
 
-                <li>
-                    <b>Medium: </b>{{ artwork.medium }}
-                </li>
+                    <li>
+                        <b>Medium: </b>{{ artwork.medium }}
+                    </li>
 
-                <li>
-                    <b>Dimensions: </b>{{ artwork.width_cm }}x{{ artwork.height_cm }}cm
-                </li>
+                    <li>
+                        <b>Dimensions: </b>{{ artwork.width_cm }}x{{ artwork.height_cm }}cm
+                    </li>
 
-            </ul>
+                </ul>
+            </div>
+
 
         </div>
 
