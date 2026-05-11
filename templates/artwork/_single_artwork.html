@@ -71,23 +71,47 @@
               Starting bid
               <small class="text-body-secondary"> ${{ artwork.starting_bid_price }} </small>
             </h4>
+            {% if is_buyer %}
+                <h4 class="highest-bid">
+                    Your Bid
+                    <small class="text-body-secondary"> ${{ bid.amount }} </small>
+                </h4>
+
+            {% else %}
             <h4 class="highest-bid">
               Highest bid
               <small class="text-body-secondary"> ${{ artwork.bids.first.amount }} </small>
             </h4>
+            {% endif %}
         </div>
 
 
 
 
         <div class="artwork-status-and-bid">
+            {% if is_buyer %}
 
-            {% if artwork.is_sold == False %}
-                <p class="badge text-bg-success">Available!</p>
+                {% if bid.status == "pending" %}
+                    <p class="badge text-bg-warning">Pending</p>
 
+                {% elif bid.status == "accepted" %}
+                    <p class="badge text-bg-success">Accepted</p>
+
+                {% elif bid.status == "rejected" %}
+                    <p class="badge text-bg-danger">Rejected</p>
+
+                {% elif bid.status == "contingent" %}
+                    <p class="badge text-bg-info">Contingent</p>
+
+                {% endif %}
             {% else %}
-                <p class="badge text-bg-secondary">Sold</p>
+                {% if artwork.is_sold == False %}
+                    <p class="badge text-bg-success">Available!</p>
 
+                {% else %}
+                    <p class="badge text-bg-secondary">Sold</p>
+
+                {% endif %}
             {% endif %}
 
         </div>
@@ -99,6 +123,7 @@
             {% csrf_token %}
             <span class="input-group-text" id="basic-addon1">$</span>
             <input type="number" class="form-control" name="amount" placeholder="place your bid here" step="0.01" aria-label="amount" aria-describedby="basic-addon1">
+            <input type="date" class="form-control" name="expiration_date">
             <button class="btn btn-outline-primary" type="submit" id="button-addon2">Place bid</button>
         </form>
 
@@ -188,6 +213,8 @@
                 <tr>
                   <th scope="col">Username</th>
                   <th scope="col">Timestamp</th>
+                  <th scope="col">Expiration</th>
+                  <th scope="col">Status</th>
                   <th scope="col">Bid amount</th>
                 </tr>
             </thead>
@@ -196,6 +223,8 @@
                 <tr class="bid-item">
                     <td>{{ bid.buyer.user.username }}</td>
                     <td>{{ bid.timestamp }}</td>
+                    <td>{{ bid.expiration_date|default:"No expiration" }}</td>
+                    <td>{{ bid.get_status_display }}</td>
                     <td>${{ bid.amount }}</td>
                 </tr>
             {% endfor %}

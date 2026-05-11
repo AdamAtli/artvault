@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="seller-detail-page">
+
+    <div style="height: 90px;"></div>
+
+    <div class="seller-detail-profile-wrapper">
+
+        <div class="seller-detail-profile-card">
+
+            {% if buyer.profile_pic %}
+                <img src="{{ buyer.profile_pic.url }}" class="seller-detail-logo">
+            {% endif %}
+
+            <div class="seller-detail-info">
+
+                <div class="seller-detail-name">
+                    {{ buyer.user.username }}
+                </div>
+
+                <div class="seller-detail-type">
+                    Buyer
+                </div>
+
+                <div class="seller-detail-bio">
+                    {% if buyer.bio %}
+                        {{ buyer.bio }}
+                    {% else %}
+                        This user has not added a bio yet
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+<div class="seller-detail-artworks">
+
+    <div class="seller-detail-section-title">
+        Bids
+    </div>
+
+    {% if request.user == buyer.user %}
+        <a href="{% url 'my-bids' %}" class="btn btn-outline-dark" mb-4>
+            View all bids
+        </a>
+    {% endif %}
+
+
+    {% include "artwork/_artworks-list.html" with is_buyer=True bids=bids %}
+
+
+
+
+    </div>
+</div>
+
+
+
+
+{% endblock %}

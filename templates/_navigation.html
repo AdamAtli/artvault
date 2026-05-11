@@ -40,7 +40,14 @@
                    data-bs-toggle="dropdown"
                    aria-expanded="false">
 
-                    <img src="{% static 'images/profile-placeholder.png' %}"
+                    <img src="
+                    {% if current_buyer and current_buyer.profile_pic %}
+                        {{ current_buyer.profile_pic.url }}
+                    {% elif current_seller and current_seller.logo%}
+                        {{ current_Seller.logo.url }}
+                    {% else %}
+                        {% static 'images/profile-placeholder.png' %}
+                    {% endif %}"
                      alt="profile"
                      width="50"
                      height="50"
@@ -52,21 +59,31 @@
                 <ul class="dropdown-menu dropdown-menu-end">
 
                     <li>
-                        <a class="dropdown-item" href="#">
-                            View Profile
-                        </a>
+                        {% if current_buyer %}
+                            <a class="dropdown-item" href="{% url 'buyer-detail' current_buyer.id %}">
+                                View Profile
+                            </a>
+                        {% elif current_seller %}
+                            <a class="dropdown-item" href="{% url 'seller-detail' current_seller.id %}">
+                                View Profile
+                            </a>
+                        {% endif %}
                     </li>
 
                     <li>
-                        <a class="dropdown-item" href="#">
-                            Edit Profile
-                        </a>
+                        {% if current_buyer %}
+                            <a class="dropdown-item" href="{% url 'edit-buyer-profile' %}">
+                                Edit Profile
+                            </a>
+                        {% endif %}
                     </li>
 
                     <li>
-                        <a class="dropdown-item" href="#">
-                            View my bids
-                        </a>
+                        {% if current_buyer %}
+                            <a class="dropdown-item" href="{% url 'my-bids' %}">
+                                View my bids
+                            </a>
+                        {% endif %}
                     </li>
 
                     <li>

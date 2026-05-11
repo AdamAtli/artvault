@@ -25,8 +25,8 @@ urlpatterns = [
     path('', include('bids.urls')),
     path('sellers/', include('sellers.urls')),
     path('admin/', admin.site.urls),
-
     path('user/', include('user.urls')),
+    path('buyers/', include('buyers.urls')),
 
 
 ]
