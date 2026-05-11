@@ -2,35 +2,43 @@
 
 {% block content %}
 
-<div class="seller-page seller-detail-layout">
+<div class="seller-detail-page">
 
-    <div class="seller-left">
+    <div class="seller-detail-cover-wrapper">
 
         {% if seller.cover_image %}
-        <div class="cover-image-item">
-            <img src="{{ seller.cover_image.url }}" class="cover-image">
-        </div>
+        <img src="{{ seller.cover_image.url }}" class="seller-detail-cover-image">
         {% endif %}
 
-        <div class="seller-profile-card">
+    </div>
+
+    <div class="seller-detail-profile-wrapper">
+
+        <div class="seller-detail-profile-card">
 
             {% if seller.logo %}
-            <img src="{{ seller.logo.url }}" class="seller-profile-logo">
+            <img src="{{ seller.logo.url }}" class="seller-detail-logo">
             {% endif %}
 
-            <div class="seller-info">
+            <div class="seller-detail-info">
 
-                <div class="profile-seller-name">{{ seller.user.username }}</div>
+                <div class="seller-detail-name">
+                    {{ seller.user.username }}
+                </div>
 
-                <div class="seller-type">{{ seller.seller_type }}</div>
+                <div class="seller-detail-type">
+                    {{ seller.seller_type }}
+                </div>
 
                 {% if seller.seller_type == "gallery" %}
-                <div class="seller-address">
+                <div class="seller-detail-address">
                     {{ seller.street_name }}, {{ seller.city }}, {{ seller.postal_code }}
                 </div>
                 {% endif %}
 
-                <div class="seller-bio">{{ seller.bio }}</div>
+                <div class="seller-detail-bio">
+                    {{ seller.bio }}
+                </div>
 
             </div>
 
@@ -38,16 +46,18 @@
 
     </div>
 
-    <div class="seller-right">
+    <div class="seller-detail-artworks">
 
-        <div class="seller-section-title">Artworks</div>
+        <div class="seller-detail-section-title">
+            Artworks
+        </div>
 
+        {% include "artwork/_artworks-list.html" with is_seller=True artworks=seller.artworks.all %}
 
     </div>
 
 </div>
 
-{% include "artwork/_artworks-list.html" with is_seller=True artworks=seller.artworks.all %}
-
 {% endblock %}
+
 
