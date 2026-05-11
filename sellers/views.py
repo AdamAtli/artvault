@@ -1,7 +1,5 @@
 from django.shortcuts import render, get_object_or_404
-from django.db.models import Min, Max
-from artworks.views import filter_artworks
-from artworks.models import Artwork
+from artworks.models import Artwork, ArtworkFilter
 
 from sellers.models import Seller
 def index(request):
@@ -13,20 +11,10 @@ def index(request):
 
 def get_seller_by_id(request, id):
     seller = get_object_or_404(Seller, pk=id)
-    seller_artworks = Artwork.objects.filter(seller=seller)
-    artworks = filter_artworks(request, seller_artworks)
-
-    prices = seller_artworks.aggregate(
-        min_price=Min("starting_bid_price"),
-        max_price=Max("starting_bid_price"),
-    )
+    queryset = Artwork.objects.filter(seller=seller)
+    f = ArtworkFilter(request.GET, queryset=queryset)
 
     return render(request, "seller/seller_details.html", {
         "seller": seller,
-        "artworks": artworks,
-        "mediums": seller_artworks.values_list("medium", flat=True).distinct(),
-        "styles": seller_artworks.values_list("style", flat=True).distinct(),
-        "min_price": prices["min_price"],
-        "max_price": prices["max_price"],
-        "year_of_creation": seller_artworks.values_list("year_of_creation", flat=True).distinct().order_by("year_of_creation"),
+        "artworks": f.qs,
     })
