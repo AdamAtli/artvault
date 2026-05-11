@@ -12,15 +12,15 @@ class Seller(models.Model):
 
     user = models.OneToOneField(User, on_delete=models.CASCADE)
 
-    seller_type = models.CharField(max_length=10, choices=Seller_Type_choices)
+    seller_type = models.CharField(max_length=10, choices=Seller_Type_choices, blank=True)
 
     logo = models.ImageField(upload_to='seller_logos/', blank=True, null=True)
     cover_image = models.ImageField(upload_to='seller_cover/', blank=True, null=True)
     bio = models.TextField(blank=True)
 
-    street_name = models.CharField(max_length=100)
-    city = models.CharField(max_length=100)
-    postal_code = models.IntegerField()
+    street_name = models.CharField(max_length=100, blank=True)
+    city = models.CharField(max_length=100, blank=True)
+    postal_code = models.IntegerField(null=True, blank=True)
     is_approved = models.BooleanField(default=False)
 
     def clean(self):
