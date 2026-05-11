@@ -44,7 +44,7 @@
                     {% if current_buyer and current_buyer.profile_pic %}
                         {{ current_buyer.profile_pic.url }}
                     {% elif current_seller and current_seller.logo%}
-                        {{ current_Seller.logo.url }}
+                        {{ current_seller.logo.url }}
                     {% else %}
                         {% static 'images/profile-placeholder.png' %}
                     {% endif %}"
@@ -73,6 +73,10 @@
                     <li>
                         {% if current_buyer %}
                             <a class="dropdown-item" href="{% url 'edit-buyer-profile' %}">
+                                Edit Profile
+                            </a>
+                        {% elif current_seller %}
+                           <a class="dropdown-item" href="{% url 'edit-seller-profile' %}">
                                 Edit Profile
                             </a>
                         {% endif %}
