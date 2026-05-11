@@ -40,7 +40,14 @@
                    data-bs-toggle="dropdown"
                    aria-expanded="false">
 
-                    <img src="{% static 'images/profile-placeholder.png' %}"
+                    <img src="
+                    {% if current_buyer and current_buyer.profile_pic %}
+                        {{ current_buyer.profile_pic.url }}
+                    {% elif current_seller and current_seller.logo%}
+                        {{ current_Seller.logo.url }}
+                    {% else %}
+                        {% static 'images/profile-placeholder.png' %}
+                    {% endif %}"
                      alt="profile"
                      width="50"
                      height="50"
