@@ -1,58 +1,38 @@
-from django.db.models import Min, Max
 from django.shortcuts import render, get_object_or_404, redirect
-
+from django.db.models import Max, Min
 from artworks.forms.artwork_create_form import ArtworkCreateForm, ImageCreateForm
-from artworks.models import Artwork, Image
+from artworks.models import Artwork, Image, ArtworkFilter
 from django.contrib.auth.decorators import login_required
 
-def filter_artworks(request, artworks):
+def get_filtered_artworks(request, queryset=None):
+    if queryset is None:
+        queryset = Artwork.objects.select_related("seller").all()
 
-    medium = request.GET.get("medium")
-    style = request.GET.get("style")
-    min_price = request.GET.get("min_price")
-    max_price = request.GET.get("max_price")
-    size = request.GET.get("size")
-    year_of_creation = request.GET.get("year_of_creation")
-    edition = request.GET.get("edition")
+    f = ArtworkFilter(request.GET, queryset=queryset)
+    artworks = f.qs
 
-    if medium:
-        artworks = artworks.filter(medium__iexact=medium)
-    if style:
-        artworks = artworks.filter(style__iexact=style)
-    if min_price:
-        artworks = artworks.filter(starting_bid_price__gte=min_price)
-    if max_price:
-        artworks = artworks.filter(starting_bid_price__lte=max_price)
-    if size == "small":
-        artworks = artworks.filter(width_cm__lte=30, height_cm__lte=30)
-    elif size == "medium":
-        artworks = artworks.filter(width_cm__lte=100, height_cm__lte=100)
-    elif size == "large":
-        artworks = artworks.filter(width_cm__gt=100)
-    if year_of_creation:
-        artworks = artworks.filter(year_of_creation=year_of_creation)
-    if edition:
-        artworks = artworks.filter(edition__iexact=edition)
+    if request.GET.get("max_price"):
+        artworks = artworks.filter(starting_bid_price__lte=request.GET["max_price"])
 
-    return artworks
+    if request.GET.get("max_year"):
+        artworks = artworks.filter(year_of_creation__lte=request.GET["max_year"])
 
+    max_price = Artwork.objects.aggregate(Max("starting_bid_price"))["starting_bid_price__max"] or 0
+    min_year = Artwork.objects.aggregate(Min("year_of_creation"))["year_of_creation__min"] or 1600
+    max_year = Artwork.objects.aggregate(Max("year_of_creation"))["year_of_creation__max"] or 2026
+
+    return {
+        "filter": f,
+        "artworks": artworks,
+        "max_price": max_price,
+        "min_year": min_year,
+        "max_year": max_year,
+    }
 
 def index(request):
-    artworks = Artwork.objects.all()
-    artworks = filter_artworks(request, artworks)
-    prices = Artwork.objects.aggregate(
-        min_price=Min("starting_bid_price"),
-        max_price=Max("starting_bid_price"),
-    )
+    context = get_filtered_artworks(request)
 
-    return render(request, "artwork/artworks.html", {
-        "artworks": artworks,
-        "mediums": Artwork.objects.values_list("medium", flat=True).distinct(),
-        "styles": Artwork.objects.values_list("style", flat=True).distinct(),
-        "min_price": prices["min_price"],
-        "max_price": prices["max_price"],
-        "year_of_creation": Artwork.objects.values_list("year_of_creation", flat=True).distinct().order_by("year_of_creation"),
-    })
+    return render(request, "artwork/artworks.html", context)
 
 def get_art_by_id(request, id):
     artwork = get_object_or_404(Artwork, pk=id)
