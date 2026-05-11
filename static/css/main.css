@@ -29,12 +29,11 @@
     margin-bottom: 0.3rem;
 }
 
-.filter-group select,
 .filter-group input[type="range"] {
     width: 100%;
 }
 
-.filters-sidebar button[type="submit"] {
+.artwork-filters button[type="submit"] {
     width: 100%;
     margin-top: 0.5rem;
 }
