@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="seller-detail-page">
+
+    <div style="height: 90px;"></div>
+
+    <div class="seller-detail-artworks">
+
+        <div class="seller-detail-section-title">
+            My bids
+        </div>
+
+        {% include "artwork/_artworks-list.html" with is_buyer=True bids=bids %}
+        
+    </div>
+
+</div>
+
+{% endblock %}

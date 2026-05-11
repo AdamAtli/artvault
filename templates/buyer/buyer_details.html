@@ -40,6 +40,11 @@
         Bids
     </div>
 
+    {% if request.user == buyer.user %}
+        <a href="{% url 'my-bids' %}" class="btn btn-outline-dark" mb-4>
+            View all bids
+        </a>
+    {% endif %}
 
 
     {% include "artwork/_artworks-list.html" with is_buyer=True bids=bids %}

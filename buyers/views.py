@@ -22,7 +22,7 @@ def buyer_detail(request, pk):
 
     return render(request, "buyer/buyer_details.html", {
         "buyer": buyer,
-        "bids": latest_bids,
+        "bids": latest_bids[:3],
 
 
     })
@@ -46,4 +46,15 @@ def edit_buyer_profile(request):
     return render(request, "buyer/edit_buyer_profile.html", {
         "form": form,
         "buyer": buyer,
+    })
+
+@login_required
+def my_bids(request):
+    buyer = request.user.buyer
+
+    bids = buyer.bids.select_related('artwork', 'artwork__seller').all()
+
+    return render(request, 'buyer/my_bids.html', {
+        "buyer": buyer,
+        "bids": bids,
     })

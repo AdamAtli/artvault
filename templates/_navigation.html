@@ -72,9 +72,11 @@
                     </li>
 
                     <li>
-                        <a class="dropdown-item" href="#">
-                            View my bids
-                        </a>
+                        {% if current_buyer %}
+                            <a class="dropdown-item" href="{% url 'my-bids' %}">
+                                View my bids
+                            </a>
+                        {% endif %}
                     </li>
 
                     <li>
