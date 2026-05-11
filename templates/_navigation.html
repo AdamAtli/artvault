@@ -94,6 +94,13 @@
                         {% endif %}
                     </li>
 
+                    {% if current_seller %}
+                        <li>
+                            <a class="dropdown-item" href="{% url 'my-artworks' %}">
+                                View my artworks
+                            </a>
+                        </li>
+                    {% endif %}
                     <li>
                         <hr class="dropdown-divider">
                     </li>

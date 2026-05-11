@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="container mt-5">
+    <h1 class="mb-4">My Artworks</h1>
+
+    {% include "artwork/_artworks-list.html" with artworks=artworks %}
+
+</div>
+
+{% endblock %}

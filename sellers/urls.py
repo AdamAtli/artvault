@@ -6,6 +6,6 @@ urlpatterns = [
     path('', views.index, name='seller-index'),
     # http://localhost:8000/<int>
     path('edit/', views.edit_seller_profile, name='edit-seller-profile'),
+    path("my_artworks/", views.my_artworks, name="my-artworks"),
     path('<int:id>', views.get_seller_by_id, name='seller-detail'),
-
 ]

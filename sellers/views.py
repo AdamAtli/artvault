@@ -40,3 +40,13 @@ def edit_seller_profile(request):
         "form": form,
         "seller": seller,
     })
+
+@login_required
+def my_artworks(request):
+    seller = request.user.seller
+
+    queryset = Artwork.objects.filter(seller=seller)
+    context = get_filtered_artworks(request, queryset=queryset)
+    context['seller'] = seller
+
+    return render(request, "seller/my_artworks.html", context)
