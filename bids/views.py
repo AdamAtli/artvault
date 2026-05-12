@@ -64,7 +64,7 @@ def update_bid_status(request, bid_id, status):
         messages.error(request, "You are not allowed to update this bid")
         return redirect("artworks-detail", id=bid.artwork.id)
 
-    if status not in ["accepted", "rejected", "contingent"]:
+    if status not in ["pending","accepted", "rejected", "contingent"]:
         messages.error(request, "Invalid bid status")
 
     if status in ["accepted", "contingent"]:

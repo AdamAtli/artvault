@@ -291,6 +291,13 @@
                                     </a>
 
                                 </div>
+
+                            {% elif bid.status == "accepted" or bid.status == "contingent"%}
+
+                                <a href="{% url 'update-bid-status' bid.id "pending" %}"
+                                   class="btn btn-sm btn-outline-secondary">
+                                    Cancel bid
+                                </a>
                             {% else %}
                                 -
                             {% endif %}
