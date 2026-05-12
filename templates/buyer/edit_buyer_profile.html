@@ -2,20 +2,20 @@
 
 {% block content %}
 
-<div class="seller-detail-page">
+<div class="user-detail-page">
 
     <div style="height: 90px;"></div>
 
-    <div class ="seller-detail-profile-wrapper">
+    <div class ="user-detail-profile-wrapper">
 
-        <div class="seller-detail-profile-card">
+        <div class="user-detail-profile-card">
 
             {% if buyer.profile_pic %}
                 <img src="{{ buyer.profile_pic.url }}"
-                     class="seller-detail-logo">
+                     class="user-detail-logo">
             {% endif %}
 
-        <div class="seller-detail-info">
+        <div class="user-detail-info">
 
             <form method="POST"
                   enctype="multipart/form-data">

@@ -2,41 +2,41 @@
 
 {% block content %}
 
-<div class="seller-detail-page">
+<div class="user-detail-page">
 
-    <div class="seller-detail-cover-wrapper">
+    <div class="user-detail-cover-wrapper">
 
         {% if seller.cover_image %}
-        <img src="{{ seller.cover_image.url }}" class="seller-detail-cover-image">
+        <img src="{{ seller.cover_image.url }}" class="user-detail-cover-image">
         {% endif %}
 
     </div>
 
-    <div class="seller-detail-profile-wrapper">
+    <div class="user-detail-profile-wrapper">
 
-        <div class="seller-detail-profile-card">
+        <div class="user-detail-profile-card">
 
             {% if seller.logo %}
-            <img src="{{ seller.logo.url }}" class="seller-detail-logo">
+            <img src="{{ seller.logo.url }}" class="user-detail-logo">
             {% endif %}
 
-            <div class="seller-detail-info">
+            <div class="user-detail-info">
 
-                <div class="seller-detail-name">
+                <div class="user-detail-name">
                     {{ seller.full_name }}
                 </div>
 
-                <div class="seller-detail-type">
+                <div class="user-detail-type">
                     {{ seller.seller_type }}
                 </div>
 
                 {% if seller.seller_type == "gallery" and seller.street_name and seller.city and seller.postal_code %}
-                <div class="seller-detail-address">
+                <div class="user-detail-address">
                     {{ seller.street_name }}, {{ seller.city }}, {{ seller.postal_code }}
                 </div>
                 {% endif %}
 
-                <div class="seller-detail-bio">
+                <div class="user-detail-bio">
                     {{ seller.bio }}
                 </div>
 
@@ -46,9 +46,9 @@
 
     </div>
 
-    <div class="seller-detail-artworks">
+    <div class="user-detail-artworks">
 
-        <div class="seller-detail-section-title">
+        <div class="user-detail-section-title">
             Artworks
         </div>
 

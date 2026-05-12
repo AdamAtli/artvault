@@ -1,21 +1,21 @@
 {% extends "base.html" %}
 
 {% block content %}
-<div class="seller-detail-page">
+<div class="user-detail-page">
 
     <div style="height: 90px;"></div>
 
-    <div class="seller-detail-profile-wrapper">
+    <div class="user-detail-profile-wrapper">
 
-        <div class="seller-detail-profile-card">
+        <div class="user-detail-profile-card">
 
             {% if buyer.profile_pic %}
-                <img src="{{ buyer.profile_pic.url }}" class="seller-detail-logo">
+                <img src="{{ buyer.profile_pic.url }}" class="user-detail-logo">
             {% endif %}
 
-            <div class="seller-detail-info">
+            <div class="user-detail-info">
 
-                <div class="seller-detail-name">
+                <div class="user-detail-name">
                     {{ buyer.full_name }}
                 </div>
 
@@ -23,11 +23,11 @@
                     {{ buyer.user.username }}
                 </div>
 
-                <ul class="seller-detail-type">
+                <ul class="user-detail-type">
                     <li>Buyer</li>
                 </ul>
 
-                <div class="seller-detail-bio">
+                <div class="user-detail-bio">
                     {% if buyer.bio %}
                         {{ buyer.bio }}
                     {% else %}
@@ -38,9 +38,9 @@
         </div>
     </div>
 
-<div class="seller-detail-artworks">
+<div class="user-detail-artworks">
 
-    <div class="seller-detail-section-title">
+    <div class="user-detail-section-title">
         Bids
     </div>
 
