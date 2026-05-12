@@ -81,18 +81,27 @@
                             <a class="dropdown-item" href="{% url 'my-bids' %}">
                                 View my bids
                             </a>
-                        {% elif current_seller and current_seller.is_approved %}
-                            <a class="dropdown-item" href="{% url 'create-artwork' %}">
-                                Create Artwork
+                        {% elif current_seller %}
+                            <a class="dropdown-item" href="{% url 'my-artworks' %}">
+                                View my artworks
                             </a>
                         {% endif %}
                     </li>
 
                     {% if current_seller %}
                         <li>
-                            <a class="dropdown-item" href="{% url 'my-artworks' %}">
-                                View my artworks
-                            </a>
+                            {% if current_seller.is_approved %}
+                                <a class="dropdown-item" href="{% url 'create-artwork' %}">Create Artwork</a>
+                            {% else %}
+                            <span data-bs-toggle="tooltip"
+                                  data-bs-placement="left"
+                                  data-bs-trigger="hover"
+                                title="Your account needs to be approved by an admin">
+                                <a class="dropdown-item disabled pe-none" href="#">
+                                    Create Artwork
+                                </a>
+                            </span>
+                            {% endif %}
                         </li>
                     {% endif %}
                     <li>
