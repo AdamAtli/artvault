@@ -20,6 +20,7 @@ def get_seller_by_id(request, id):
     context = get_filtered_artworks(request, queryset=queryset)
     context['seller'] = seller
 
+
     return render(request, "seller/seller_details.html", context)
 
 @login_required
