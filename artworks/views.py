@@ -6,6 +6,8 @@ from artworks.models import Artwork, Image, ArtworkFilter
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.core.paginator import Paginator
+from django.db.models import Q
+
 
 def get_filtered_artworks(request, queryset=None):
     if queryset is None:
@@ -41,7 +43,17 @@ def get_filtered_artworks(request, queryset=None):
 def index(request):
     context = get_filtered_artworks(request)
 
-    paginator = Paginator(context["artworks"], 9)
+    artworks = context["artworks"]
+
+    search = request.GET.get("search")
+
+    if search:
+        artworks = artworks.filter(
+            Q(title__icontains=search) |
+            Q(seller__user__username__icontains=search)
+        )
+
+    paginator = Paginator(artworks, 9)
 
     page_number = request.GET.get("page")
 
