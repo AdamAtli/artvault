@@ -89,10 +89,9 @@
 
 
         <div class="artwork-status-and-bid">
-            {% if is_buyer %}
-
+            {% if bid %}
                 {% if bid.status == "pending" %}
-                    <p class="badge text-bg-warning">Pending</p>
+                    <p class="badge text-warning">Pending</p>
 
                 {% elif bid.status == "accepted" %}
                     <p class="badge text-bg-success">Accepted</p>
@@ -102,35 +101,59 @@
 
                 {% elif bid.status == "contingent" %}
                     <p class="badge text-bg-info">Contingent</p>
+                {% endif %}
+            {% elif artwork.user_bid %}
+                {% if artwork.user_bid.status == "pending" %}
+                    <p class="badge text-warning">Pending</p>
+
+                {% elif artwork.user_bid.status == "accepted" %}
+                    <p class="badge text-bg-success">Accepted</p>
+
+                {% elif artwork.user_bid.status == "rejected" %}
+                    <p class="badge text-bg-danger">Rejected</p>
+
+                {% elif artwork.user_bid.status == "contingent" %}
+                    <p class="badge text-bg-info">Contingent</p>
 
                 {% endif %}
-            {% else %}
-                {% if artwork.is_sold == False %}
+
+            {% elif artwork.is_available %}
                     <p class="badge text-bg-success">Available!</p>
-
-                {% else %}
+            {% else %}
                     <p class="badge text-bg-secondary">Sold</p>
-
-                {% endif %}
             {% endif %}
+
 
         </div>
 
 
         {% if is_detail == True %}
+        {% if artwork.is_available %}
+            <form method="POST" action="{% url 'place_bid' artwork.id %}" class="input-group mb-3">
+                {% csrf_token %}
+                <span class="input-group-text" id="basic-addon1">$</span>
+                <input type="number" class="form-control" name="amount" placeholder="place your bid here" step="0.01" aria-label="amount" aria-describedby="basic-addon1">
+                <input type="date" class="form-control" name="expiration_date">
+                <button class="btn btn-outline-primary" type="submit" id="button-addon2">Place bid</button>
+            </form>
 
-        <form method="POST" action="{% url 'place_bid' artwork.id %}" class="input-group mb-3">
-            {% csrf_token %}
-            <span class="input-group-text" id="basic-addon1">$</span>
-            <input type="number" class="form-control" name="amount" placeholder="place your bid here" step="0.01" aria-label="amount" aria-describedby="basic-addon1">
-            <input type="date" class="form-control" name="expiration_date">
-            <button class="btn btn-outline-primary" type="submit" id="button-addon2">Place bid</button>
-        </form>
+            <form class="d-grid gap-2" style="padding: 10px">
+              <button class="btn btn-success" type="button" disabled>Go to payment</button>
+            </form>
+        {% else %}
 
-        <form class="d-grid gap-2" style="padding: 10px">
-          <button class="btn btn-success" type="button" disabled>Go to payment</button>
-        </form>
-
+                {% if user_bid and user_bid.status == "accepted" %}
+                    <a href="#" class="btn btn-success w-100 mb-3">
+                        Finalize Bid
+                    </a>
+                {% elif user_bid and user_bid.status == "contingent" %}
+                    <a href="#" class="btn btn-info w-100 mb-3">
+                        View Requirements
+                    </a>
+                {% else %}
+                    <p class="text-muted">Bidding is closed for this artwork.</p>
+                {% endif %}
+        {% endif %}
         <hr>
         <!-- Accordion for artwork details -->
         <div class="accordion" id="accordionPanelsStayOpenExample">

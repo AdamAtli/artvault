@@ -42,6 +42,12 @@ class Artwork(models.Model):
     def __str__(self):
         return self.title
 
+    @property
+    def is_available(self):
+        return not self.is_sold and not self.bids.filter(
+            status__in=["accepted", "contingent"]
+        ).exists()
+
 
 
 class Image(models.Model):
@@ -97,3 +103,4 @@ class ArtworkFilter(django_filters.FilterSet):
     class Meta:
         model = Artwork
         fields = ['medium', 'style', 'edition', 'size']
+

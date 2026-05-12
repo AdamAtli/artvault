@@ -18,6 +18,12 @@ def get_filtered_artworks(request, queryset=None):
     if request.GET.get("max_year"):
         artworks = artworks.filter(year_of_creation__lte=request.GET["max_year"])
 
+    for artwork in artworks:
+        artwork.user_bid = None
+
+        if request.user.is_authenticated and hasattr(request.user, "buyer"):
+            artwork.user_bid = artwork.bids.filter(buyer=request.user.buyer).first()
+
     max_price = Artwork.objects.aggregate(Max("starting_bid_price"))["starting_bid_price__max"] or 0
     min_year = Artwork.objects.aggregate(Min("year_of_creation"))["year_of_creation__min"] or 1600
     max_year = Artwork.objects.aggregate(Max("year_of_creation"))["year_of_creation__max"] or 2026
@@ -38,8 +44,16 @@ def index(request):
 def get_art_by_id(request, id):
     artwork = get_object_or_404(Artwork, pk=id)
 
+    user_bid = None
+
+    if request.user.is_authenticated and hasattr(request.user, "buyer"):
+        user_bid = artwork.bids.filter(buyer=request.user.buyer).first()
+
+    artwork.user_bid = user_bid
+    
     return render(request, "artwork/artwork_details.html", {
-        "artwork": artwork
+        "artwork": artwork,
+        "user_bid": user_bid
     })
 
 @login_required

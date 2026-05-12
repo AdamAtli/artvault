@@ -10,6 +10,9 @@ from decimal import Decimal
 def place_bid(request, artwork_id):
     if request.method == "POST":
         artwork = get_object_or_404(Artwork, pk=artwork_id)
+        if not artwork.is_available:
+            messages.error(request, "Bidding is closed for this artwork.")
+            return redirect("artworks-detail", id=artwork_id)
         highest_bid = artwork.bids.order_by('-amount').first()
         new_amount = Decimal(request.POST.get('amount'))
         expiration_date = request.POST.get('expiration_date') or None
