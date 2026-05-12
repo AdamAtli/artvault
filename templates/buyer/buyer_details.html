@@ -16,12 +16,16 @@
             <div class="seller-detail-info">
 
                 <div class="seller-detail-name">
+                    {{ buyer.full_name }}
+                </div>
+
+                <div>
                     {{ buyer.user.username }}
                 </div>
 
-                <div class="seller-detail-type">
-                    Buyer
-                </div>
+                <ul class="seller-detail-type">
+                    <li>Buyer</li>
+                </ul>
 
                 <div class="seller-detail-bio">
                     {% if buyer.bio %}

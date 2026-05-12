@@ -3,8 +3,6 @@ from django import forms
 from .models import Seller
 
 class SellerProfileForm(forms.ModelForm):
-    username = forms.CharField(max_length = 150)
-
     class Meta:
         model = Seller
         fields = [
@@ -14,6 +12,7 @@ class SellerProfileForm(forms.ModelForm):
             "street_name",
             "city",
             "postal_code",
+            "full_name",
         ]
         widgets = {
             "logo": forms.FileInput(attrs={"class": "form-control"}),
@@ -22,20 +21,5 @@ class SellerProfileForm(forms.ModelForm):
             "street_name": forms.TextInput(attrs={"class": "form-control"}),
             "city": forms.TextInput(attrs={"class": "form-control"}),
             "postal_code": forms.NumberInput(attrs={"class": "form-control"}),
+            "full_name": forms.TextInput(attrs={"class": "form-control"}),
         }
-
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-
-        self.fields['username'].initial = self.instance.user.username
-        self.fields['username'].widget.attrs.update({"class": "form-control"})
-
-    def save(self, commit=True):
-        seller = super().save(commit=False)
-        seller.user.username = self.cleaned_data["username"]
-
-        if commit:
-            seller.user.save()
-            seller.save()
-
-        return seller

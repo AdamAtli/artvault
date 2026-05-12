@@ -29,9 +29,9 @@ class Seller(models.Model):
     def clean(self):
         errors = []
 
-        if not self.user.username:
-            errors.append("Username is required")
-        if not self.logo:
+        if not self.full_name:
+            errors.append("Full name is required")
+        if not self.logo and not self.pk:
             errors.append("Logo is required")
         if self.seller_type == self.Gallery:
             if not self.street_name or not self.city or not self.postal_code:
