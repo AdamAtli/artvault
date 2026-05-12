@@ -3,6 +3,13 @@
     {% if not is_buyer %}
     <aside class="artwork-filters">
         <form method="GET">
+
+            <h5>Order by</h5>
+            <div class="filter-group">
+                {{ filter.form.order_by }}
+            </div>
+            <hr>
+
             <h5>Filters</h5>
 
             <details class="filter-group">

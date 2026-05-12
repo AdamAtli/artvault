@@ -2,16 +2,25 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.db.models import Max, Min
 from artworks.forms.artwork_create_form import ArtworkCreateForm, ImageCreateForm
-from artworks.models import Artwork, Image, ArtworkFilter
+from artworks.models import Artwork, Image
+from .filters import ArtworkFilter
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.core.paginator import Paginator
 from django.db.models import Q
+from django.db.models.functions import Coalesce
 
 
 def get_filtered_artworks(request, queryset=None):
     if queryset is None:
         queryset = Artwork.objects.select_related("seller").all()
+
+    queryset = queryset.annotate(
+        current_price=Coalesce(
+            Max("bids__amount"),
+            "starting_bid_price"
+        )
+    )
 
     f = ArtworkFilter(request.GET, queryset=queryset)
     artworks = f.qs
