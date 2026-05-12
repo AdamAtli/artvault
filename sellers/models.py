@@ -1,3 +1,4 @@
+from django.core.exceptions import ValidationError
 from django.db import models
 from django.contrib.auth.models import User
 
@@ -24,9 +25,17 @@ class Seller(models.Model):
     is_approved = models.BooleanField(default=False)
 
     def clean(self):
+        errors = []
+
+        if not self.user.username:
+            errors.append("Username is required")
+        if not self.logo:
+            errors.append("Logo is required")
         if self.seller_type == self.Gallery:
             if not self.street_name or not self.city or not self.postal_code:
-                raise ValueError("Gallery must have a full address")
+                errors.append("Gallery must have a full address")
+        if errors:
+            raise ValidationError(errors)
 
 
     def __str__(self):

@@ -1,3 +1,4 @@
+from django.core.exceptions import ValidationError
 from django.shortcuts import render, get_object_or_404, redirect
 from artworks.models import Artwork
 from artworks.views import get_filtered_artworks
@@ -29,9 +30,14 @@ def edit_seller_profile(request):
         form = SellerProfileForm(request.POST, request.FILES, instance=seller)
 
         if form.is_valid():
-            form.save()
-            messages.success(request, "Your profile was successfully updated.")
-            return redirect("seller-detail", id=seller.id)
+            try:
+                seller = form.save(commit=False)
+                seller.full_clean()
+                seller.save()
+                messages.success(request, "Your profile was successfully updated.")
+                return redirect('seller-detail', id=seller.id)
+            except ValidationError as e:
+                form.add_error(None, e)
 
     else:
         form = SellerProfileForm(instance=seller)

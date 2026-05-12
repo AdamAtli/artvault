@@ -30,7 +30,7 @@
                     {{ seller.seller_type }}
                 </div>
 
-                {% if seller.seller_type == "gallery" %}
+                {% if seller.seller_type == "gallery" and seller.street_name and seller.city and seller.postal_code %}
                 <div class="seller-detail-address">
                     {{ seller.street_name }}, {{ seller.city }}, {{ seller.postal_code }}
                 </div>

@@ -1,3 +1,4 @@
+from django.contrib.auth import login
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from django.shortcuts import render
@@ -7,16 +8,23 @@ from buyers.models import Buyer
 
 def register(request):
     form = UserCreationForm()
+
     if request.method == 'POST':
         form = UserCreationForm(request.POST)
+
         if form.is_valid():
             user = form.save()
             is_seller = request.POST.get('is_seller') == 'on'
+
             if is_seller:
-                Seller.objects.create(user=user)
+                seller_type = request.POST.get('seller_type')
+                Seller.objects.create(user=user, seller_type=seller_type)
+                login(request, user)
+                return redirect('edit-seller-profile')
             else:
                 Buyer.objects.create(user=user)
-            return redirect('login')
+                login(request, user)
+                return redirect('login')
 
     return render(request, 'user/register.html', {
         'form': form
