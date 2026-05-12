@@ -69,7 +69,7 @@ def update_bid_status(request, bid_id, status):
 
     if status in ["accepted", "contingent"]:
         existing_bid = bid.artwork.bids.filter(
-            status_in=["accepted", "contingent"]
+            status__in=["accepted", "contingent"]
         ).exclude(pk=bid.pk).first()
 
         if existing_bid:
