@@ -1,16 +1,40 @@
 {% extends "base.html" %}
 
 {% block content %}
-
+<div class="registration-form">
     <h1>Register now!</h1>
 
     <form method="post" action="{% url 'register' %}">
 
         {% csrf_token %}
+
+        {% if form.errors %}
+            <ul class="register-error">
+                {% for error in form.non_field_errors %}
+                    <li>{{ error }}</li>
+                {% endfor %}
+                {% for field in form %}
+                    {% for error in field.errors %}
+                        <li>{{ field.label }}: {{ error }}</li>
+                    {% endfor %}
+                {% endfor %}
+            </ul>
+        {% endif %}
+
         {{ form }}
+
+        <div class="form-check" style="padding: 20px">
+          <input class="form-check-input" type="checkbox" name="is_seller" id="checkDefault">
+          <label class="form-check-label" for="checkDefault">
+            Register as seller
+          </label>
+        </div>
+
         <input type="submit" class="btn btn-primary" value="Register">
 
     </form>
+</div>
+
 
 
 {% endblock %}

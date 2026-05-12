@@ -461,3 +461,10 @@
   border-color: #0d6efd;
 }
 
+.registration-form {
+    padding: 20px;
+}
+
+.register-error {
+    color: #a94442;
+}
