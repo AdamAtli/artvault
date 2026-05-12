@@ -1,5 +1,5 @@
 from django.contrib.auth import login
-from django.contrib.auth.forms import UserCreationForm
+from .forms import RegisterForm
 from django.contrib.auth.models import User
 from django.shortcuts import render
 from django.shortcuts import redirect
@@ -7,10 +7,10 @@ from sellers.models import Seller
 from buyers.models import Buyer
 
 def register(request):
-    form = UserCreationForm()
+    form = RegisterForm()
 
     if request.method == 'POST':
-        form = UserCreationForm(request.POST)
+        form = RegisterForm(request.POST)
 
         if form.is_valid():
             user = form.save()
@@ -24,7 +24,7 @@ def register(request):
             else:
                 Buyer.objects.create(user=user)
                 login(request, user)
-                return redirect('login')
+                return redirect('artworks-index')
 
     return render(request, 'user/register.html', {
         'form': form

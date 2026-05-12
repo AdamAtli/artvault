@@ -57,11 +57,12 @@
     <!-- Info section -->
     <div class="{% if is_detail %}col-12 col-md-6 col-lg-5 artwork-info-section{% endif %}">
         <h3 class="{% if not is_detail %}text-truncate{% endif %}">{{artwork.title}}</h3>
-        {% if is_seller == False %}
+        {% if is_seller %}
+        {% else %}
         <a href="{% url 'seller-detail' artwork.seller.id %}">
             <div class="seller">
                 <img src="{{ artwork.seller.logo.url}}" class="artwork_seller-image" alt="seller-logo">
-                <span class="seller-name">{{ artwork.seller.user.username }}</span>
+                <span class="seller-name">{{ artwork.seller.full_name }}</span>
             </div>
         </a>
         {% endif %}
@@ -290,6 +291,13 @@
                                     </a>
 
                                 </div>
+
+                            {% elif bid.status == "accepted" or bid.status == "contingent"%}
+
+                                <a href="{% url 'update-bid-status' bid.id "pending" %}"
+                                   class="btn btn-sm btn-outline-secondary">
+                                    Cancel bid
+                                </a>
                             {% else %}
                                 -
                             {% endif %}

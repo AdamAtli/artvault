@@ -8,20 +8,18 @@
 
         {% csrf_token %}
 
-        {% if form.errors %}
-            <ul class="register-error">
-                {% for error in form.non_field_errors %}
-                    <li>{{ error }}</li>
-                {% endfor %}
-                {% for field in form %}
-                    {% for error in field.errors %}
-                        <li>{{ field.label }}: {{ error }}</li>
-                    {% endfor %}
-                {% endfor %}
-            </ul>
-        {% endif %}
+        {% for field in form %}
+            <div class="form-group">
+                {{ field.label_tag }}
+                {{ field }}
 
-        {{ form }}
+                {% if field.help_text %}
+                    <small>{{ field.help_text|safe }}</small>
+                {% endif %}
+
+                {{ field.errors }}
+            </div>
+        {% endfor %}
 
         <div class="register-as-seller-buttons">
             <div class="form-check">
@@ -32,9 +30,9 @@
             </div>
 
             <div class="form-check">
-              <input class="form-check-input dependent-radio" type="radio" name="seller_type" value="individual" id="radio-individual" disabled>
-              <label class="form-check-label" for="radio-individual">
-                Individual
+              <input class="form-check-input dependent-radio" type="radio" name="seller_type" value="artist" id="radio-artist" disabled>
+              <label class="form-check-label" for="radio-artist">
+                artist
               </label>
             </div>
             <div class="form-check">
@@ -55,7 +53,7 @@
 <script>
   const master = document.getElementById('master-checkbox');
   const radios = document.querySelectorAll('.dependent-radio');
-  const radioIndividual = document.getElementById('radio-individual');
+  const radioArtist = document.getElementById('radio-artist');
 
   master.addEventListener('change', function() {
     radios.forEach(radio => {
@@ -63,7 +61,7 @@
     });
 
     if (this.checked) {
-        radioIndividual.checked = true;
+        radioArtist.checked = true;
     } else {
       radios.forEach(radio => radio.checked = false);
     }
