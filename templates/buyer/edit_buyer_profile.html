@@ -24,10 +24,17 @@
 
                 <div class="mb-3">
                     <label class="form-label">
-                        Username
+                        Full name
                     </label>
-                    {{ form.username }}
+                    {{ form.full_name }}
+
+                    {% if form.full_name.errors %}
+                        <div class="text-danger">
+                            {{ form.full_name.errors }}
+                        </div>
+                    {% endif %}
                 </div>
+
 
                 <div class="mb-3">
                     <label class="form-label">

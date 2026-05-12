@@ -13,6 +13,8 @@ class Seller(models.Model):
 
     user = models.OneToOneField(User, on_delete=models.CASCADE)
 
+    full_name = models.CharField(max_length=100, blank=True)
+
     seller_type = models.CharField(max_length=10, choices=Seller_Type_choices, blank=True)
 
     logo = models.ImageField(upload_to='seller_logos/', blank=True, null=True)
@@ -27,9 +29,9 @@ class Seller(models.Model):
     def clean(self):
         errors = []
 
-        if not self.user.username:
-            errors.append("Username is required")
-        if not self.logo:
+        if not self.full_name:
+            errors.append("Full name is required")
+        if not self.logo and not self.pk:
             errors.append("Logo is required")
         if self.seller_type == self.Gallery:
             if not self.street_name or not self.city or not self.postal_code:

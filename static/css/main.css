@@ -470,9 +470,40 @@
 }
 
 .register-as-seller-buttons {
-    padding: 20px;
+    padding-bottom: 10px;
 }
 
 .register-as-seller-buttons .dependent-radio {
     margin-left: 1px ;
+}
+
+.form-group label{
+    display: block;
+}
+
+.registration-form {
+    max-width: 420px;
+    margin: 40px auto;
+    padding: 30px;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+
+.form-group {
+    margin-bottom: 10px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 6px;
+    font-weight: 600;
+    font-size: 0.95rem;
+}
+
+.form-group small {
+    display: block;
+    margin-top: 6px;
+    color: #666;
+    font-size: 0.85rem;
 }
