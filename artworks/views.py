@@ -115,4 +115,7 @@ def create_artwork(request):
         "image_form": image_form
     })
 
+def about(request):
+    return render(request, "user/about.html")
+
 
