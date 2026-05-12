@@ -55,3 +55,29 @@ def delete_bid(request, bid_id):
         bid.delete()
         messages.success(request, "Bid deleted successfully")
     return redirect("my-bids")
+
+@login_required
+def update_bid_status(request, bid_id, status):
+    bid = get_object_or_404(Bid, pk=bid_id)
+
+    if bid.artwork.seller.user != request.user:
+        messages.error(request, "You are not allowed to update this bid")
+        return redirect("artworks-detail", id=bid.artwork.id)
+
+    if status not in ["accepted", "rejected", "contingent"]:
+        messages.error(request, "Invalid bid status")
+
+    if status in ["accepted", "contingent"]:
+        existing_bid = bid.artwork.bids.filter(
+            status_in=["accepted", "contingent"]
+        ).exclude(pk=bid.pk).first()
+
+        if existing_bid:
+            messages.error(request, "Bid already accepted or is contingent")
+            return redirect("artworks-detail", id=bid.artwork.id)
+
+    bid.status = status
+    bid.save()
+
+    messages.success(request, f"Bid marked as {bid.get_status_display()}.")
+    return redirect("artworks-detail", id=bid.artwork.id)

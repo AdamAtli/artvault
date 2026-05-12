@@ -258,6 +258,10 @@
                   <th scope="col">Expiration</th>
                   <th scope="col">Status</th>
                   <th scope="col">Bid amount</th>
+
+                    {% if request.user == artwork.seller.user %}
+                        <th scope="col">Actions</th>
+                    {% endif %}
                 </tr>
             </thead>
             <tbody>
@@ -268,6 +272,29 @@
                     <td>{{ bid.expiration_date|default:"No expiration" }}</td>
                     <td>{{ bid.get_status_display }}</td>
                     <td>${{ bid.amount }}</td>
+
+                    {% if request.user == artwork.seller.user %}
+                        <td>
+                            {% if bid.status == "pending" %}
+                                <div class="d-flex flex-column gap-1">
+                                    <a href="{% url 'update-bid-status' bid.id 'accepted' %}" class="btn btn-sm btn-success">
+                                        Accept
+                                    </a>
+
+                                    <a href="{% url 'update-bid-status' bid.id 'contingent' %}" class="btn btn-sm btn-info">
+                                        Contingent
+                                    </a>
+
+                                    <a href="{% url 'update-bid-status' bid.id 'rejected' %}" class="btn btn-sm btn-danger">
+                                        Reject
+                                    </a>
+
+                                </div>
+                            {% else %}
+                                -
+                            {% endif %}
+                        </td>
+                    {% endif %}
                 </tr>
             {% endfor %}
             </tbody>
