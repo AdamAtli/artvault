@@ -13,6 +13,8 @@ class Seller(models.Model):
 
     user = models.OneToOneField(User, on_delete=models.CASCADE)
 
+    full_name = models.CharField(max_length=100, blank=True)
+
     seller_type = models.CharField(max_length=10, choices=Seller_Type_choices, blank=True)
 
     logo = models.ImageField(upload_to='seller_logos/', blank=True, null=True)
