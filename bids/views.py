@@ -1,5 +1,5 @@
 from django.core.exceptions import ValidationError
-from django.shortcuts import render, get_object_or_404, redirect
+from django.shortcuts import get_object_or_404, redirect
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 
@@ -10,14 +10,31 @@ from decimal import Decimal
 def place_bid(request, artwork_id):
     if request.method == "POST":
         artwork = get_object_or_404(Artwork, pk=artwork_id)
+
         if not artwork.is_available:
             messages.error(request, "Bidding is closed for this artwork.")
             return redirect("artworks-detail", id=artwork_id)
-        highest_bid = artwork.bids.order_by('-amount').first()
+
+
         new_amount = Decimal(request.POST.get('amount'))
         expiration_date = request.POST.get('expiration_date') or None
 
-        bid = Bid(buyer=request.user.buyer, artwork=artwork, amount=new_amount, expiration_date=expiration_date)
+        bid = Bid.objects.filter(buyer=request.user.buyer, artwork=artwork, status="pending").first()
+
+        if bid:
+            if new_amount < bid.amount:
+                messages.error(request, f"Your current bid is ${bid.amount}. New bid must be higher")
+                return redirect("artworks-detail", id=artwork_id)
+            bid.amount = new_amount
+            bid.expiration_date = expiration_date
+        else:
+            bid  = Bid(
+                buyer=request.user.buyer,
+                artwork=artwork,
+                amount=new_amount,
+                expiration_date=expiration_date,
+            )
+
         try:
             bid.full_clean()
             bid.save()
@@ -26,3 +43,15 @@ def place_bid(request, artwork_id):
             messages.error(request, e.messages)
             
     return redirect("artworks-detail", id=artwork_id)
+
+@login_required
+def delete_bid(request, bid_id):
+    bid = get_object_or_404(
+        Bid,
+        pk=bid_id,
+        buyer=request.user.buyer,
+    )
+    if request.method == "POST":
+        bid.delete()
+        messages.success(request, "Bid deleted successfully")
+    return redirect("my-bids")

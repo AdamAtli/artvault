@@ -47,7 +47,9 @@ class Artwork(models.Model):
         return not self.is_sold and not self.bids.filter(
             status__in=["accepted", "contingent"]
         ).exists()
-
+    @property
+    def highest_bid(self):
+        return self.bids.order_by("-amount").first()
 
 
 class Image(models.Model):

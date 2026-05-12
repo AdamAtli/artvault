@@ -75,7 +75,7 @@
                                     </li>
 
                                     <li>
-                                        <b>Date of bid</b> {{ bid.timestamp }}
+                                        <b>Date of bid:</b> {{ bid.timestamp }}
                                     </li>
                                     <li>
                                         <b>Status:</b>{{ bid.get_status_display }}
@@ -86,11 +86,34 @@
                                     </li>
                                 </ul>
                                 {% if request.user == bid.buyer.user %}
-                                    {% if bid.status == "accepted" or bid.status == "contingent" %}
+
+                                    {% if bid.status == "pending" %}
+                                        <a href="{% url 'artworks-detail' bid.artwork.id %}"
+                                           class ="btn btn-outline-primary">
+                                            Resubmit bid
+                                        </a>
+                                    {% endif %}
+
+
+                                    {% if bid.status == "accepted" %}
                                         <a href="#" class = "btn btn-success">
                                             Finalize bid
                                         </a>
+                                    {% elif bid.status == "contingent" %}
+                                        <a href="#" class = "btn btn-info">
+                                            View requirements
+                                        </a>
                                     {% endif %}
+
+                                    <form method="POST"
+                                          action="{% url 'delete-bid' bid.id %}"
+                                          style="display:inline">
+                                        {% csrf_token %}
+                                        <button type="submit" class="btn btn-outline-danger">
+                                            Delete Bid
+                                        </button>
+
+                                    </form>
                                 {% endif %}
                             </div>
                         </div>

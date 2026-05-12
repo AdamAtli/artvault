@@ -23,9 +23,10 @@ class Bid(models.Model):
     expiration_date = models.DateField(null=True, blank=True)
 
     def clean(self):
-        highest_bid = self.artwork.bids.exclude(pk=self.pk).order_by("-amount").first()
-        if highest_bid and self.amount <= highest_bid.amount:
-            raise ValidationError(f"Bid must be higher than the current highest bid of ${highest_bid.amount}")
+        if self.amount < self.artwork.starting_bid_price:
+            raise ValidationError(
+                f"Bid must be at least the starting bid price of ${self.artwork.starting_bid_price}"
+            )
 
     class Meta:
         ordering = ['-timestamp']
