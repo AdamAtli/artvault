@@ -1,7 +1,7 @@
 from django import forms
 
 from .models import Seller
-#TODO only display address of galleries
+
 class SellerProfileForm(forms.ModelForm):
     username = forms.CharField(max_length = 150)
 

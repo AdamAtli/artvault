@@ -49,9 +49,12 @@
 
             <hr>
             <button type="submit">Apply</button>
+            <a href="?">Clear Filters</a>
         </form>
     </aside>
     {% endif %}
+
+
 
     <main class="artworks-content">
 
@@ -118,15 +121,46 @@
 </div>
 
 
-<nav aria-label="Page navigation example">
-   <ul class="pagination justify-content-center">
-    <li class="page-item"><a class="page-link" href="#">Previous</a></li>
-    <li class="page-item"><a class="page-link" href="#">1</a></li>
-    <li class="page-item"><a class="page-link" href="#">2</a></li>
-    <li class="page-item"><a class="page-link" href="#">3</a></li>
-    <li class="page-item"><a class="page-link" href="#">Next</a></li>
+{% if artworks.paginator.num_pages > 1 %}
+
+<nav aria-label="Page navigation">
+  <ul class="pagination justify-content-center mt-4">
+
+    {% if artworks.has_previous %}
+      <li class="page-item">
+        <a class="page-link" href="?page={{ artworks.previous_page_number }}">
+          Previous
+        </a>
+      </li>
+    {% endif %}
+
+    {% for num in artworks.paginator.page_range %}
+      {% if artworks.number == num %}
+        <li class="page-item active">
+          <span class="page-link">{{ num }}</span>
+        </li>
+      {% else %}
+        <li class="page-item">
+          <a class="page-link" href="?page={{ num }}">
+            {{ num }}
+          </a>
+        </li>
+      {% endif %}
+    {% endfor %}
+
+    {% if artworks.has_next %}
+      <li class="page-item">
+        <a class="page-link" href="?page={{ artworks.next_page_number }}">
+          Next
+        </a>
+      </li>
+    {% endif %}
+
   </ul>
 </nav>
+
+{% endif %}
+
 
 
 

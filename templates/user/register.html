@@ -23,12 +23,28 @@
 
         {{ form }}
 
-        <div class="form-check" style="padding: 20px">
-          <input class="form-check-input" type="checkbox" name="is_seller" id="checkDefault">
-          <label class="form-check-label" for="checkDefault">
-            Register as seller
-          </label>
+        <div class="register-as-seller-buttons">
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" name="is_seller" id="master-checkbox">
+              <label class="form-check-label" for="master-checkbox">
+                Register as seller
+              </label>
+            </div>
+
+            <div class="form-check">
+              <input class="form-check-input dependent-radio" type="radio" name="seller_type" value="individual" id="radio-individual" disabled>
+              <label class="form-check-label" for="radio-individual">
+                Individual
+              </label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input dependent-radio" type="radio" name="seller_type" value="gallery" id="radio-gallery" disabled>
+              <label class="form-check-label" for="radio-gallery">
+                Gallery
+              </label>
+            </div>
         </div>
+
 
         <input type="submit" class="btn btn-primary" value="Register">
 
@@ -36,5 +52,22 @@
 </div>
 
 
+<script>
+  const master = document.getElementById('master-checkbox');
+  const radios = document.querySelectorAll('.dependent-radio');
+  const radioIndividual = document.getElementById('radio-individual');
+
+  master.addEventListener('change', function() {
+    radios.forEach(radio => {
+      radio.disabled = !this.checked;
+    });
+
+    if (this.checked) {
+        radioIndividual.checked = true;
+    } else {
+      radios.forEach(radio => radio.checked = false);
+    }
+  });
+</script>
 
 {% endblock %}

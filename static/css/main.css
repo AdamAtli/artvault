@@ -468,3 +468,11 @@
 .register-error {
     color: #a94442;
 }
+
+.register-as-seller-buttons {
+    padding: 20px;
+}
+
+.register-as-seller-buttons .dependent-radio {
+    margin-left: 1px ;
+}

@@ -1,9 +1,11 @@
+
 from django.shortcuts import render, get_object_or_404, redirect
 from django.db.models import Max, Min
 from artworks.forms.artwork_create_form import ArtworkCreateForm, ImageCreateForm
 from artworks.models import Artwork, Image, ArtworkFilter
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
+from django.core.paginator import Paginator
 
 def get_filtered_artworks(request, queryset=None):
     if queryset is None:
@@ -38,6 +40,12 @@ def get_filtered_artworks(request, queryset=None):
 
 def index(request):
     context = get_filtered_artworks(request)
+
+    paginator = Paginator(context["artworks"], 9)
+
+    page_number = request.GET.get("page")
+
+    context["artworks"] = paginator.get_page(page_number)
 
     return render(request, "artwork/artworks.html", context)
 
