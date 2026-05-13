@@ -8,6 +8,7 @@
     <div class="seller-grid">
 
         {% for seller in sellers %}
+        {% if seller.is_approved %}
 
         <a href="{% url 'seller-detail' seller.id %}" class="seller-card seller-link">
 
@@ -17,7 +18,7 @@
                 <img src="{% static 'images/profile-placeholder.png' %}" class="seller-card-logo">
             {% endif %}
 
-            <h3 class="seller-name">{{ seller.user.username }}</h3>
+            <h3 class="seller-name">{{ seller.full_name }}</h3>
 
             <div class="seller-type-text">
                 {{ seller.seller_type }}
@@ -25,6 +26,7 @@
 
         </a>
 
+        {% endif %}
         {% endfor %}
 
     </div>
