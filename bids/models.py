@@ -41,9 +41,36 @@ class Bid(models.Model):
 
     @property
     def is_active(self):
-        return self.status in ["pending", "accepted", "rejected"]
+        return self.status in ["pending", "accepted", "contingent"]
 
 
 
     class Meta:
         ordering = ['-timestamp']
+
+class BidContingency(models.Model):
+    RESPONSE_CHOICES = [
+        ("accepted", "Accepted"),
+        ("rejected", "Rejected"),
+    ]
+
+    bid = models.OneToOneField(
+        Bid,
+        on_delete=models.CASCADE,
+        related_name="contingency",
+    )
+    seller_message = models.TextField()
+
+    buyer_response = models.CharField(
+        max_length=20,
+        choices=RESPONSE_CHOICES,
+        blank=True,
+    )
+
+    buyer_message = models.TextField(blank=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    responded_at = models.DateTimeField(null=True, blank=True)
+
+    @property
+    def has_buyer_responded(self):
+        return bool(self.buyer_response)

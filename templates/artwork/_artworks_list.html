@@ -124,7 +124,7 @@
                                             Finalize bid
                                         </a>
                                     {% elif bid.status == "contingent" %}
-                                        <a href="#" class = "btn btn-info">
+                                        <a href="{% url 'contingency-detail' bid.id %}" class = "btn btn-info">
                                             View requirements
                                         </a>
                                     {% endif %}
