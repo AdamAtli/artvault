@@ -1,0 +1,115 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="container mt-5" style="max-width: 800px;">
+
+    <h2 class="mb-4">
+        Contingency Details
+    </h2>
+
+    <div class="card p-4">
+        <h4>{{ bid.artwork.title }}</h4>
+
+        <p>
+            Buyer:
+            <strong>{{ bid.buyer.user.username }}</strong>
+        </p>
+
+        <p>
+            Bid Amount:
+            <strong>${{ bid.amount }}</strong>
+        </p>
+
+        <hr>
+
+        <h5>Seller Requirements</h5>
+
+        <p>
+            {{ contingency.seller_message }}
+        </p>
+
+        <hr>
+
+        {% if is_buyer %}
+
+            {% if contingency.has_buyer_responded %}
+
+                <div class="alert alert-info">
+                    You already responded to these requirements
+                </div>
+
+                <p>
+                    <strong>Your response:</strong>
+                    {{ contingency.get_buyer_response_display }}
+                </p>
+
+                <p>
+                    <strong>Your message:</strong>
+                    {{ contingency.buyer_message|default:"No message" }}
+                </p>
+
+            {% else %}
+                <form method="POST">
+                    {% csrf_token %}
+
+                    {{ form.as_p }}
+
+                    <button type="submit" class="btn btn-primary">
+                        Send Response
+                    </button>
+
+                </form>
+
+            {% endif %}
+
+        {% elif is_seller %}
+            {% if contingency.has_buyer_responded %}
+
+                <div class="alert alert-success">
+                    Buyer has responded.
+                </div>
+
+                <p>
+                    <strong>Buyer response:</strong>
+                    {{ contingency.get_buyer_response_display }}
+                </p>
+
+                <p>
+                    <strong>Buyer message:</strong>
+                    {{ contingency.buyer_message|default:"No message" }}
+                </p>
+            {% else %}
+                <div class="alert alert-warning">
+                    Waiting for buyer response.
+                </div>
+            {% endif %}
+
+            <div class="mt-4 d-flex gap-2">
+
+                <a href="{% url 'update-bid-status' bid.id 'accepted' %}"
+                class="btn btn-success">
+                    Accept Bid
+                </a>
+
+                <a href="{% url 'update-bid-status' bid.id 'rejected' %}"
+                class="btn btn-danger">
+                    Reject Bid
+                </a>
+
+                <a href="{% url 'update-bid-status' bid.id 'pending' %}"
+                class="btn btn-outline-secondary">
+                    Return to pending
+                </a>
+
+            </div>
+
+
+        {% endif %}
+
+    </div>
+
+
+</div>
+
+{% endblock %}

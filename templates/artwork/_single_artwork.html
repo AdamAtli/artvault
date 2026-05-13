@@ -173,7 +173,7 @@
                         Finalize Bid
                     </a>
                 {% elif user_bid and user_bid.status == "contingent" %}
-                    <a href="#" class="btn btn-info w-100 mb-3">
+                    <a href="{% url 'contingency-detail' user_bid.id %}" class="btn btn-info w-100 mb-3">
                         View Requirements
                     </a>
                 {% else %}
@@ -288,7 +288,7 @@
                                         Accept
                                     </a>
 
-                                    <a href="{% url 'update-bid-status' bid.id 'contingent' %}" class="btn btn-sm btn-info">
+                                    <a href="{% url 'create-contingency' bid.id %}" class="btn btn-sm btn-info">
                                         Contingent
                                     </a>
 
@@ -298,7 +298,31 @@
 
                                 </div>
 
-                            {% elif bid.status == "accepted" or bid.status == "contingent"%}
+                            {% elif bid.status == "contingent" %}
+                                <div class="d-flex flex-column gap-1">
+                                    <a href="{% url 'contingency-detail' bid.id %}"
+                                       class="btn btn-sm btn-info">
+
+                                        {% if bid.contingency.has_buyer_responded %}
+                                            View Response
+                                        {% else %}
+                                            Waiting for Buyer
+                                        {% endif %}
+                                    </a>
+
+                                    <a href="{% url 'update-bid-status' bid.id 'pending' %}"
+                                       class="btn btn-sm btn-outline-secondary">
+                                        Return to pending
+                                    </a>
+
+                                    <a href="{% url 'update-bid-status' bid.id 'rejected' %}"
+                                       class="btn btn-sm btn-danger">
+                                        Reject
+                                    </a>
+
+
+                                </div>
+                            {% elif bid.status == "accepted" %}
 
                                 <a href="{% url 'update-bid-status' bid.id "pending" %}"
                                    class="btn btn-sm btn-outline-secondary">

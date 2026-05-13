@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class = "container mt-5" style="max-width: 700px;">
+
+    <h2 class="mb-4">
+        Create Contingency
+    </h2>
+
+    <div class="card p-4">
+
+        <h5>{{ bid.artwork.title }}</h5>
+
+        <p>
+            Buyer:
+            <strong>{{ bid.buyer.user.username }}</strong>
+        </p>
+
+        <p>
+            Bid amount:
+            <strong>${{ bid.amount }}</strong>
+        </p>
+
+        <hr>
+
+        <form method="POST">
+            {% csrf_token %}
+
+            {{ form.as_p }}
+
+            <button type="submit" class="btn btn-info">
+                Send Requirements
+            </button>
+
+            <a href="{% url 'artworks-detail' bid.artwork.id %}"
+               class="btn btn-outline-secondary">
+                Cancel
+            </a>
+
+
+        </form>
+
+
+
+    </div>
+
+
+</div>
+
+
+{% endblock %}
