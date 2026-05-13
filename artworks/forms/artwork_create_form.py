@@ -5,6 +5,14 @@ from artworks.models import Artwork, Image
 
 
 class ArtworkCreateForm(ModelForm):
+
+    new_medium = forms.CharField(
+        required=False,
+    )
+    new_style = forms.CharField(
+        required=False,
+    )
+
     class Meta:
         model = Artwork
         fields = [

@@ -461,10 +461,6 @@
   border-color: #0d6efd;
 }
 
-.registration-form {
-    padding: 20px;
-}
-
 .register-error {
     color: #a94442;
 }
@@ -475,10 +471,6 @@
 
 .register-as-seller-buttons .dependent-radio {
     margin-left: 1px ;
-}
-
-.form-group label{
-    display: block;
 }
 
 .registration-form {
@@ -506,4 +498,23 @@
     margin-top: 6px;
     color: #666;
     font-size: 0.85rem;
+}
+
+.medium-checkbox-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.add-new label {
+    font-size: 0.9rem;
+    color: dimgray;
+}
+
+.add-new {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    margin-bottom: 20px;
 }

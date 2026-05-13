@@ -50,7 +50,7 @@ class Image(models.Model):
         return self.artwork.title
 
 class Medium(models.Model):
-    name = models.CharField(max_length=100)
+    name = models.CharField(max_length=100, unique=True)
 
     def save(self, *args, **kwargs):
         self.name = self.name.strip().title()
@@ -61,7 +61,7 @@ class Medium(models.Model):
         return self.name
 
 class Style(models.Model):
-    name = models.CharField(max_length=100)
+    name = models.CharField(max_length=100, unique=True)
 
     def save(self, *args, **kwargs):
         self.name = self.name.strip().title()

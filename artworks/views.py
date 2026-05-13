@@ -2,7 +2,7 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.db.models import Max, Min
 from artworks.forms.artwork_create_form import ArtworkCreateForm, ImageCreateForm
-from artworks.models import Artwork, Image
+from artworks.models import Artwork, Image, Medium, Style
 from .filters import ArtworkFilter
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
@@ -103,6 +103,25 @@ def create_artwork(request):
             artwork.seller = request.user.seller
             artwork.save()
             form.save_m2m()
+
+            new_medium = form.cleaned_data.get("new_medium")
+
+            if new_medium:
+                medium, created = Medium.objects.get_or_create(
+                    name=new_medium.strip().title()
+                )
+
+                artwork.mediums.add(medium)
+
+            new_style = form.cleaned_data.get("new_style")
+            
+            if new_style:
+                style, created = Style.objects.get_or_create(
+                    name=new_style.strip().title()
+                )
+                artwork.style = style
+
+                artwork.save()
 
             for uploaded_image in request.FILES.getlist("image"):
                 Image.objects.create(artwork=artwork, image=uploaded_image)
