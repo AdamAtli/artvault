@@ -160,5 +160,3 @@ def contact_us(request):
     return render(request, "user/contact_us.html")
 
 
-
-
