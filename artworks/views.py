@@ -32,6 +32,21 @@ def get_filtered_artworks(request, queryset=None):
     if request.GET.get("max_year"):
         artworks = artworks.filter(year_of_creation__lte=request.GET["max_year"])
 
+    availability = request.GET.get("availability")
+
+    if availability == "available":
+        artworks = artworks.exclude(
+            is_sold=True
+        ).exclude(
+            bids__status__in=["accepted", "contingent", "finalized"]
+        )
+
+    elif availability == "sold":
+        artworks = artworks.filter(
+            Q(is_sold=True) |
+            Q(bids__status__in=["accepted", "contingent", "finalized"])
+        )
+
     artworks = artworks.distinct()
 
     for artwork in artworks:

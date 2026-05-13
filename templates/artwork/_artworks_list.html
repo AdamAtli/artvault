@@ -54,6 +54,23 @@
                 {{ filter.form.edition }}
             </details>
 
+            <div class="availability-filter">
+                <label>Availability</label>
+                <select name="availability">
+                    <option value="">
+                        All
+                    </option>
+
+                    <option value="available">
+                        Available
+                    </option>
+
+                    <option value="sold">
+                        Sold
+                    </option>
+                </select>
+            </div>
+
             <hr>
             <button type="submit">Apply</button>
             <a href="?">Clear Filters</a>

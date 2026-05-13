@@ -12,10 +12,10 @@ SIZE_CHOICES = [
 ]
 
 PRICE_CHOICES = [
-    ("under_100k", "Under $100,000"),
-    ("100k_250k", "$100,000 - $250,000"),
-    ("250k_500k", "$250,000 - $500,000"),
-    ("over_500k", "Over $500,000"),
+    ("under_1k", "Under $1,000"),
+    ("1k_5k", "$1,000 - $5,000"),
+    ("5k_25k", "$5,000 - $25,000"),
+    ("over_25k", "Over $25,000"),
 ]
 
 class ArtworkFilter(django_filters.FilterSet):
@@ -46,26 +46,26 @@ class ArtworkFilter(django_filters.FilterSet):
 
     def filter_by_price_range(self, queryset, name, value):
 
-        if value == "under_100k":
+        if value == "under_1k":
             return queryset.filter(
-                current_price__lt=100000
+                current_price__lt=1000
             )
 
-        elif value == "100k_250k":
+        elif value == "1k_5k":
             return queryset.filter(
-                current_price__gte=100000,
-                current_price__lte=250000
+                current_price__gte=1000,
+                current_price__lte=5000
             )
 
-        elif value == "250k_500k":
+        elif value == "5k_25k":
             return queryset.filter(
-                current_price__gte=250000,
-                current_price__lte=500000
+                current_price__gte=5000,
+                current_price__lte=25000
             )
 
-        elif value == "over_500k":
+        elif value == "over_25k":
             return queryset.filter(
-                current_price__gt=500000
+                current_price__gt=25000
             )
 
         return queryset

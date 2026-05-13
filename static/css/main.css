@@ -38,6 +38,10 @@
     margin-top: 0.5rem;
 }
 
+.availability-filter label {
+    display: block;
+}
+
 .artworks-content {
     flex: 1;
     min-width: 0;
