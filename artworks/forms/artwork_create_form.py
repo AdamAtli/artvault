@@ -38,6 +38,36 @@ class ArtworkCreateForm(ModelForm):
             'provenance': forms.Textarea(attrs={'class':'form-control', 'rows':4, 'placeholder': 'Provenance'}),
         }
 
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+        self.fields["style"].required = False
+        self.fields["mediums"].required = False
+
+    def clean(self):
+
+        cleaned_data = super().clean()
+
+        style = cleaned_data.get("style")
+        new_style = cleaned_data.get("new_style")
+
+        mediums = cleaned_data.get("mediums")
+        new_medium = cleaned_data.get("new_medium")
+
+        if not style and not new_style:
+            self.add_error(
+                "style",
+                "Select a style or add a new one."
+            )
+
+        if not mediums and not new_medium:
+            self.add_error(
+                "mediums",
+                "Select at least one medium or add a new one."
+            )
+
+        return cleaned_data
+
 class MultipleFileInput(forms.ClearableFileInput):
     allow_multiple_selected = True
 

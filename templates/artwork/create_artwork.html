@@ -4,6 +4,13 @@
 <div class="registration-form">
     <h1>Register Artwork</h1>
     <form method="post" enctype="multipart/form-data" action="{% url 'create-artwork' %}">
+
+        {% if form.non_field_errors %}
+            <div class="alert alert-danger">
+                {{ form.non_field_errors }}
+            </div>
+        {% endif %}
+
         {% csrf_token %}
 
         <div class="form-group">
@@ -43,6 +50,12 @@
 
             </ul>
 
+            {% if form.mediums.errors %}
+                <div class="text-danger small mt-1">
+                    {{ form.mediums.errors }}
+                </div>
+            {% endif %}
+
             <div class="add-new">
                 <label>
                     Add custom medium
@@ -57,6 +70,13 @@
                 Style
             </label>
             {{ form.style }}
+
+            {% if form.style.errors %}
+                <div class="text-danger small mt-1">
+                    {{ form.style.errors }}
+                </div>
+            {% endif %}
+
             <div class="add-new">
                 <label>
                     Add custom style

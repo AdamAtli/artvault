@@ -118,6 +118,15 @@ def create_artwork(request):
         if form.is_valid() and image_form.is_valid():
             artwork = form.save(commit=False)
             artwork.seller = request.user.seller
+
+            new_style = form.cleaned_data.get("new_style")
+
+            if new_style:
+                style,created = Style.objects.get_or_create(
+                    name=new_style.strip().title()
+                )
+                artwork.style = style
+
             artwork.save()
             form.save_m2m()
 
@@ -129,16 +138,6 @@ def create_artwork(request):
                 )
 
                 artwork.mediums.add(medium)
-
-            new_style = form.cleaned_data.get("new_style")
-
-            if new_style:
-                style, created = Style.objects.get_or_create(
-                    name=new_style.strip().title()
-                )
-                artwork.style = style
-
-                artwork.save()
 
             for uploaded_image in request.FILES.getlist("image"):
                 Image.objects.create(artwork=artwork, image=uploaded_image)
