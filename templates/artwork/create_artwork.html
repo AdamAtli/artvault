@@ -14,6 +14,7 @@
         </div>
 
         <div class="form-group dropdown">
+            <label>Medium</label>
 
             <button class="btn btn-outline-secondary dropdown-toggle"
                     type="button"
@@ -24,7 +25,6 @@
             </button>
 
             <ul class="dropdown-menu p-3">
-
                 {% for checkbox in form.mediums %}
 
                     <li class="medium-checkbox-item">
@@ -43,28 +43,28 @@
 
             </ul>
 
+            <div class="add-new">
+                <label>
+                    Add custom medium
+                </label>
+                {{ form.new_medium }}
+            </div>
         </div>
 
-        <div class="form-group">
-            <label>
-                Add new medium
-            </label>
-            {{ form.new_medium }}
-        </div>
 
         <div class="form-group">
             <label>
                 Style
             </label>
             {{ form.style }}
+            <div class="add-new">
+                <label>
+                    Add custom style
+                </label>
+                {{ form.new_style }}
+            </div>
         </div>
 
-        <div class="form-group">
-            <label>
-                Add new style
-            </label>
-            {{ form.new_style }}
-        </div>
 
         <div class="form-group">
             <label>
