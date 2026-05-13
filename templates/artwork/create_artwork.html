@@ -7,6 +7,23 @@
                 {% csrf_token %}
 
                 {{ form }}
+
+                <div class="mb-3">
+                    <label>
+                        Add new medium
+                    </label>
+
+                    {{ form.new_medium }}
+                </div>
+
+                <div class="mb-3">
+                    <label>
+                        Add new style
+                    </label>
+
+                    {{ form.new_style }}
+                </div>
+
                 {{ image_form }}
 
                 <input type="submit" class="btn btn-primary mt-3" value="Create" />
