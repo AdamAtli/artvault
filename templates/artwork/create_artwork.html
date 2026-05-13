@@ -1,34 +1,97 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <div class="container mt-5">
-        <div class="mx-auto" style="max-width: 600px;">
-            <form method="post" enctype="multipart/form-data" action="{% url 'create-artwork' %}">
-                {% csrf_token %}
+<div class="registration-form">
+    <h1>Register Artwork</h1>
+    <form method="post" enctype="multipart/form-data" action="{% url 'create-artwork' %}">
+        {% csrf_token %}
 
-                {{ form }}
-
-                <div class="mb-3">
-                    <label>
-                        Add new medium
-                    </label>
-
-                    {{ form.new_medium }}
-                </div>
-
-                <div class="mb-3">
-                    <label>
-                        Add new style
-                    </label>
-
-                    {{ form.new_style }}
-                </div>
-
-                {{ image_form }}
-
-                <input type="submit" class="btn btn-primary mt-3" value="Create" />
-            </form>
+        <div class="form-group">
+            <label>
+                Title
+            </label>
+            {{ form.title }}
         </div>
-    </div>
+
+        <div class="form-group">
+            <label>
+                Mediums
+            </label>
+            {{ form.mediums }}
+        </div>
+
+        <div class="form-group">
+            <label>
+                Add new medium
+            </label>
+            {{ form.new_medium }}
+        </div>
+
+        <div class="form-group">
+            <label>
+                Style
+            </label>
+            {{ form.style }}
+        </div>
+
+        <div class="form-group">
+            <label>
+                Add new style
+            </label>
+            {{ form.new_style }}
+        </div>
+
+        <div class="form-group">
+            <label>
+                Starting bid price
+            </label>
+            {{ form.starting_bid_price }}
+        </div>
+
+        <div class="form-group">
+            <label>
+                Width(cm)
+            </label>
+            {{ form.width_cm }}
+        </div>
+
+        <div class="form-group">
+            <label>
+                Height(cm)
+            </label>
+            {{ form.height_cm }}
+        </div>
+
+        <div class="form-group">
+            <label>
+                Year of creation
+            </label>
+            {{ form.year_of_creation }}
+        </div>
+
+        <div class="form-group">
+            <label>
+                Edition
+            </label>
+            {{ form.edition }}
+        </div>
+
+        <div class="form-group">
+            <label>
+                Provenance
+            </label>
+            {{ form.provenance }}
+        </div>
+
+        <div class="form-group">
+            <label>
+                Images
+            </label>
+            {{ image_form }}
+        </div>
+
+        <input type="submit" class="btn btn-primary mt-3" value="Create" />
+    </form>
+</div>
 
 {% endblock %}
