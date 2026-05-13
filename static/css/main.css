@@ -508,3 +508,9 @@
     font-size: 0.85rem;
 }
 
+.medium-checkbox-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
