@@ -11,13 +11,21 @@ SIZE_CHOICES = [
     ("large", "Large (70cm+)"),
 ]
 
+PRICE_CHOICES = [
+    ("under_100k", "Under $100,000"),
+    ("100k_250k", "$100,000 - $250,000"),
+    ("250k_500k", "$250,000 - $500,000"),
+    ("over_500k", "Over $500,000"),
+]
+
 class ArtworkFilter(django_filters.FilterSet):
     mediums = django_filters.ModelMultipleChoiceFilter(
         queryset=Medium.objects.all(),
         widget=forms.CheckboxSelectMultiple,
     )
-    style = django_filters.ModelChoiceFilter(
+    style = django_filters.ModelMultipleChoiceFilter(
         queryset=Style.objects.all(),
+        widget=forms.CheckboxSelectMultiple,
     )
 
     edition = django_filters.MultipleChoiceFilter(
@@ -30,6 +38,37 @@ class ArtworkFilter(django_filters.FilterSet):
         widget=forms.CheckboxSelectMultiple,
         method="filter_by_size",
     )
+
+    price_range = django_filters.ChoiceFilter(
+        choices=PRICE_CHOICES,
+        method="filter_by_price_range",
+    )
+
+    def filter_by_price_range(self, queryset, name, value):
+
+        if value == "under_100k":
+            return queryset.filter(
+                current_price__lt=100000
+            )
+
+        elif value == "100k_250k":
+            return queryset.filter(
+                current_price__gte=100000,
+                current_price__lte=250000
+            )
+
+        elif value == "250k_500k":
+            return queryset.filter(
+                current_price__gte=250000,
+                current_price__lte=500000
+            )
+
+        elif value == "over_500k":
+            return queryset.filter(
+                current_price__gt=500000
+            )
+
+        return queryset
 
     def filter_by_size(self, queryset, name, value):
         if not value:
