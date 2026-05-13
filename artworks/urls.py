@@ -10,4 +10,6 @@ urlpatterns = [
     path('create_artwork', views.create_artwork, name='create-artwork'),
 
     path("about/", views.about, name="about"),
+
+    path( "contact/", views.contact_us, name="contact-us"),
 ]
