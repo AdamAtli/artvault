@@ -1,23 +1,24 @@
 
 from django.shortcuts import render, get_object_or_404, redirect
-from django.db.models import Max, Min
+from django.db.models import Max, Min, Q
 from artworks.forms.artwork_create_form import ArtworkCreateForm, ImageCreateForm
 from artworks.models import Artwork, Image, Medium, Style
 from .filters import ArtworkFilter
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.core.paginator import Paginator
-from django.db.models import Q
 from django.db.models.functions import Coalesce
+from bids.utils import expire_old_bids
 
 
 def get_filtered_artworks(request, queryset=None):
+    expire_old_bids()
     if queryset is None:
         queryset = Artwork.objects.select_related("seller").all()
 
     queryset = queryset.annotate(
         current_price=Coalesce(
-            Max("bids__amount"),
+            Max("bids__amount", filter=~Q(bids__status__in=["expired", "rejected"])),
             "starting_bid_price"
         )
     )
@@ -73,6 +74,7 @@ def index(request):
     return render(request, "artwork/artworks.html", context)
 
 def get_art_by_id(request, id):
+    expire_old_bids()
     artwork = get_object_or_404(Artwork, pk=id)
 
     user_bid = None

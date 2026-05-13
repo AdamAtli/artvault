@@ -6,8 +6,11 @@ from django.contrib.auth.decorators import login_required
 from .models import Bid
 from artworks.models import Artwork
 from decimal import Decimal
+from .utils import expire_old_bids
+
 @login_required
 def place_bid(request, artwork_id):
+    expire_old_bids()
     if request.method == "POST":
         artwork = get_object_or_404(Artwork, pk=artwork_id)
 
@@ -46,6 +49,7 @@ def place_bid(request, artwork_id):
 
 @login_required
 def delete_bid(request, bid_id):
+    expire_old_bids()
     bid = get_object_or_404(
         Bid,
         pk=bid_id,
@@ -58,14 +62,20 @@ def delete_bid(request, bid_id):
 
 @login_required
 def update_bid_status(request, bid_id, status):
+    expire_old_bids()
     bid = get_object_or_404(Bid, pk=bid_id)
 
     if bid.artwork.seller.user != request.user:
         messages.error(request, "You are not allowed to update this bid")
         return redirect("artworks-detail", id=bid.artwork.id)
 
+    if bid.status == "expired":
+        messages.error(request, "This bid is expired and cannot be updated")
+        return redirect("artworks-detail", id=bid.artwork.id)
+
     if status not in ["pending","accepted", "rejected", "contingent"]:
         messages.error(request, "Invalid bid status")
+        return redirect("artworks-detail", id=bid.artwork.id)
 
     if status in ["accepted", "contingent"]:
         existing_bid = bid.artwork.bids.filter(

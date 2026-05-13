@@ -115,6 +115,9 @@
 
                 {% elif bid.status == "contingent" %}
                     <p class="badge text-bg-info">Contingent</p>
+
+                {% elif bid.status == "expired" %}
+                    <p class="badge text-bg-secondary">Expired</p>
                 {% endif %}
             {% elif artwork.user_bid %}
                 {% if artwork.user_bid.status == "pending" %}
@@ -128,6 +131,9 @@
 
                 {% elif artwork.user_bid.status == "contingent" %}
                     <p class="badge text-bg-info">Contingent</p>
+
+                {% elif artwork.user_bid.status == "expired" %}
+                    <p class="badge text-bg-secondary">Expired</p>
 
                 {% endif %}
 

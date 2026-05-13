@@ -39,7 +39,9 @@ class Artwork(models.Model):
         ).exists()
     @property
     def highest_bid(self):
-        return self.bids.order_by("-amount").first()
+        return self.bids.exclude(
+            status__in=["expired", "rejected"]
+        ).order_by("-amount").first()
 
 
 class Image(models.Model):

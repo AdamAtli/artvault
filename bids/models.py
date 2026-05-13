@@ -2,6 +2,7 @@ from django.db import models
 from django.core.exceptions import ValidationError
 from artworks.models import Artwork
 from buyers.models import Buyer
+from django.utils import timezone
 
 
 class Bid(models.Model):
@@ -15,6 +16,7 @@ class Bid(models.Model):
         ("rejected", "Rejected"),
         ("contingent", "Contingent"),
         ("finalized", "Finalized"),
+        ("expired", "Expired"),
     ]
     status = models.CharField(
         max_length=20,
@@ -28,6 +30,20 @@ class Bid(models.Model):
             raise ValidationError(
                 f"Bid must be at least the starting bid price of ${self.artwork.starting_bid_price}"
             )
+
+    @property
+    def is_expired(self):
+        return (
+            self.status == "pending"
+            and self.expiration_date
+            and self.expiration_date <= timezone.localdate()
+        )
+
+    @property
+    def is_active(self):
+        return self.status in ["pending", "accepted", "rejected"]
+
+
 
     class Meta:
         ordering = ['-timestamp']

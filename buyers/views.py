@@ -2,10 +2,12 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from .forms import BuyerProfileForm
+from bids.utils import expire_old_bids
 
 from .models import Buyer
 
 def buyer_detail(request, pk):
+    expire_old_bids()
 
     buyer = get_object_or_404(Buyer, pk=pk)
     bids = buyer.bids.select_related('artwork', 'artwork__seller').order_by(
@@ -50,6 +52,7 @@ def edit_buyer_profile(request):
 
 @login_required
 def my_bids(request):
+    expire_old_bids()
     buyer = request.user.buyer
 
     bids = buyer.bids.select_related('artwork', 'artwork__seller').all()
