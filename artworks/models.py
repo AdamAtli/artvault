@@ -45,7 +45,7 @@ class Artwork(models.Model):
     @property
     def is_available(self):
         return not self.is_sold and not self.bids.filter(
-            status__in=["accepted", "contingent"]
+            status__in=["accepted", "contingent" ,"finalized"]
         ).exists()
     @property
     def highest_bid(self):

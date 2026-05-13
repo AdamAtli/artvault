@@ -1,0 +1,80 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="container mt-5" style="max-width: 1200px;">
+    <h1 class="mb-4">Review finalization</h1>
+
+    <div class="row g-4">
+
+        <div class="col-md-4">
+            <div class="card p-4 shadow-sm">
+                <h4>Contact information</h4>
+                <p><strong>Street:</strong> {{ contact.street_name }}</p>
+                <p><strong>City:</strong> {{ contact.city }}</p>
+                <p><strong>Postal code:</strong> {{ contact.postal_code }}</p>
+                <p><strong>Country:</strong> {{ contact.country }}</p>
+                <p><strong>National ID:</strong> {{ contact.national_id }}</p>
+            </div>
+
+        </div>
+
+        <div class="col-md-4">
+            <div class="card p-4 shadow-sm">
+                <h4>Payment information</h4>
+                <p><strong>Method:</strong> {{ payment.payment_method }}</p>
+
+                {% if payment.payment_method == "credit_card" %}
+                    <p><strong>Cardholder:</strong> {{ payment.cardholder_name }}</p>
+                    <p><strong>Card number:</strong> {{ payment.credit_card_number }}</p>
+                    <p><strong>Expiry:</strong> {{ payment.expiry_date }}</p>
+                    <p><strong>CVC:</strong> {{ payment.cvc }}</p>
+
+                {% elif payment.payment_method == "bank_transfer" %}
+                    <p><strong>Bank account:</strong> {{ payment.bank_account }}</p>
+
+                {% elif payment.payment_method == "wire_transfer" %}
+                    <p><strong>Sending bank:</strong> {{ payment.sending_bank }}</p>
+                    <p><strong>Routing number:</strong> {{ payment.routing_number }}</p>
+                    <p><strong>Account number:</strong> {{ payment.account_number }}</p>
+                {% endif %}
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card p-4 shadow-sm">
+                <h4>Bid summary</h4>
+                <p><strong>Artwork:</strong> {{ bid.artwork.title }}</p>
+                <p><strong>Seller:</strong> {{ bid.artwork.seller.user.username }}</p>
+                <p><strong>Bid amount:</strong> ${{ bid.amount }}</p>
+
+                <form method="post">
+                    {% csrf_token %}
+
+                    <a href="{% url 'finalize-payment' bid.id %}"
+                       class="btn btn-outline-secondary">
+                        Back
+                    </a>
+
+                    <button type="submit" class="btn btn-success">
+                        Confirm bid
+                    </button>
+
+
+                </form>
+
+
+            </div>
+
+
+
+        </div>
+
+    </div>
+
+
+
+
+</div>
+
+{% endblock %}

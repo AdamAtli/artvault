@@ -42,7 +42,8 @@ INSTALLED_APPS = [
     'buyers.apps.BuyerConfig',
     'bids.apps.BidsConfig',
     'user.apps.UserConfig',
-    'django_filters'
+    'finalization.apps.FinalizationConfig',
+    'django_filters',
 ]
 
 MIDDLEWARE = [

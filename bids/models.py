@@ -14,6 +14,7 @@ class Bid(models.Model):
         ("accepted", "Accepted"),
         ("rejected", "Rejected"),
         ("contingent", "Contingent"),
+        ("finalized", "Finalized"),
     ]
     status = models.CharField(
         max_length=20,

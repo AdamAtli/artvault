@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mt-5" style="max-width: 700px;">
+
+    <div class="card p-5 shadow-sm text-center">
+        <h1 class="text-success mb-4">
+            Bid finalized successfully
+        </h1>
+
+        <p class="lead">
+            Your purchase of
+            <strong>{{ bid.artwork.title }}</strong>
+            has been completed.
+        </p>
+
+        <p>
+            Seller:
+            {{ bid.artwork.seller.user.username }}
+        </p>
+
+        <p>
+            Finalized amount:
+            <strong>${{ bid.amount }}</strong>
+        </p>
+
+        <a href="{% url 'artworks-index' %}"
+           class="btn btn-dark mt-4">
+            Return to homepage
+        </a>
+
+
+
+
+    </div>
+
+</div>
+
+{% endblock %}

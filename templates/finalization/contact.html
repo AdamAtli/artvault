@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mt-5" style="max-width: 700px;">
+    <h1>Finalize Bid</h1>
+    <h3>Contact information</h3>
+
+    <p>{{ bid.artwork.title }} - ${{ bid.amount }}</p>
+
+    <form method="post">
+
+        {% csrf_token %}
+
+        <div class="mb-3">
+            <label class="form-label">Street name</label>
+            {{ form.street_name }}
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">City</label>
+            {{ form.city }}
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Postal code</label>
+            {{ form.postal_code }}
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Country</label>
+            {{ form.country }}
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">National ID</label>
+            {{ form.national_id }}
+        </div>
+
+        <button type="submit" class="btn btn-dark">
+            Next
+        </button>
+
+    </form>
+
+
+</div>
+{% endblock %}

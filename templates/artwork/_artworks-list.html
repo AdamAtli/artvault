@@ -96,7 +96,7 @@
 
 
                                     {% if bid.status == "accepted" %}
-                                        <a href="#" class = "btn btn-success">
+                                        <a href="{% url 'finalize-contact' bid.id %}" class = "btn btn-success">
                                             Finalize bid
                                         </a>
                                     {% elif bid.status == "contingent" %}

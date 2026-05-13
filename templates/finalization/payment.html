@@ -1,0 +1,223 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="container mt-5" style="max-width: 1200px;">
+    <div class="row g-4">
+
+
+        <div class="col-md-4">
+
+            <div class="card p-4 shadow-sm">
+                <h4 class="mb-3">Contact information</h4>
+
+                <p><strong>Street:</strong> {{ contact.street_name }}</p>
+
+                <p><strong>City:</strong> {{ contact.city }}</p>
+
+                <p><strong>Postal code:</strong> {{ contact.postal_code }}</p>
+
+                <p><strong>Country:</strong> {{ contact.country }}</p>
+
+                <p><strong>National ID:</strong> {{ contact.national_id }}</p>
+            </div>
+
+        </div>
+
+        <!-- RIGHT SIDE -->
+        <div class="col-md-8">
+
+            <div class="card p-4 shadow-sm">
+
+                <h2 class="mb-4">Payment</h2>
+
+                <form method="post">
+                    {% csrf_token %}
+
+                    <div class="mb-4">
+                        <label class="form-label fw-bold">
+                            Payment method
+                        </label>
+
+                        <div class="form-check">
+                            <input class="form-check-input"
+                                   type="radio"
+                                   name="payment_method"
+                                   value="credit_card"
+                                   id="credit_card"
+                                   checked>
+
+                            <label class="form-check-label"
+                                   for="credit_card">
+                                Credit card
+                            </label>
+                        </div>
+
+                        <div class="form-check">
+                            <input class="form-check-input"
+                                   type="radio"
+                                   name="payment_method"
+                                   value="bank_transfer"
+                                   id="bank_transfer">
+
+                            <label class="form-check-label"
+                                   for="bank_transfer">
+                                Bank transfer
+                            </label>
+                        </div>
+
+                        <div class="form-check">
+                            <input class="form-check-input"
+                                   type="radio"
+                                   name="payment_method"
+                                   value="wire_transfer"
+                                   id="wire_transfer">
+
+                            <label class="form-check-label"
+                                   for="wire_transfer">
+                                Wire transfer
+                            </label>
+                        </div>
+                    </div>
+
+
+                    <hr>
+
+                    <div id="credit-card-fields">
+                        <h5 class="mb-3 mt-4">Credit card</h5>
+
+                        <div class="row g-3">
+
+                            <div class="col-md-12">
+                                <label class="form-label">
+                                    Cardholder name
+                                </label>
+
+                                {{ form.cardholder_name }}
+                            </div>
+
+                            <div class="col-md-12">
+                                <label class="form-label">
+                                    Card number
+                                </label>
+
+                                {{ form.credit_card_number }}
+                            </div>
+
+                            <div class="col-md-6">
+                                <label class="form-label">
+                                    Expiry date
+                                </label>
+
+                                {{ form.expiry_date }}
+                            </div>
+
+                            <div class="col-md-6">
+                                <label class="form-label">
+                                    CVC
+                                </label>
+
+                                {{ form.cvc }}
+                            </div>
+                        </div>
+                    </div>
+
+                    <hr>
+                    <div id="bank-transfer-fields">
+                        <h5 class="mb-3 mt-4">Bank transfer</h5>
+
+                        <div class="mb-3">
+                            <label class="form-label">
+                                Bank account
+                            </label>
+
+                            {{ form.bank_account }}
+                        </div>
+                    </div>
+
+                    <hr>
+
+                    <div id="wire-transfer-fields">
+                        <h5 class="mb-3 mt-4">Wire transfer</h5>
+
+                        <div class="row g-3">
+
+                            <div class="col-md-12">
+                                <label class="form-label">
+                                    Sending bank
+                                </label>
+
+                                {{ form.sending_bank }}
+                            </div>
+
+                            <div class="col-md-6">
+                                <label class="form-label">
+                                    Routing number
+                                </label>
+
+                                {{ form.routing_number }}
+                            </div>
+
+                            <div class="col-md-6">
+                                <label class="form-label">
+                                    Account number
+                                </label>
+
+                                {{ form.account_number }}
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="d-flex justify-content-between mt-5">
+
+                        <a href="{% url 'finalize-contact' bid.id %}"
+                           class="btn btn-outline-secondary">
+                            Back
+                        </a>
+
+                        <button type="submit"
+                                class="btn btn-dark">
+                            Next
+                        </button>
+
+                    </div>
+                </form>
+
+            </div>
+        </div>
+
+    </div>
+
+
+</div>
+
+
+<script>
+
+function togglePaymentFields() {
+
+    const paymentMethod =
+        document.querySelector("input[name='payment_method']:checked").value;
+
+    document.getElementById("credit-card-fields").style.display = "none";
+    document.getElementById("bank-transfer-fields").style.display = "none";
+    document.getElementById("wire-transfer-fields").style.display = "none";
+
+    if (paymentMethod === "credit_card") {
+        document.getElementById("credit-card-fields").style.display = "block";
+    }
+
+    if (paymentMethod === "bank_transfer") {
+        document.getElementById("bank-transfer-fields").style.display = "block";
+    }
+    if (paymentMethod === "wire_transfer") {
+        document.getElementById("wire-transfer-fields").style.display = "block";
+    }
+}
+
+document.querySelectorAll("input[name='payment_method']").forEach(radio => {
+    radio.addEventListener("change", togglePaymentFields);
+});
+togglePaymentFields();
+</script>
+{% endblock %}

@@ -158,12 +158,12 @@
             </form>
 
             <form class="d-grid gap-2" style="padding: 10px">
-              <button class="btn btn-success" type="button" disabled>Go to payment</button>
+              <button class="btn btn-success" type="button" disabled>Finalize Bid</button>
             </form>
         {% else %}
 
                 {% if user_bid and user_bid.status == "accepted" %}
-                    <a href="#" class="btn btn-success w-100 mb-3">
+                    <a href="{% url 'finalize-contact' user_bid.id %}" class="btn btn-success w-100 mb-3">
                         Finalize Bid
                     </a>
                 {% elif user_bid and user_bid.status == "contingent" %}
