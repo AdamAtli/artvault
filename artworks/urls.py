@@ -8,4 +8,6 @@ urlpatterns = [
     path('<int:id>', views.get_art_by_id, name='artworks-detail'),
 
     path('create_artwork', views.create_artwork, name='create-artwork'),
+
+    path("about/", views.about, name="about"),
 ]

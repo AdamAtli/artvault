@@ -2,14 +2,25 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.db.models import Max, Min
 from artworks.forms.artwork_create_form import ArtworkCreateForm, ImageCreateForm
-from artworks.models import Artwork, Image, ArtworkFilter
+from artworks.models import Artwork, Image
+from .filters import ArtworkFilter
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.core.paginator import Paginator
+from django.db.models import Q
+from django.db.models.functions import Coalesce
+
 
 def get_filtered_artworks(request, queryset=None):
     if queryset is None:
         queryset = Artwork.objects.select_related("seller").all()
+
+    queryset = queryset.annotate(
+        current_price=Coalesce(
+            Max("bids__amount"),
+            "starting_bid_price"
+        )
+    )
 
     f = ArtworkFilter(request.GET, queryset=queryset)
     artworks = f.qs
@@ -41,7 +52,17 @@ def get_filtered_artworks(request, queryset=None):
 def index(request):
     context = get_filtered_artworks(request)
 
-    paginator = Paginator(context["artworks"], 9)
+    artworks = context["artworks"]
+
+    search = request.GET.get("search")
+
+    if search:
+        artworks = artworks.filter(
+            Q(title__icontains=search) |
+            Q(seller__user__username__icontains=search)
+        )
+
+    paginator = Paginator(artworks, 9)
 
     page_number = request.GET.get("page")
 
@@ -93,5 +114,8 @@ def create_artwork(request):
         "form": form,
         "image_form": image_form
     })
+
+def about(request):
+    return render(request, "user/about.html")
 
 
