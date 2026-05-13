@@ -26,7 +26,7 @@ def get_filtered_artworks(request, queryset=None):
     artworks = f.qs
 
     if request.GET.get("max_price"):
-        artworks = artworks.filter(starting_bid_price__lte=request.GET["max_price"])
+        artworks = artworks.filter(current_price__lte=request.GET["max_price"])
 
     if request.GET.get("max_year"):
         artworks = artworks.filter(year_of_creation__lte=request.GET["max_year"])
@@ -39,7 +39,7 @@ def get_filtered_artworks(request, queryset=None):
         if request.user.is_authenticated and hasattr(request.user, "buyer"):
             artwork.user_bid = artwork.bids.filter(buyer=request.user.buyer).first()
 
-    max_price = Artwork.objects.aggregate(Max("starting_bid_price"))["starting_bid_price__max"] or 0
+    max_price = queryset.aggregate(Max("current_price"))["current_price__max"] or 0
     min_year = Artwork.objects.aggregate(Min("year_of_creation"))["year_of_creation__min"] or 1600
     max_year = Artwork.objects.aggregate(Max("year_of_creation"))["year_of_creation__max"] or 2026
 
@@ -114,7 +114,7 @@ def create_artwork(request):
                 artwork.mediums.add(medium)
 
             new_style = form.cleaned_data.get("new_style")
-            
+
             if new_style:
                 style, created = Style.objects.get_or_create(
                     name=new_style.strip().title()

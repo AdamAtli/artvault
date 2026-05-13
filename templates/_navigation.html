@@ -1,39 +1,139 @@
 {% load static %}
 <nav class="navbar navbar-expand-lg bg-body-tertiary">
   <div class="container-fluid">
+
     <a class="navbar-brand" href="/">
       <img src="{% static 'images/temp-logo.webp' %}" alt="avlogo" width="50" height="50" class="rounded-circle">
     </a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
+
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
+
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+
         <li class="nav-item">
           <a class="nav-link active" aria-current="page" href="/">Home</a>
         </li>
+
         <li class="nav-item">
           <a class="nav-link" href="{% url 'seller-index' %}">Sellers</a>
         </li>
+
         <li class="nav-item dropdown">
+
           <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
             Browse Art
           </a>
-          <ul class="dropdown-menu">
-              <li>
-                <a class="dropdown-item"
-                   href="{% url 'artworks-index' %}">
-                    All Artworks
-                </a>
+
+          <ul class="dropdown-menu art-dropdown-menu">
+
+              <li class="art-dropdown-section">
+                <h6 class="dropdown-header">
+                    Mediums
+                </h6>
+
+                  <ul class="list-unstyled">
+                    {% for medium in nav_mediums %}
+                      <li>
+                          <a class="dropdown-item"
+                             href="{% url 'artworks-index' %}?mediums={{ medium.id }}">
+                             {{ medium.name }}
+                          </a>
+                      </li>
+                    {% endfor %}
+                  </ul>
               </li>
-              <li><hr class="dropdown-divider"></li>
-              
-            <li><a class="dropdown-item" href="#">Another action</a></li>
-            <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="#">Something else here</a></li>
+
+              <li class="art-dropdown-section">
+
+                  <h6 class="dropdown-header">
+                      Styles
+                  </h6>
+
+                  <ul class="list-unstyled">
+                    {% for style in nav_styles %}
+                      <li>
+                          <a class="dropdown-item"
+                             href="{% url 'artworks-index' %}?style={{ style.id }}">
+                              {{ style.name }}
+                          </a>
+                      </li>
+                    {% endfor %}
+                  </ul>
+              </li>
+
+             <li class="art-dropdown-section">
+
+                <h6 class="dropdown-header">
+                    Size
+                </h6>
+
+                 <ul class="list-unstyled">
+                     <li>
+                        <a class="dropdown-item"
+                           href="{% url 'artworks-index' %}?size=small">
+                            Small
+                        </a>
+                     </li>
+
+                     <li>
+                        <a class="dropdown-item"
+                           href="{% url 'artworks-index' %}?size=medium">
+                            Medium
+                        </a>
+                     </li>
+
+                     <li>
+                        <a class="dropdown-item"
+                           href="{% url 'artworks-index' %}?size=large">
+                            Large
+                        </a>
+                     </li>
+                 </ul>
+             </li>
+
+              <li class="art-dropdown-section">
+                  <h6 class="dropdown-header">
+                      Price Range
+                  </h6>
+
+                  <ul class="list-unstyled">
+                      <li>
+                          <a class="dropdown-item"
+                             href="{% url 'artworks-index' %}?price_range=under_100k">
+                             Under $100,000
+                          </a>
+                      </li>
+
+                      <li>
+                          <a class="dropdown-item"
+                             href="{% url 'artworks-index' %}?price_range=100k_250k">
+                             $100,000 - $250,000
+                          </a>
+                      </li>
+
+                      <li>
+                          <a class="dropdown-item"
+                             href="{% url 'artworks-index' %}?price_range=250k_500k">
+                             $250,000 - $500,000
+                          </a>
+                      </li>
+
+                      <li>
+                          <a class="dropdown-item"
+                             href="{% url 'artworks-index' %}?price_range=over_500k">
+                             Over $500,000
+                          </a>
+                      </li>
+                  </ul>
+              </li>
+
           </ul>
         </li>
       </ul>
+
       <form class="d-flex" method="GET" action="{% url 'artworks-index' %}">
         <input
            class="form-control me-2"
@@ -120,9 +220,6 @@
                             {% endif %}
                         </li>
                     {% endif %}
-                    <li>
-                        <hr class="dropdown-divider">
-                    </li>
 
                     <li>
                         <form method="post" action="{% url 'logout' %}">
