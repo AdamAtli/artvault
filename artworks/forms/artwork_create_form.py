@@ -9,7 +9,7 @@ class ArtworkCreateForm(ModelForm):
         model = Artwork
         fields = [
             'title',
-            'medium',
+            'mediums',
             'style',
             'starting_bid_price',
             'width_cm',
@@ -20,8 +20,8 @@ class ArtworkCreateForm(ModelForm):
         ]
         widgets = {
             'title': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Artwork Title'}),
-            'medium': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Artwork Medium'}),
-            'style': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Artwork Style'}),
+            'mediums': forms.CheckboxSelectMultiple(),
+            'style': forms.Select(attrs={'class': 'form-select'}),
             'starting_bid_price':forms.NumberInput(attrs={'class': 'form-control', 'placeholder': 'Artwork Starting Bid Price'}),
             'width_cm': forms.NumberInput(attrs={'class': 'form-control', 'placeholder': 'Width in cm'}),
             'height_cm': forms.NumberInput(attrs={'class': 'form-control', 'placeholder': 'Height in cm'}),

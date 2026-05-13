@@ -1,10 +1,12 @@
 from django.db import models
+from django.db.models import ForeignKey, ManyToManyField
+
 from sellers.models import Seller
 
 class Artwork(models.Model):
     title = models.CharField(max_length=200)
-    medium =models.CharField(max_length=100)
-    style = models.CharField(max_length=100)
+    mediums = ManyToManyField("Medium", related_name='artworks', blank=True)
+    style = ForeignKey("Style", on_delete=models.CASCADE, related_name='artworks')
     starting_bid_price = models.DecimalField(max_digits=10, decimal_places=2)
     width_cm = models.DecimalField(max_digits=10, decimal_places=2)
     height_cm = models.DecimalField(max_digits=10, decimal_places=2)
@@ -27,15 +29,6 @@ class Artwork(models.Model):
 
     seller = models.ForeignKey(Seller, on_delete=models.CASCADE, related_name='artworks')
 
-    def save(self, *args, **kwargs):
-        if self.medium:
-            self.medium = self.medium.strip().capitalize()
-        if self.style:
-            self.style = self.style.strip().capitalize()
-        if self.edition:
-            self.edition = self.edition.strip().lower()
-        super().save(*args, **kwargs)
-
     def __str__(self):
         return self.title
 
@@ -56,5 +49,25 @@ class Image(models.Model):
     def __str__(self):
         return self.artwork.title
 
+class Medium(models.Model):
+    name = models.CharField(max_length=100)
 
+    def save(self, *args, **kwargs):
+        self.name = self.name.strip().title()
+
+        super().save(*args, **kwargs)
+
+    def __str__(self):
+        return self.name
+
+class Style(models.Model):
+    name = models.CharField(max_length=100)
+
+    def save(self, *args, **kwargs):
+        self.name = self.name.strip().title()
+
+        super().save(*args, **kwargs)
+
+    def __str__(self):
+        return self.name
 

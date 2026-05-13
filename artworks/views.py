@@ -31,6 +31,8 @@ def get_filtered_artworks(request, queryset=None):
     if request.GET.get("max_year"):
         artworks = artworks.filter(year_of_creation__lte=request.GET["max_year"])
 
+    artworks = artworks.distinct()
+
     for artwork in artworks:
         artwork.user_bid = None
 
@@ -100,6 +102,7 @@ def create_artwork(request):
             artwork = form.save(commit=False)
             artwork.seller = request.user.seller
             artwork.save()
+            form.save_m2m()
 
             for uploaded_image in request.FILES.getlist("image"):
                 Image.objects.create(artwork=artwork, image=uploaded_image)

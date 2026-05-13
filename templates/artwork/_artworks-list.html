@@ -14,7 +14,7 @@
 
             <details class="filter-group">
                 <summary>Medium</summary>
-                {{ filter.form.medium }}
+                {{ filter.form.mediums }}
             </details>
 
             <details class="filter-group">
@@ -136,7 +136,10 @@
                             <ul class="artworks-info-list">
 
                                 <li>
-                                    <b>Medium: </b>{{ artwork.medium }}
+                                    <b>Mediums: </b>
+                                    {% for medium in artwork.mediums.all %}
+                                        {{ medium.name }}{% if not forloop.last %}, {% endif %}
+                                    {% endfor %}
                                 </li>
 
                                 <li>

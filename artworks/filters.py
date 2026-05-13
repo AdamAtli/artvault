@@ -1,7 +1,7 @@
 import django_filters
 from django.db.models import Q
 from django import forms
-from .models import Artwork
+from .models import Artwork, Medium, Style
 
 
 
@@ -12,14 +12,14 @@ SIZE_CHOICES = [
 ]
 
 class ArtworkFilter(django_filters.FilterSet):
-    medium = django_filters.MultipleChoiceFilter(
-        choices=lambda: [(m, m) for m in Artwork.objects.values_list("medium", flat=True).distinct()],
+    mediums = django_filters.ModelMultipleChoiceFilter(
+        queryset=Medium.objects.all(),
         widget=forms.CheckboxSelectMultiple,
     )
-    style = django_filters.MultipleChoiceFilter(
-        choices=lambda: [(s, s) for s in Artwork.objects.values_list('style', flat=True).distinct()],
-        widget=forms.CheckboxSelectMultiple,
+    style = django_filters.ModelChoiceFilter(
+        queryset=Style.objects.all(),
     )
+
     edition = django_filters.MultipleChoiceFilter(
         choices=Artwork.EDITION_CHOICES,
         widget=forms.CheckboxSelectMultiple,
@@ -68,4 +68,4 @@ class ArtworkFilter(django_filters.FilterSet):
 
     class Meta:
         model = Artwork
-        fields = ['medium', 'style', 'edition', 'size']
+        fields = ['edition', 'size']
