@@ -84,7 +84,7 @@ def index(request):
 
     page_number = request.GET.get("page")
 
-    context["artworks"] = paginator.get_page(page_number)
+    context["show_vault"] = request.session.pop('show_vault', False)
 
     return render(request, "artwork/artworks.html", context)
 

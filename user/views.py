@@ -5,6 +5,14 @@ from django.shortcuts import render
 from django.shortcuts import redirect
 from sellers.models import Seller
 from buyers.models import Buyer
+from django.contrib.auth.views import LoginView
+
+class VaultLoginView(LoginView):
+    def form_valid(self, form):
+        response = super().form_valid(form)
+        self.request.session['show_vault'] = True
+        return response
+
 
 def register(request):
     form = RegisterForm()
