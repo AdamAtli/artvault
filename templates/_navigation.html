@@ -1,5 +1,5 @@
 {% load static %}
-<nav class="navbar navbar-expand-lg sticky-top bg-body-tertiary">
+<nav class="navbar navbar-expand-lg sticky-top navbar-dark custom-navbar">
   <div class="container-fluid">
 
     <a class="navbar-brand" href="/">
@@ -10,251 +10,246 @@
     </button>
 
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav navbar-left me-auto mb-2 mb-lg-0">
 
-      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href="/">Home</a>
+            </li>
 
-        <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="/">Home</a>
-        </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'seller-index' %}">Sellers</a>
+            </li>
 
-        <li class="nav-item">
-          <a class="nav-link" href="{% url 'seller-index' %}">Sellers</a>
-        </li>
+            <li class="nav-item dropdown">
 
-        <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                Browse Art
+              </a>
 
-          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            Browse Art
-          </a>
+              <ul class="dropdown-menu art-dropdown-menu">
 
-          <ul class="dropdown-menu art-dropdown-menu">
+                  <li class="art-dropdown-section">
+                    <h6 class="dropdown-header">
+                        Mediums
+                    </h6>
 
-              <li class="art-dropdown-section">
-                <h6 class="dropdown-header">
-                    Mediums
-                </h6>
+                      <ul class="list-unstyled">
+                        {% for medium in nav_mediums %}
+                          <li>
+                              <a class="dropdown-item"
+                                 href="{% url 'artworks-index' %}?mediums={{ medium.id }}">
+                                 {{ medium.name }}
+                              </a>
+                          </li>
+                        {% endfor %}
+                      </ul>
+                  </li>
 
-                  <ul class="list-unstyled">
-                    {% for medium in nav_mediums %}
-                      <li>
-                          <a class="dropdown-item"
-                             href="{% url 'artworks-index' %}?mediums={{ medium.id }}">
-                             {{ medium.name }}
-                          </a>
-                      </li>
-                    {% endfor %}
-                  </ul>
-              </li>
+                  <li class="art-dropdown-section">
 
-              <li class="art-dropdown-section">
+                      <h6 class="dropdown-header">
+                          Styles
+                      </h6>
 
-                  <h6 class="dropdown-header">
-                      Styles
-                  </h6>
+                      <ul class="list-unstyled">
+                        {% for style in nav_styles %}
+                          <li>
+                              <a class="dropdown-item"
+                                 href="{% url 'artworks-index' %}?style={{ style.id }}">
+                                  {{ style.name }}
+                              </a>
+                          </li>
+                        {% endfor %}
+                      </ul>
+                  </li>
 
-                  <ul class="list-unstyled">
-                    {% for style in nav_styles %}
-                      <li>
-                          <a class="dropdown-item"
-                             href="{% url 'artworks-index' %}?style={{ style.id }}">
-                              {{ style.name }}
-                          </a>
-                      </li>
-                    {% endfor %}
-                  </ul>
-              </li>
+                 <li class="art-dropdown-section">
 
-             <li class="art-dropdown-section">
+                    <h6 class="dropdown-header">
+                        Size
+                    </h6>
 
-                <h6 class="dropdown-header">
-                    Size
-                </h6>
+                     <ul class="list-unstyled">
+                         <li>
+                            <a class="dropdown-item"
+                               href="{% url 'artworks-index' %}?size=small">
+                                Small
+                            </a>
+                         </li>
 
-                 <ul class="list-unstyled">
-                     <li>
-                        <a class="dropdown-item"
-                           href="{% url 'artworks-index' %}?size=small">
-                            Small
-                        </a>
-                     </li>
+                         <li>
+                            <a class="dropdown-item"
+                               href="{% url 'artworks-index' %}?size=medium">
+                                Medium
+                            </a>
+                         </li>
 
-                     <li>
-                        <a class="dropdown-item"
-                           href="{% url 'artworks-index' %}?size=medium">
-                            Medium
-                        </a>
-                     </li>
+                         <li>
+                            <a class="dropdown-item"
+                               href="{% url 'artworks-index' %}?size=large">
+                                Large
+                            </a>
+                         </li>
+                     </ul>
+                 </li>
 
-                     <li>
-                        <a class="dropdown-item"
-                           href="{% url 'artworks-index' %}?size=large">
-                            Large
-                        </a>
-                     </li>
-                 </ul>
-             </li>
+                  <li class="art-dropdown-section">
+                      <h6 class="dropdown-header">
+                          Price Range
+                      </h6>
 
-              <li class="art-dropdown-section">
-                  <h6 class="dropdown-header">
-                      Price Range
-                  </h6>
+                      <ul class="list-unstyled">
+                          <li>
+                              <a class="dropdown-item"
+                                 href="{% url 'artworks-index' %}?price_range=under_1k">
+                                 Under $1,000
+                              </a>
+                          </li>
 
-                  <ul class="list-unstyled">
-                      <li>
-                          <a class="dropdown-item"
-                             href="{% url 'artworks-index' %}?price_range=under_1k">
-                             Under $1,000
-                          </a>
-                      </li>
+                          <li>
+                              <a class="dropdown-item"
+                                 href="{% url 'artworks-index' %}?price_range=1k_5k">
+                                 $1,000 - $5,000
+                              </a>
+                          </li>
 
-                      <li>
-                          <a class="dropdown-item"
-                             href="{% url 'artworks-index' %}?price_range=1k_5k">
-                             $1,000 - $5,000
-                          </a>
-                      </li>
+                          <li>
+                              <a class="dropdown-item"
+                                 href="{% url 'artworks-index' %}?price_range=5k_25k">
+                                 $5,000 - $25,000
+                              </a>
+                          </li>
 
-                      <li>
-                          <a class="dropdown-item"
-                             href="{% url 'artworks-index' %}?price_range=5k_25k">
-                             $5,000 - $25,000
-                          </a>
-                      </li>
+                          <li>
+                              <a class="dropdown-item"
+                                 href="{% url 'artworks-index' %}?price_range=over_25k">
+                                 Over $25,000
+                              </a>
+                          </li>
+                      </ul>
+                  </li>
 
-                      <li>
-                          <a class="dropdown-item"
-                             href="{% url 'artworks-index' %}?price_range=over_25k">
-                             Over $25,000
-                          </a>
-                      </li>
-                  </ul>
-              </li>
-
+              </ul>
+            </li>
           </ul>
-        </li>
-      </ul>
 
-      <form class="d-flex" method="GET" action="{% url 'artworks-index' %}">
-        <input
-           class="form-control me-2"
-           type="search"
-            name="search"
-           placeholder="Search artworks..."
-           value="{{ request.GET.search }}"
-        >
+          <form class="navbar-search" method="GET" action="{% url 'artworks-index' %}">
+            <input
+               class="form-control me-2"
+               type="search"
+                name="search"
+               placeholder="Search artworks..."
+               value="{{ request.GET.search }}"
+            >
 
-        <button class="btn btn-outline-success" type="submit">
-            Search
-        </button>
-      </form>
-        {% if user.is_authenticated %}
+            <button class="btn btn-outline-warning" type="submit">
+                Search
+            </button>
+          </form>
 
-            <div class="dropdown ms-3">
+        <div class="navbar-right">
+            {% if user.is_authenticated %}
 
-                <a href="#"
-                   class="d-block"
-                   data-bs-toggle="dropdown"
-                   aria-expanded="false">
+                <div class="dropdown ms-3">
 
-                    {% if current_buyer and current_buyer.profile_pic %}
-                        <img src="{{ current_buyer.profile_pic.url }}" alt="profile" width="50" height="50" class="rounded-circle" style="object-fit: cover;">
-                    {% elif current_seller and current_seller.logo %}
-                        <img src="{{ current_seller.logo.url }}" alt="profile" width="50" height="50" class="rounded-circle" style="object-fit: cover;">
-                    {% else %}
-                        <img src="{% static 'images/profile-placeholder.png' %}" alt="profile" width="50" height="50" class="rounded-circle" style="object-fit: cover;">
-                    {% endif %}
+                    <a href="#"
+                       class="d-block"
+                       data-bs-toggle="dropdown"
+                       aria-expanded="false">
 
-                </a>
-
-                <ul class="dropdown-menu dropdown-menu-end">
-
-                    <li>
-                        {% if current_buyer %}
-                            <a class="dropdown-item" href="{% url 'buyer-detail' current_buyer.id %}">
-                                View Profile
-                            </a>
-                        {% elif current_seller %}
-                            <a class="dropdown-item" href="{% url 'seller-detail' current_seller.id %}">
-                                View Profile
-                            </a>
+                        {% if current_buyer and current_buyer.profile_pic %}
+                            <img src="{{ current_buyer.profile_pic.url }}" alt="profile" width="50" height="50" class="rounded-circle" style="object-fit: cover;">
+                        {% elif current_seller and current_seller.logo %}
+                            <img src="{{ current_seller.logo.url }}" alt="profile" width="50" height="50" class="rounded-circle" style="object-fit: cover;">
+                        {% else %}
+                            <img src="{% static 'images/profile-placeholder.webp' %}" alt="profile" width="50" height="50" class="rounded-circle" style="object-fit: cover;">
                         {% endif %}
-                    </li>
 
-                    <li>
-                        {% if current_buyer %}
-                            <a class="dropdown-item" href="{% url 'edit-buyer-profile' %}">
-                                Edit Profile
-                            </a>
-                        {% elif current_seller %}
-                           <a class="dropdown-item" href="{% url 'edit-seller-profile' %}">
-                                Edit Profile
-                            </a>
-                        {% endif %}
-                    </li>
+                    </a>
 
-                    <li>
-                        {% if current_buyer %}
-                            <a class="dropdown-item" href="{% url 'my-bids' %}">
-                                View my bids
-                            </a>
-                        {% elif current_seller %}
-                            <a class="dropdown-item" href="{% url 'my-artworks' %}">
-                                View my artworks
-                            </a>
-                        {% endif %}
-                    </li>
+                    <ul class="dropdown-menu dropdown-menu-end">
 
-                    {% if current_seller %}
                         <li>
-                            {% if current_seller.is_approved %}
-                                <a class="dropdown-item" href="{% url 'create-artwork' %}">Create Artwork</a>
-                            {% else %}
-                            <span data-bs-toggle="tooltip"
-                                  data-bs-placement="left"
-                                  data-bs-trigger="hover"
-                                  title="You must complete your profile and get it approved by an admin">
-                                <a class="dropdown-item disabled pe-none" href="#">
-                                    Create Artwork
+                            {% if current_buyer %}
+                                <a class="dropdown-item" href="{% url 'buyer-detail' current_buyer.id %}">
+                                    View Profile
                                 </a>
-                            </span>
+                            {% elif current_seller %}
+                                <a class="dropdown-item" href="{% url 'seller-detail' current_seller.id %}">
+                                    View Profile
+                                </a>
                             {% endif %}
                         </li>
-                    {% endif %}
 
-                    <li>
-                        <form method="post" action="{% url 'logout' %}">
-                            {% csrf_token %}
-                            <button type="submit" class="dropdown-item">
-                                Log Out
-                            </button>
-                        </form>
-                        
-                    </li>
-                </ul>
+                        <li>
+                            {% if current_buyer %}
+                                <a class="dropdown-item" href="{% url 'edit-buyer-profile' %}">
+                                    Edit Profile
+                                </a>
+                            {% elif current_seller %}
+                               <a class="dropdown-item" href="{% url 'edit-seller-profile' %}">
+                                    Edit Profile
+                                </a>
+                            {% endif %}
+                        </li>
 
-            </div>
+                        <li>
+                            {% if current_buyer %}
+                                <a class="dropdown-item" href="{% url 'my-bids' %}">
+                                    View my bids
+                                </a>
+                            {% elif current_seller %}
+                                <a class="dropdown-item" href="{% url 'my-artworks' %}">
+                                    View my artworks
+                                </a>
+                            {% endif %}
+                        </li>
 
+                        {% if current_seller %}
+                            <li>
+                                {% if current_seller.is_approved %}
+                                    <a class="dropdown-item" href="{% url 'create-artwork' %}">Create Artwork</a>
+                                {% else %}
+                                <span data-bs-toggle="tooltip"
+                                      data-bs-placement="left"
+                                      data-bs-trigger="hover"
+                                      title="You must complete your profile and get it approved by an admin">
+                                    <a class="dropdown-item disabled pe-none" href="#">
+                                        Create Artwork
+                                    </a>
+                                </span>
+                                {% endif %}
+                            </li>
+                        {% endif %}
 
+                        <li>
+                            <form method="post" action="{% url 'logout' %}">
+                                {% csrf_token %}
+                                <button type="submit" class="dropdown-item">
+                                    Log Out
+                                </button>
+                            </form>
 
+                        </li>
+                    </ul>
 
+                </div>
 
+            {% else %}
 
+                <button type="button"
+                        class="btn btn-gold ms-3"
+                        data-bs-toggle="modal"
+                        data-bs-target="#loginModal">
+                    Login
+                </button>
 
+                <a href="{% url 'register' %}" class="btn btn-silver ms-2">
+                    Register
+                </a>
 
-        {% else %}
-
-            <button type="button"
-                    class="btn btn-outline-dark ms-3"
-                    data-bs-toggle="modal"
-                    data-bs-target="#loginModal">
-                Login
-            </button>
-
-            <a href="{% url 'register' %}" class="btn btn-dark ms-2">
-                Register
-            </a>
-
-        {% endif %}
+            {% endif %}
+        </div>
     </div>
   </div>
 </nav>
