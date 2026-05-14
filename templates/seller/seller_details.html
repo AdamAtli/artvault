@@ -1,5 +1,7 @@
 {% extends "base.html" %}
 
+{% load static %}
+
 {% block content %}
 
 <div class="user-detail-page">
@@ -17,7 +19,9 @@
         <div class="user-detail-profile-card">
 
             {% if seller.logo %}
-            <img src="{{ seller.logo.url }}" class="user-detail-logo">
+                <img src="{{ seller.logo.url }}" class="user-detail-logo">
+            {% else %}
+                <img src="{% static 'images/profile-placeholder.webp' %}" class="user-detail-logo">
             {% endif %}
 
             <div class="user-detail-info">
