@@ -1,176 +1,147 @@
-<br>
+<h1 class="display-4 all-title">Artworks</h1>
 <div class="artwork-page">
     {% if not is_buyer %}
-    <aside class="artwork-filters">
-        <form method="GET">
 
-            <h5>Order by</h5>
+    <aside class="artwork-sidebar d-none d-lg-block">
+        <form method="GET" class="filters-form">
+
             <div class="filter-group">
+                <label>Order By</label>
                 {{ filter.form.order_by }}
             </div>
-            <hr>
 
-            <h5>Filters</h5>
-
-            <details class="filter-group">
-                <summary>Medium</summary>
-                {{ filter.form.mediums }}
-            </details>
-
-            <details class="filter-group">
-                <summary>Style</summary>
-                {{ filter.form.style }}
-            </details>
-
-            <div class="filter-group">
-                <label for="price-range" class="form-label">Price range max: $<span id="priceDisplay">{{ request.GET.max_price|default:max_price }}</span></label>
-                <input type="range" class="form-range" id="price-range"
-                name="max_price"
-                min="0"
-                max="{{ max_price }}"
-                step="50"
-                value="{{ request.GET.max_price|default:max_price }}"
-                oninput="document.getElementById('priceDisplay').textContent = this.value">
-            </div>
-
-            <div class="filter-group">
-                <label for="year-range" class="form-label">Year of creation max: <span id="yearDisplay">{{ request.GET.max_year|default:max_year }}</span></label>
-                <input type="range" class="form-range" id="year-range"
-                name="max_year"
-                min="{{ min_year }}"
-                max="{{ max_year }}"
-                step="1"
-                value="{{ request.GET.max_year|default:max_year }}"
-                oninput="document.getElementById('yearDisplay').textContent = this.value">
-            </div>
-
-            <details class="filter-group">
-                <summary>Size</summary>
-                {{ filter.form.size }}
-            </details>
-
-            <details class="filter-group">
-                <summary>Edition</summary>
-                {{ filter.form.edition }}
-            </details>
-
-            <div class="availability-filter">
-                <label>Availability</label>
-                <select name="availability">
-                    <option value="">
-                        All
-                    </option>
-
-                    <option value="available">
-                        Available
-                    </option>
-
-                    <option value="sold">
-                        Sold
-                    </option>
-                </select>
-            </div>
-
-            <hr>
-            <button type="submit">Apply</button>
-            <a href="?">Clear Filters</a>
+            {% include "artwork/_filters.html" %}
         </form>
     </aside>
-    {% endif %}
+
+    <div class="artwork-main">
+
+        <div class="mobile-filter-bar d-flex d-lg-none">
+                <button class="btn btn-dark" type="button" data-bs-toggle="offcanvas" data-bs-target="#mobileFilters">
+                  Filters
+                </button>
+
+                <div class="mobile-sort">
+                    <span>Order By</span>
+                    {{ filter.form.order_by }}
+                </div>
+        </div>
+
+        <div class="offcanvas offcanvas-start" tabindex="-1" id="mobileFilters">
+
+          <div class="offcanvas-header">
+            <h5>Filters</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
+          </div>
+
+          <div class="offcanvas-body">
+              <form method="GET" class="filters-form">
+
+                  {% include "artwork/_filters.html" %}
+                  <input type="hidden" name="order_by" value="{{ request.GET.order_by }}">
+
+              </form>
+
+          </div>
+
+        </div>
+
+        {% endif %}
 
 
 
-    <main class="artworks-content">
+        <main class="artworks-content">
 
-        <div class="row g-4">
+            <div class="row g-4">
 
-            {% if is_buyer %}
+                {% if is_buyer %}
 
-                {% for bid in bids %}
-                    {% with artwork=bid.artwork %}
+                    {% for bid in bids %}
+                        {% with artwork=bid.artwork %}
+                            <div class="col-md-4">
+                                <div class="container-item">
+                                    {% include "artwork/_single_artwork.html" with is_detail=False is_buyer=True artwork=artwork bid=bid %}
+
+                                    <ul class="artworks-info-list">
+
+                                        <li>
+                                            <b>Bid price:</b>${{ bid.amount }}
+                                        </li>
+
+                                        <li>
+                                            <b>Date of bid:</b> {{ bid.timestamp }}
+                                        </li>
+                                        <li>
+                                            <b>Status:</b>{{ bid.get_status_display }}
+                                        </li>
+
+                                        <li>
+                                            <b>Expiration:</b>{{ bid.expiration_date|default:"No expiration" }}
+                                        </li>
+                                    </ul>
+                                    {% if request.user == bid.buyer.user %}
+
+                                        {% if bid.status == "pending" %}
+                                            <a href="{% url 'artworks-detail' bid.artwork.id %}"
+                                               class ="btn btn-outline-primary">
+                                                Resubmit bid
+                                            </a>
+                                        {% endif %}
+
+
+                                        {% if bid.status == "accepted" %}
+                                            <a href="{% url 'finalize-contact' bid.id %}" class = "btn btn-success">
+                                                Finalize bid
+                                            </a>
+                                        {% elif bid.status == "contingent" %}
+                                            <a href="{% url 'contingency-detail' bid.id %}" class = "btn btn-info">
+                                                View requirements
+                                            </a>
+                                        {% endif %}
+
+                                        <form method="POST"
+                                              action="{% url 'delete-bid' bid.id %}"
+                                              style="display:inline">
+                                            {% csrf_token %}
+                                            <button type="submit" class="btn btn-outline-danger">
+                                                Delete Bid
+                                            </button>
+
+                                        </form>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        {% endwith %}
+                    {% endfor %}
+                {% else %}
+                    {% for artwork in artworks %}
+
                         <div class="col-md-4">
                             <div class="container-item">
-                                {% include "artwork/_single_artwork.html" with is_detail=False is_buyer=True artwork=artwork bid=bid %}
+                                {% include "artwork/_single_artwork.html" with is_detail=False artwork=artwork %}
 
                                 <ul class="artworks-info-list">
 
                                     <li>
-                                        <b>Bid price:</b>${{ bid.amount }}
+                                        <b>Mediums: </b>
+                                        {% for medium in artwork.mediums.all %}
+                                            {{ medium.name }}{% if not forloop.last %}, {% endif %}
+                                        {% endfor %}
                                     </li>
 
                                     <li>
-                                        <b>Date of bid:</b> {{ bid.timestamp }}
-                                    </li>
-                                    <li>
-                                        <b>Status:</b>{{ bid.get_status_display }}
+                                        <b>Dimensions: </b>{{ artwork.width_cm }}x{{ artwork.height_cm }}cm
                                     </li>
 
-                                    <li>
-                                        <b>Expiration:</b>{{ bid.expiration_date|default:"No expiration" }}
-                                    </li>
                                 </ul>
-                                {% if request.user == bid.buyer.user %}
-
-                                    {% if bid.status == "pending" %}
-                                        <a href="{% url 'artworks-detail' bid.artwork.id %}"
-                                           class ="btn btn-outline-primary">
-                                            Resubmit bid
-                                        </a>
-                                    {% endif %}
-
-
-                                    {% if bid.status == "accepted" %}
-                                        <a href="{% url 'finalize-contact' bid.id %}" class = "btn btn-success">
-                                            Finalize bid
-                                        </a>
-                                    {% elif bid.status == "contingent" %}
-                                        <a href="{% url 'contingency-detail' bid.id %}" class = "btn btn-info">
-                                            View requirements
-                                        </a>
-                                    {% endif %}
-
-                                    <form method="POST"
-                                          action="{% url 'delete-bid' bid.id %}"
-                                          style="display:inline">
-                                        {% csrf_token %}
-                                        <button type="submit" class="btn btn-outline-danger">
-                                            Delete Bid
-                                        </button>
-
-                                    </form>
-                                {% endif %}
                             </div>
                         </div>
-                    {% endwith %}
-                {% endfor %}
-            {% else %}
-                {% for artwork in artworks %}
+                    {% endfor %}
+                {% endif %}
+            </div>
 
-                    <div class="col-md-4">
-                        <div class="container-item">
-                            {% include "artwork/_single_artwork.html" with is_detail=False artwork=artwork %}
-
-                            <ul class="artworks-info-list">
-
-                                <li>
-                                    <b>Mediums: </b>
-                                    {% for medium in artwork.mediums.all %}
-                                        {{ medium.name }}{% if not forloop.last %}, {% endif %}
-                                    {% endfor %}
-                                </li>
-
-                                <li>
-                                    <b>Dimensions: </b>{{ artwork.width_cm }}x{{ artwork.height_cm }}cm
-                                </li>
-
-                            </ul>
-                        </div>
-                    </div>
-                {% endfor %}
-            {% endif %}
-        </div>
-
-    </main>
+        </main>
+    </div>
 </div>
 
 
