@@ -24,16 +24,6 @@
         </div>
     </div>
 
-    <script>
-        window.addEventListener('load', () => {
-            setTimeout(() => {
-                document.querySelector('.vault-door').classList.add('open');
-            }, 100);
-            setTimeout(() => {
-                document.getElementById('vault-overlay').remove();
-            }, 1800);
-        });
-    </script>
     {% endif %}
     {% include "_navigation.html" %}
 
@@ -54,34 +44,7 @@
     {% include "footer.html" %}
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const tooltips = document.querySelectorAll('[data-bs-toggle="tooltip"]')
-            tooltips.forEach(el => new bootstrap.Tooltip(el))
-        })
-    </script>
 
-    <script>
-        let lastScroll = 0;
-
-        const navbar = document.querySelector('.custom-navbar');
-        window.addEventListener('scroll', () => {
-            const currentScroll = window.pageYOffset;
-
-            if (currentScroll <= 0) {
-                navbar.classList.remove('nav-hidden');
-                return;
-            }
-
-            if (currentScroll > lastScroll && !navbar.classList.contains('nav-hidden')) {
-                navbar.classList.add('nav-hidden');
-
-            } else if (currentScroll < lastScroll && navbar.classList.contains('nav-hidden')) {
-                navbar.classList.remove('nav-hidden');
-            }
-
-            lastScroll = currentScroll;
-        });
-    </script>
+    <script src="{% static 'js/main.js' %}"></script>
 </body>
 </html>
