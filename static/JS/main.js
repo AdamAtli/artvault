@@ -12,10 +12,25 @@ document.addEventListener('DOMContentLoaded', function() {
     tooltips.forEach(el => new bootstrap.Tooltip(el))
 })
 
-let lastScroll = 0;
 
+
+let lastScroll = 0;
+let menuIsOpen = false;
 const navbar = document.querySelector('.custom-navbar');
+const navbarCollapse = document.querySelector('#navbarSupportedContent');
+
+navbarCollapse.addEventListener('show.bs.collapse', () => {
+    menuIsOpen = true;
+    navbar.classList.remove('nav-hidden');
+});
+
+navbarCollapse.addEventListener('hide.bs.collapse', () => {
+    menuIsOpen = false;
+});
+
 window.addEventListener('scroll', () => {
+    if (menuIsOpen) return;
+
     const currentScroll = window.pageYOffset;
 
     if (currentScroll <= 0) {
